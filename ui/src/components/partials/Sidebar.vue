@@ -1,0 +1,437 @@
+<template>
+    <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+        <!--begin::Logo-->
+        <div class="app-sidebar-logo d-none d-lg-flex flex-center py-10 px-5 mb-1" id="kt_app_sidebar_logo">
+            <!--begin::Logo image-->
+            <a href="#">
+                <img alt="Logo" :src="`${page.base_url}/assets/media/logos/dark.svg`" class="h-20px" />
+            </a>
+            <!--end::Logo image-->
+        </div>
+        <!--end::Logo-->
+        <!--begin::Sidebar menu-->
+        <div class="app-sidebar-menu d-flex w-100 hover-scroll-overlay-y my-5" id="kt_app_sidebar_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo" data-kt-scroll-offset="0">
+            <!--begin::Menu-->
+            <div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg menu-here-bg menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold" id="#kt_app_sidebar_menu" data-kt-menu="true">
+                <router-link class="menu-item py-1" :to="{ name: 'client.dashboard' }">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-house fs-1"></i>
+                        </span>
+                    </span>
+                </router-link>
+                <div class="menu-item py-1" @mouseover="menuHover('employer')" @mouseleave="menuHoverLeave('employer')" :class="{ 'show menu-dropdown' : page.employerHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-user fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 171px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Employers</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.joborder' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Manpower Request</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.joborder.owned' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">My Manpower Request</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.employer' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Employer Manager</span>
+                            </router-link>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item py-1" @mouseover="menuHover('applicant')" @mouseleave="menuHoverLeave('applicant')" :class="{ 'show menu-dropdown' : page.applicantHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-user-2 fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 238px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Applicants</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.applicant.create' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Add Applicant</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.applicant.pipeline' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicant Pipeline</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link class="menu-link" :to="{ name: 'client.interview' }">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Interview Schedule</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Quick Encode</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Search Applicant</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Source Applicant</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item py-1" @mouseover="menuHover('process')" @mouseleave="menuHoverLeave('process')" :class="{ 'show menu-dropdown' : page.processHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-equalizer fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 304px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Processing</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="light-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicant Monitoring</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Document Monitoring</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Document List</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Medical</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item py-1" @mouseover="menuHover('web')" @mouseleave="menuHoverLeave('web')" :class="{ 'show menu-dropdown' : page.webHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-layers fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 371px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Web Management</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="light-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Job Openings</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Announcements</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Online Applicant</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="mini-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Unposted Job</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item py-1" @mouseover="menuHover('report')" @mouseleave="menuHoverLeave('report')" :class="{ 'show menu-dropdown' : page.reportHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-stats fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 437px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Reports</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="light-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicants Encoded</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicants Source</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Audit Trail</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Birthday</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Contract Expiration</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Deployment Report</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Interview Calendar</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Manpower Request</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="dark-sidebar.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Status Report</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item py-1" @mouseover="menuHover('settings')" @mouseleave="menuHoverLeave('settings')" :class="{ 'show menu-dropdown' : page.settingsHover}">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-setting fs-1"></i>
+                        </span>
+                    </span>
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 409px);">
+                        <div class="menu-item">
+                            <div class="menu-content">
+                                <span class="menu-section fs-5 fw-bolder ps-1 py-1">Settings</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.configuration' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Account Configuration</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.sources' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicant Source</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.status' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicant Status</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../documentation/getting-started/changelog.html">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Applicant Trashbox</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.clinic' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Clinic Manager</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.document' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Document Type</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.email' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Email Template</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.role' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Role Manager</span>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.settings.user' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">User Manager</span>
+                            </router-link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Menu-->
+        </div>
+        <!--end::Sidebar menu-->
+    </div>
+</template>
+
+<script>
+import { reactive } from 'vue';
+
+export default {
+    setup() {
+        const page = reactive({
+            base_url: process.env.VUE_APP_URL,
+            dashboardHover: false,
+            employerHover: false,
+            applicantHover: false,
+            processHover: false,
+            webHover: false,
+            reportHover: false,
+            settingsHover: false
+        });
+
+        const menuHover = (type) => {
+            page.dashboardHover = (type == 'dashboard') ? true : false;
+            page.employerHover = (type == 'employer') ? true : false;
+            page.applicantHover = (type == 'applicant') ? true : false;
+            page.processHover = (type == 'process') ? true : false;
+            page.reportHover = (type == 'report') ? true : false;
+            page.webHover = (type == 'web') ? true : false;
+            page.settingsHover = (type == 'settings') ? true : false;
+        }
+
+        const menuHoverLeave = (type) => {
+            page.dashboardHover = false;
+            page.employerHover = false;
+            page.applicantHover = false;
+            page.processHover = false;
+            page.webHover =  false;
+            page.reportHover = false;
+            page.settingsHover =  false;
+        }
+
+        return {
+            page,
+            menuHover,
+            menuHoverLeave
+        }
+    },
+}
+</script>
