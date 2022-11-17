@@ -147,8 +147,9 @@ export default {
         }
 
         const searchApplicant = _debounce( function () {
-            let data = { search: state.search_table };
             initialize.value = false;
+            $('#applicants-table').DataTable().destroy();
+            let data = { search: state.search_table };
             initDatatable(data);
         }, 500);
 
@@ -204,6 +205,9 @@ export default {
         }
 
         onMounted(() => {
+            initialize.value = false;
+            state.search_table = '';
+            $('#applicants-table').DataTable().destroy();
             initDatatable();
             $('tbody', '#applicants-table').on( 'click', '.view-applicant', function(){
                 const cell =  $('#applicants-table').DataTable().cell( $(this).closest("td") );
