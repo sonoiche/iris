@@ -13,7 +13,17 @@ class Applicant extends Model
 
     protected $table = "applicants";
     protected $guarded = [];
-    protected $appends = ['display_photo','fullname','birthdate_display','source_name','nationality_name','keywords_display','age_gender'];
+    protected $appends = [
+        'display_photo',
+        'fullname',
+        'birthdate_display',
+        'source_name',
+        'nationality_name',
+        'keywords_display',
+        'age_gender',
+        'applicant_name',
+        'date_applied_display'
+    ];
 
     public function source()
     {
@@ -33,6 +43,11 @@ class Applicant extends Model
     public function educations()
     {
         return $this->hasMany(Education::class, 'applicant_id', 'applicant_number');
+    }
+
+    public function lineup()
+    {
+        return $this->hasOne(Lineup::class, 'applicant_id', 'applicant_number');
     }
 
     public function getDisplayPhotoAttribute()
@@ -101,5 +116,24 @@ class Applicant extends Model
         } else {
             return '';
         }
+    }
+
+    public function getApplicantNameAttribute()
+    {
+        $fname = isset($this->attributes['fname']) ? $this->attributes['fname'] : '';
+        $mname = isset($this->attributes['mname']) ? ' '.$this->attributes['mname'] : '';
+        $lname = $this->attributes['lname'] ?? '';
+        $applicant_number = $this->attributes['applicant_number'];
+
+        return $lname.', '.$fname.$mname.'<br>'.$applicant_number;
+    }
+
+    public function getDateAppliedDisplayAttribute()
+    {
+        $date = $this->attributes['date_applied'] ?? '';
+        if($date) {
+            return Carbon::parse($date)->format('d M, Y');
+        }
+        return '';
     }
 }

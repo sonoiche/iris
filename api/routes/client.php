@@ -95,6 +95,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('positions', PositionController::class);
 
         Route::post('applicants/encode', [ApplicantController::class, 'encode']);
+        Route::post('applicants/datatable', [ApplicantController::class, 'datatable']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
         Route::apiResource('applicants', ApplicantController::class);
 

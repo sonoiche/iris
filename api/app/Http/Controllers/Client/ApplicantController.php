@@ -185,6 +185,76 @@ class ApplicantController extends Controller
         return response()->json($data);
     }
 
+    public function datatable(Request $request)
+    {
+        $columns = [
+            0   => '',
+            1   => 'lname',
+            2   => 'mobile_number',
+            3   => 'position_applied',
+            4   => 'date_applied',
+            5   => 'status',
+            6   => 'latest_remarks'
+        ];
+
+        $search     = $request['search'];
+
+        $result     = Applicant::with('lineup.lineup_status')
+            ->when($search, function ($query, $search) {
+            $query->where(function ($queryString) use ($search) {
+                $queryString->orWhere('fname', 'like', '%'.$search.'%')
+                    ->orWhere('mname', 'like', '%'.$search.'%')
+                    ->orWhere('lname', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%')
+                    ->orWhere('mobile_number', 'like', '%'.$search.'%')
+                    ->orWhere('applicant_number', 'like', '%'.$search.'%');
+            });
+        });
+
+        $totalData = $result->count();
+
+        $totalFiltered = $totalData;
+
+        $limit  = $request['length'];
+        $start  = $request['start'];
+
+        $order  = $columns[$request['order.0.column']];
+        $dir    = $request['order.0.dir'];
+
+        $applicants = $result->offset($start)
+            ->limit($limit)
+            ->when($order, function ($query, $order) use ($dir) {
+                if($order != '') {
+                    $query->orderBy($order, $dir);
+                }
+            })
+            ->get();
+
+        $data = [];
+        if(!empty($applicants)) {
+            foreach ($applicants as $key =>  $applicant) {
+                $nestedData['counter']              = $key+1;
+                $nestedData['applicant_name']       = ['applicant_name' => $applicant->applicant_name, 'applicant_id' => $applicant->applicant_number];
+                $nestedData['mobile_number']        = $applicant->mobile_number;
+                $nestedData['position_applied']     = isset($applicant->position_applied) ? $applicant->position_applied : '--';
+                $nestedData['date_applied_display'] = (isset($applicant->date_applied) && $applicant->position_applied) ? Carbon::parse($applicant->date_applied)->format('d M, Y') : '';
+                $nestedData['status']               = isset($applicant->lineup) ? $applicant->lineup->lineup_status->name : '';
+                $nestedData['latest_remarks']       = $applicant->remarks;
+                $nestedData['action']               = ['id' => $applicant->id, 'applicant_id' => $applicant->applicant_number];
+                $data[]                             = $nestedData;
+            }
+        }
+
+        $json_data = [
+            "draw"            => intval($request['draw']),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        ];
+
+        return response()->json($json_data);
+    }
+
     private function generateApplicantNumber()
     {
         $year = date('Y');

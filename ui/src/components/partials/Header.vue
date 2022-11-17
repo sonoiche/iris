@@ -25,14 +25,14 @@
                         <li class="breadcrumb-item text-muted">
                             <router-link :to="{ name: 'client.dashboard' }" class="breadcrumb-link text-muted text-hover-primary">Home</router-link>
                         </li>
-                        <li class="breadcrumb-item">
+                        <!-- <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">User Management</li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Roles</li>
+                        <li class="breadcrumb-item text-muted">Roles</li> -->
                     </ul>
                 </div>
                 <div class="app-navbar align-items-center flex-shrink-0">

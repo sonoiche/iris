@@ -97,8 +97,8 @@
 								<!--begin::Wrapper-->
 								<div class="pe-5">
 									<!--begin::Title-->
-									<h1 class="text-dark fw-bolder fs-3x fs-lg-4tx mb-14 ms-n1" id="home">Let Your Brand 
-									<br />Boost On-board 
+									<h1 class="text-dark fw-bolder fs-3x fs-lg-4tx mb-14 ms-n1" id="home">Let Your Brand
+									<br />Boost On-board
 									<br />Marketing Assets</h1>
 									<!--end::Title-->
 									<!--begin::Action-->
@@ -140,7 +140,7 @@
 				<!--begin::Container-->
 				<div class="container">
 					<!--begin::Title-->
-					<h3 class="fs-lg-2tx fs-2x text-dark text-center mb-16 lh-base" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">Our 3-Step Guide for How to Setup 
+					<h3 class="fs-lg-2tx fs-2x text-dark text-center mb-16 lh-base" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">Our 3-Step Guide for How to Setup
 					<br />and Deploy Your App Today</h3>
 					<!--end::Title-->
 					<!--begin::Row-->
@@ -190,7 +190,7 @@
 								<!--end::Heading-->
 								<!--begin::Description-->
 								<div class="fw-bold fs-6 fs-lg-4 text-gray-700">With a few clicks install required
-								<br />stack and database and launch 
+								<br />stack and database and launch
 								<br />your app with no code</div>
 								<!--end::Description-->
 							</div>
@@ -275,9 +275,9 @@
 									<!--end::Symbol-->
 									<!--begin::Text-->
 									<div class="d-flex flex-column">
-										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">This is by far the cleanest template and the most 
+										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">This is by far the cleanest template and the most
 										<br />well structured platform</a>
-										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used. 
+										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used.
 										<br />The codes are up tandard css styles are clean.</span>
 									</div>
 									<!--end::Text-->
@@ -301,9 +301,9 @@
 									<!--end::Symbol-->
 									<!--begin::Text-->
 									<div class="d-flex flex-column">
-										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">How to Write a Blog Post, Step: Writing a Great 
+										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">How to Write a Blog Post, Step: Writing a Great
 										<br />Amazing Headline</a>
-										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used. 
+										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used.
 										<br />The codes are up tandard css styles are clean.</span>
 									</div>
 									<!--end::Text-->
@@ -327,9 +327,9 @@
 									<!--end::Symbol-->
 									<!--begin::Text-->
 									<div class="d-flex flex-column">
-										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">Keep All Your Sentences Short Shorte. Accept That 
+										<a href="pages/blog/post.html" class="text-dark text-hover-primary fs-3 fw-bolder mb-3">Keep All Your Sentences Short Shorte. Accept That
 										<br />Your Blog Post Will Never Be Perfect</a>
-										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used. 
+										<span class="text-gray-700 fw-bold fs-4">The most well thought out design theme I have ever used.
 										<br />The codes are up tandard css styles are clean.</span>
 									</div>
 									<!--end::Text-->
@@ -370,7 +370,7 @@
 						<!--begin::Plans-->
 						<div class="d-flex flex-column position-relative z-index-2">
 							<!--begin::Title-->
-							<h1 class="fs-lg-2tx fs-2x fw-bolder text-dark mb-7 mb-lg-15 text-center lh-base">Good Rated a Very Strong 5 Star by Users 
+							<h1 class="fs-lg-2tx fs-2x fw-bolder text-dark mb-7 mb-lg-15 text-center lh-base">Good Rated a Very Strong 5 Star by Users
 							<br />Because It’s Strong Quality</h1>
 							<!--end::Title-->
 							<!--begin::Wrapper-->
@@ -396,7 +396,7 @@
 									</div>
 									<!--begin::Text-->
 									<div class="mb-7">
-										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template 
+										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template
 										<br />and the most well structured</h3>
 										<span class="text-gray-700 d-block fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</span>
 									</div>
@@ -439,7 +439,7 @@
 									</div>
 									<!--begin::Text-->
 									<div class="mb-7">
-										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template 
+										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template
 										<br />and the most well structured</h3>
 										<span class="text-gray-700 d-block fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</span>
 									</div>
@@ -482,7 +482,7 @@
 									</div>
 									<!--begin::Text-->
 									<div class="mb-7">
-										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template 
+										<h3 class="text-dark fw-bolder mb-3 lh-base">This is by far the cleanest template
 										<br />and the most well structured</h3>
 										<span class="text-gray-700 d-block fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</span>
 									</div>
@@ -524,8 +524,8 @@
 						<!--begin::Plans-->
 						<div class="d-flex flex-column container pt-lg-20">
 							<!--begin::Heading-->
-							<h1 class="fs-lg-2tx fs-2x fw-bolder text-dark mb-7 mb-lg-13 text-center" id="pricing" data-kt-scroll-offset="{default: 100, lg: 150}">One Stop Pricing For Your Business 
-							<br />Because 
+							<h1 class="fs-lg-2tx fs-2x fw-bolder text-dark mb-7 mb-lg-13 text-center" id="pricing" data-kt-scroll-offset="{default: 100, lg: 150}">One Stop Pricing For Your Business
+							<br />Because
 							<span class="d-inline-block position-relative ms-2">
 								<span class="d-inline-block mb-2 text-danger">It’s Strong Quality</span>
 								<span class="d-inline-block position-absolute h-4px bottom-0 end-0 start-0 bg-danger translate rounded"></span>
@@ -868,12 +868,12 @@
 							<br /></h3>
 							<!--end::Title-->
 							<!--begin::Text-->
-							<span class="text-gray-700 d-block fw-bold fs-4 pb-5 lh-lg">The most well thought out design theme I have ever used. 
-							<br />The codes are up to tandard. The css styles are amazingly very clean. 
+							<span class="text-gray-700 d-block fw-bold fs-4 pb-5 lh-lg">The most well thought out design theme I have ever used.
+							<br />The codes are up to tandard. The css styles are amazingly very clean.
 							<br />In fact the cleanest and the most up to standard I have ever seen.</span>
 							<!--end::Text-->
 							<!--begin::Text-->
-							<span class="text-gray-700 fw-bold fs-4 lh-lg">In fact the cleanest and the most up to standard codes are up to 
+							<span class="text-gray-700 fw-bold fs-4 lh-lg">In fact the cleanest and the most up to standard codes are up to
 							<br />tandard. The css styles are amazingly very clean.</span>
 							<!--end::Text-->
 						</div>
@@ -1282,7 +1282,7 @@
 									<h2 class="text-gray-900 fw-bold mb-3">Would you need a Custom License?</h2>
 									<!--end::Title-->
 									<!--begin::Text-->
-									<span class="fw-normal fs-4 text-gray-600">Email us to 
+									<span class="fw-normal fs-4 text-gray-600">Email us to
 									<a href="https://keenthemes.com/support" class="fw-bold fs-4 text-gray-800 text-hover-primary">support@keenthemes.com</a></span>
 									<!--end::Text-->
 								</div>
@@ -1293,7 +1293,7 @@
 									<h2 class="text-gray-900 fw-bold mb-3">How About a Custom Project?</h2>
 									<!--end::Title-->
 									<!--begin::Text-->
-									<span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service. 
+									<span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service.
 									<a href="pages/user-profile/overview.html" class="fw-bold fs-4 text-gray-800 text-hover-primary">Click to Get a Quote</a></span>
 									<!--end::Text-->
 								</div>
