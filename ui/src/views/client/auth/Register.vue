@@ -5,12 +5,12 @@
 				<div class="d-flex flex-column flex-lg-row-auto bg-primary w-xl-600px positon-xl-relative">
 					<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
 						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
-							<a href="#" class="py-9 pt-lg-20">
-								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/default.svg`" class="h-40px" />
+							<a href="../../index.html" class="py-9 pt-lg-20">
+								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/logo-2.png`" style="width: 150px" />
 							</a>
-							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to Good</h1>
-							<p class="fw-bold fs-2 text-white">Plan your blog post by choosing a topic creating 
-							<br />an outline and checking facts</p>
+							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to IRIS Online</h1>
+							<p class="fw-bold fs-2 text-white">A software that manage and empower your
+							<br />recruitment management process</p>
 						</div>
 						<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(/assets/media/illustrations/sketchy-1/2.png)"></div>
 					</div>
@@ -21,7 +21,7 @@
 							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form">
 								<div class="mb-10 text-center">
 									<h1 class="text-dark mb-3">Create an Account</h1>
-									<div class="text-gray-400 fw-bold fs-4">Already have an account? 
+									<div class="text-gray-400 fw-bold fs-4">Already have an account?
 									<router-link :to="{ name: 'login' }" class="link-primary fw-bolder">Sign in here</router-link></div>
 								</div>
 								<button type="button" class="btn btn-light-primary fw-bolder w-100 mb-10">
@@ -83,7 +83,7 @@
 								<div class="fv-row mb-10">
 									<label class="form-check form-check-custom form-check-solid form-check-inline">
 										<input class="form-check-input" type="checkbox" name="toc" value="1" />
-										<span class="form-check-label fw-bold text-gray-700 fs-6">I Agree 
+										<span class="form-check-label fw-bold text-gray-700 fs-6">I Agree
 										<a href="#" class="ms-1 link-primary">Terms and conditions</a>.</span>
 									</label>
 								</div>
@@ -91,7 +91,7 @@
 									<button type="button" class="btn btn-lg btn-primary" @click="register">
 										<span class="indicator-label" v-if="!loggingIn">Submit</span>
 										<span v-else>
-											Please wait... 
+											Please wait...
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 										</span>
 									</button>

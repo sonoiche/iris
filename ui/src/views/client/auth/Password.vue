@@ -9,18 +9,12 @@
 					<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
 						<!--begin::Header-->
 						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
-							<!--begin::Logo-->
 							<a href="../../index.html" class="py-9 pt-lg-20">
-								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/default.svg`" class="h-40px" />
+								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/logo-2.png`" style="width: 150px" />
 							</a>
-							<!--end::Logo-->
-							<!--begin::Title-->
-							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to Good</h1>
-							<!--end::Title-->
-							<!--begin::Description-->
-							<p class="fw-bold fs-2 text-white">Plan your blog post by choosing a topic creating 
-							<br />an outline and checking facts</p>
-							<!--end::Description-->
+							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to IRIS Online</h1>
+							<p class="fw-bold fs-2 text-white">A software that manage and empower your
+							<br />recruitment management process</p>
 						</div>
 						<!--end::Header-->
 						<!--begin::Illustration-->
@@ -58,7 +52,7 @@
 								<div class="d-flex flex-wrap justify-content-center pb-lg-0">
 									<button type="button" id="kt_password_reset_submit" class="btn btn-lg btn-primary fw-bolder me-4">
 										<span class="indicator-label">Submit</span>
-										<span class="indicator-progress">Please wait... 
+										<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 									</button>
 									<router-link class="btn btn-lg btn-light-primary fw-bolder" :to="{ name: 'login' }">Cancel</router-link>

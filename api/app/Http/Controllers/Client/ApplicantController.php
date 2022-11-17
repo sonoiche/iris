@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Client\Lineup;
 use App\Models\Client\Applicant;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Applicant\ApplicantResource;
 use App\Http\Requests\Client\Applicant\ApplicantRequest;
 use App\Http\Requests\Client\Applicant\ApplicantUpdateRequest;
-use App\Models\Client\Lineup;
+use App\Http\Requests\Client\Applicant\EncodeApplicantRequest;
 
 class ApplicantController extends Controller
 {
@@ -41,7 +42,6 @@ class ApplicantController extends Controller
         $applicant->postal_code             = $request['postal_code'];
         $applicant->language_spoken         = $request['language_spoken'];
         $applicant->keywords                = $request['keywords'];
-        $applicant->resume                  = $request['resume'];
         $applicant->expected_salary         = $request['expected_salary'];
         $applicant->availability            = $request['availability'];
 
@@ -152,6 +152,36 @@ class ApplicantController extends Controller
             ->whereNotIn('applicant_number', $deployed_applicant_ids)
             ->get();
 
+        return response()->json($data);
+    }
+
+    public function encode(EncodeApplicantRequest $request)
+    {
+        $applicant = new Applicant;
+        $applicant->position_applied    = $request['position_applied'];
+        $applicant->fname               = $request['fname'];
+        $applicant->mname               = $request['mname'];
+        $applicant->lname               = $request['lname'];
+        $applicant->mobile_number       = $request['mobile_number'];
+        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->keywords            = $request['keywords'];
+
+        if($request['resume'] != '' && $request->has('resume')) {
+            $file   = $request->file('resume');
+            $resume = time().'.'.$file->getClientOriginalExtension();
+
+            Storage::disk('public')->putFileAs(
+                'uploads/applicant/resume',
+                $file,
+                $resume
+            );
+
+            $applicant->resume = 'uploads/applicant/resume/'.$resume;
+        }
+
+        $applicant->save();
+        $data['message']    = 'New applicant has been saved.';
+        $data['applicant']  = $applicant;
         return response()->json($data);
     }
 

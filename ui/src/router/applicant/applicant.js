@@ -6,6 +6,8 @@ import ApplicantPipeline from '@/views/client/applicant/pipeline/Index.vue';
 import ApplicantShowPipeline from '@/views/client/applicant/pipeline/Show.vue';
 import InterviewIndex from '@/views/client/applicant/interview/Index.vue';
 import InterviewCreate from '@/views/client/applicant/interview/Create.vue';
+import ApplicantEncode from '@/views/client/applicant/Encode.vue';
+import ApplicantSearch from '@/views/client/applicant/search/Index.vue';
 
 const routes = [
     {
@@ -90,6 +92,32 @@ const routes = [
         path: '/client/applicant/interview/create',
         name: 'client.interview.create',
         component: InterviewCreate,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/applicant/encode',
+        name: 'client.applicant.encode',
+        component: ApplicantEncode,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/applicant/search',
+        name: 'client.applicant.search',
+        component: ApplicantSearch,
         beforeEnter: (to, from, next) => {
             if (!store.getters["auth/authenticated"]) {
                 return next({

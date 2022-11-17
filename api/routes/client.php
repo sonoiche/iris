@@ -94,6 +94,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::put('positions/update-jobdescription/{id}', [PositionController::class, 'updateJobDescription']);
         Route::apiResource('positions', PositionController::class);
 
+        Route::post('applicants/encode', [ApplicantController::class, 'encode']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
         Route::apiResource('applicants', ApplicantController::class);
 

@@ -6,22 +6,22 @@
 					<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
 						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
 							<a href="../../index.html" class="py-9 pt-lg-20">
-								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/default.svg`" class="h-40px" />
+								<img alt="Logo" :src="`${page.base_url}/assets/media/logos/logo-2.png`" style="width: 150px" />
 							</a>
-							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to Good</h1>
-							<p class="fw-bold fs-2 text-white">Plan your blog post by choosing a topic creating 
-							<br />an outline and checking facts</p>
+							<h1 class="fw-bolder text-white fs-2qx pb-5 pb-md-10">Welcome to IRIS Online</h1>
+							<p class="fw-bold fs-2 text-white">A software that manage and empower your
+							<br />recruitment management process</p>
 						</div>
 						<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(../../assets/media/illustrations/sketchy-1/2.png)"></div>
 					</div>
 				</div>
-				
+
 				<div class="d-flex flex-column flex-lg-row-fluid py-10">
 					<div class="d-flex flex-center flex-column flex-column-fluid">
 						<div class="w-lg-600px p-10 p-lg-15 mx-auto">
 							<div class="form w-100" v-if="!page.isTwoFA">
 								<div class="text-center mb-10">
-									<h1 class="text-dark mb-3">Sign In to Good</h1>
+									<h1 class="text-dark mb-3">Sign In to IRIS</h1>
 								</div>
 								<div class="fv-row mb-10">
 									<label class="form-label fs-6 fw-bolder text-dark">Email</label>
@@ -38,7 +38,7 @@
 									<button type="button" class="btn btn-lg btn-primary w-100 mb-5" @click="submit">
 										<span class="indicator-label" v-if="!loggingIn">Continue</span>
 										<span v-if="loggingIn">
-											Please wait... 
+											Please wait...
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 										</span>
 									</button>
@@ -87,7 +87,7 @@
 										<button type="button" class="btn btn-lg btn-primary fw-bolder" :disabled="!completed" @click="challengeLogin">
 											<span class="indicator-label">Submit</span>
 											<span v-if="loggingIn">
-												Please wait... 
+												Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 											</span>
 										</button>

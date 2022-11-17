@@ -4,7 +4,7 @@
         <div class="app-sidebar-logo d-none d-lg-flex flex-center py-10 px-5 mb-1" id="kt_app_sidebar_logo">
             <!--begin::Logo image-->
             <a href="#">
-                <img alt="Logo" :src="`${page.base_url}/assets/media/logos/dark.svg`" class="h-20px" />
+                <img alt="Logo" :src="`${page.base_url}/assets/media/logos/logo.png`" class="h-40px" />
             </a>
             <!--end::Logo image-->
         </div>
@@ -95,23 +95,23 @@
                             </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <router-link :to="{ name: 'client.applicant.encode' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Quick Encode</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <router-link :to="{ name: 'client.applicant.search' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Search Applicant</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="light-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -141,7 +141,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -149,7 +149,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -157,7 +157,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -179,7 +179,7 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="light-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -187,7 +187,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -195,7 +195,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -203,7 +203,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="mini-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="light-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -233,7 +233,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -241,7 +241,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -249,7 +249,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -257,7 +257,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -265,7 +265,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -273,7 +273,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -281,7 +281,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -289,7 +289,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="dark-sidebar.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -335,7 +335,7 @@
                             </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="../documentation/getting-started/changelog.html">
+                            <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
