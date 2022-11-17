@@ -42,12 +42,7 @@
                                                         <th class="fw-bolder text-center">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="text-gray-600 fw-bold" v-if="state.search_table == ''">
-                                                    <tr>
-                                                        <td colspan="8" class="text-center">No applicants available</td>
-                                                    </tr>
-                                                </tbody>
-                                                <tbody class="text-gray-600 fw-bold" v-else></tbody>
+                                                <tbody class="text-gray-600 fw-bold"></tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -153,11 +148,12 @@ export default {
 
         const searchApplicant = _debounce( function () {
             let data = { search: state.search_table };
-            $('#applicants-table').DataTable().destroy();
+            initialize.value = false;
             initDatatable(data);
         }, 500);
 
         const editApplicant = async (id) => {
+            initialize.value = false;
             router.push({
                 name: 'client.applicant.edit',
                 params: {
@@ -189,6 +185,8 @@ export default {
         }
 
         const viewApplicant = (id) => {
+            initialize.value = false;
+            $('#applicants-table').DataTable().destroy();
             router.push({
                 name: 'client.applicant.show',
                 params: {
@@ -206,7 +204,7 @@ export default {
         }
 
         onMounted(() => {
-
+            initDatatable();
             $('tbody', '#applicants-table').on( 'click', '.view-applicant', function(){
                 const cell =  $('#applicants-table').DataTable().cell( $(this).closest("td") );
                 viewApplicant(cell.data()['applicant_id']);
