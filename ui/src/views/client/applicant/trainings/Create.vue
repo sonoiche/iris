@@ -106,7 +106,8 @@ export default {
         const state = reactive({
             date_issue: '',
             date_expiry: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, training, storeTraining } = trainingRepo();
 
@@ -134,6 +135,7 @@ export default {
             formData.append('date_expiry', (state.date_expiry) ? new Date(state.date_expiry).toISOString() : '');
             formData.append('remarks', training.value.remarks ?? '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeTraining(formData);
             isSuccess.value = true;
             isContinue.value = true;

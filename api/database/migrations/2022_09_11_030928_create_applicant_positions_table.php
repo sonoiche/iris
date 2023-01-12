@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('applicant_positions', function (Blueprint $table) {
             $table->id();
-            $table->integer('applicant_id');
+            $table->string('applicant_id');
             $table->string('position_applied')->nullable();
             $table->string('years_of_experience')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

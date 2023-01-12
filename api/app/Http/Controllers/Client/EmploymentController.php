@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Client\Applicant;
 use App\Models\Client\Employment;
+use App\Models\Client\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Applicant\EmploymentResource;
 use App\Http\Requests\Client\Applicant\EmploymentRequest;
@@ -32,7 +35,11 @@ class EmploymentController extends Controller
         $employment->duration           = $from. '-' .$to;
         $employment->duties             = $request['duties'];
         $employment->applicant_id       = $request['applicant_id'];
+        $employment->user_id            = $request['user_id'];
         $employment->save();
+
+        // insert activity log
+        $this->storeActivityLog('employment', $employment, 'create');
 
         $data['message']                = 'New employment has been saved.';
         return response()->json($data);
@@ -58,6 +65,9 @@ class EmploymentController extends Controller
         $employment->duties             = $request['duties'];
         $employment->save();
 
+        // insert activity log
+        $this->storeActivityLog('employment', $employment, 'update');
+
         $data['message']                = 'Employment has been updated.';
         return response()->json($data);
     }
@@ -68,5 +78,21 @@ class EmploymentController extends Controller
         $employment->delete();
         $data['message'] = 'Employment has been deleted.';
         return response()->json($data);
+    }
+    
+    private function storeActivityLog($type, $applicant, $action)
+    {
+        $user = User::find($applicant->user_id);
+        $applicant = Applicant::where('applicant_number', $applicant->applicant_id)->first();
+
+        $activity = new ActivityLog;
+        $activity->user_id          = $user->id;
+        $activity->username         = $user->fname.' '.$user->lname;
+        $activity->activity_type    = 'crud';
+        $activity->applicant_id     = $applicant->applicant_number;
+        $activity->applicant_name   = $applicant->fname.' '.$applicant->lname;
+        $activity->module           = $type;
+        $activity->user_action      = $action;
+        $activity->save();
     }
 }

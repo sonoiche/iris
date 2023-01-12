@@ -240,7 +240,7 @@ export default {
         }
 
         const setStatus = (value) => {
-            principal.value.status = value;
+            principal.value.status = value.id;
             if(value) {
                 errors.value.status = '';
             }

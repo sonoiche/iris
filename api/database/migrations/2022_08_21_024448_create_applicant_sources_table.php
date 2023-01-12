@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('applicant_sources', function (Blueprint $table) {
             $table->id();
-            $table->integer('agency_id');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();

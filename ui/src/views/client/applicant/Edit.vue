@@ -21,7 +21,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-7 mb-4 mb-lg-0">
                                                                 <BaseInput
-                                                                    v-model="applicant.position"
+                                                                    v-model="applicant.position_applied"
                                                                     label="Position Applied"
                                                                     type="text"
                                                                     id="position_applied"
@@ -29,7 +29,7 @@
                                                             </div>
                                                             <div class="col-lg-3 mb-4 mb-lg-0">
                                                                 <BaseInput
-                                                                    v-model="applicant.position"
+                                                                    v-model="applicant.yrs_of_exp"
                                                                     label="Year of Experience"
                                                                     type="text"
                                                                     id="experience"
@@ -486,7 +486,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import applicantRepo from '@/repositories/applicants/applicant';
 import sourceRepo from '@/repositories/settings/source';
@@ -498,6 +498,11 @@ export default {
         const { status, errors, applicant, getApplicant, updateApplicant } = applicantRepo();
         const { sources, getSources } = sourceRepo();
         const { nationalities, getNationalities } = nationalityRepo();
+
+        const state = reactive({
+            authuser: JSON.parse(localStorage.getItem('authuser'))
+        });
+
         const availabilities = [
             { id: 'Immediate', name: 'Immediate' },
             { id: '1 Week', name: '1 Week' },
@@ -525,6 +530,7 @@ export default {
         const passport_file = ref('');
         const isSuccess = ref(false);
         const sourceOptions = ref([]);
+        const keywordsObject = ref([]);
 
         const setAvailability = (value) => {
             applicant.value.availability = value;
@@ -599,6 +605,9 @@ export default {
             formData.append('philhealth', applicant.value.philhealth ?? '');
             formData.append('pagibig', applicant.value.pagibig ?? '');
             formData.append('remarks', applicant.value.remarks ?? '');
+            formData.append('position_applied', applicant.value.position_applied ?? '');
+            formData.append('yrs_of_exp', applicant.value.yrs_of_exp ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
 
             await updateApplicant(formData, applicant.value.id);
@@ -607,7 +616,7 @@ export default {
                 isSuccess.value = true;
             }
 
-            isSuccess.value = false;
+            isSuccess.value = true;
         }
 
         const onFileChange = (e) => {
@@ -640,18 +649,17 @@ export default {
         onMounted( async () => {
             initRequireData();
             await getApplicant(route.params.id);
-            // let keywordsObject = JSON.parse(applicant.value.keywords);
-            // keywordsObject.map((item) => {
-            //     return {
-            //         id: item.id,
-            //         name: item.name
-            //     }
-            // });
-
-            console.log(JSON.parse(applicant.value.keywords));
+            keywordsObject.value = JSON.parse(applicant.value.keywords);
+            keywordsObject.value.map((item) => {
+                return {
+                    id: item.id,
+                    name: item.name
+                }
+            });
         });
 
         return {
+            state,
             status,
             errors,
             applicant,
@@ -679,7 +687,8 @@ export default {
             religions,
             setReligion,
             onPassportFileChange,
-            passport_file
+            passport_file,
+            keywordsObject
         }
     },
 }

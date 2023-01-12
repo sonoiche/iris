@@ -8,6 +8,8 @@ import InterviewIndex from '@/views/client/applicant/interview/Index.vue';
 import InterviewCreate from '@/views/client/applicant/interview/Create.vue';
 import ApplicantEncode from '@/views/client/applicant/Encode.vue';
 import ApplicantSearch from '@/views/client/applicant/search/Index.vue';
+import ApplicantSource from '@/views/client/applicant/source/Index.vue';
+import ApplicantResumeParser from '@/views/client/applicant/ResumeParser.vue';
 
 const routes = [
     {
@@ -118,6 +120,32 @@ const routes = [
         path: '/client/applicant/search',
         name: 'client.applicant.search',
         component: ApplicantSearch,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/applicant/source',
+        name: 'client.applicant.source',
+        component: ApplicantSource,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/applicant/resume-parser',
+        name: 'client.applicant.resume-parser',
+        component: ApplicantResumeParser,
         beforeEnter: (to, from, next) => {
             if (!store.getters["auth/authenticated"]) {
                 return next({

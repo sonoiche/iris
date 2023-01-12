@@ -160,6 +160,7 @@ export default {
             formData.append('date_taken', (state.date_taken) ? new Date(state.date_taken).toISOString() : '');
             formData.append('date_result', (state.date_result) ? new Date(state.date_result).toISOString() : '');
             formData.append('id', medical.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateMedical(formData, props.updateId);
             isSuccess.value = true;

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Client\ActivityLog;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -107,6 +108,14 @@ class LoginController extends Controller
             $user->save();
         }
 
+        // insert to activity log
+        $activity = new ActivityLog;
+        $activity->user_id          = $user->id;
+        $activity->username         = $user->fname.' '.$user->lname;
+        $activity->activity_type    = 'access';
+        $activity->ip_address       = $this->getIp();
+        $activity->save();
+
         $data['user'] = $user;
         $data['two_factor_until'] = $user->two_factor_until;
 
@@ -130,5 +139,14 @@ class LoginController extends Controller
     private function generateOtp()
     {
         return random_int(100000, 999999);
+    }
+
+    private function getIp(){
+        $ip = file_get_contents('https://api.ipify.org');
+        if($ip) {
+            return $ip;
+        }
+
+        return '';
     }
 }

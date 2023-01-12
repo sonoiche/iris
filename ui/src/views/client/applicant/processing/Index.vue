@@ -96,8 +96,29 @@
                                     </div>
                                     <div class="col-lg-6 mb-4 mb-lg-0">
                                         <div class="col-lg-12 mb-4 mb-lg-0">
+                                            <BaseSelect
+                                                label="Job Order Position"
+                                                :options="positionOptions"
+                                                :placeholder="`Select Job Order Position`"
+                                                :defaultValue="{ id: processing.position_id, name: processing.position_title }"
+                                                id="position_id"
+                                                :is-clear="isClear"
+                                                @select-value="setJobOrderPosition"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <div class="col-lg-6 mb-4 mb-lg-0">
+                                        <div class="col-lg-12 mb-4 mb-lg-0">
                                             <label class="form-label fs-6 fw-bolder mb-3">Endorsement Date</label>
                                             <date-picker v-model="state.date_endorse" inputClassName="form-control form-control-solid fc-calendar" :format="`MM/dd/yyyy`" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-4 mb-lg-0">
+                                        <div class="col-lg-12 mb-4 mb-lg-0">
+                                            <label class="form-label fs-6 fw-bolder mb-3">Deployed Date</label>
+                                            <date-picker v-model="state.deployed_date" inputClassName="form-control form-control-solid fc-calendar" :format="`MM/dd/yyyy`" />
                                         </div>
                                     </div>
                                 </div>
@@ -121,6 +142,7 @@
 import countryRepo from '@/repositories/employer/country';
 import principalRepo from '@/repositories/employer/principal';
 import joborderRepo from '@/repositories/employer/joborder';
+import positionRepo from '@/repositories/employer/position';
 import processRepo from '@/repositories/applicants/process';
 import { ref, reactive, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
@@ -130,11 +152,14 @@ export default {
         const route = useRoute();
         const state = reactive({
             date_endorse: '',
-            addContinue: false
+            deployed_date: '',
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser')),
         });
         const { principals, getSelectPrincipal } = principalRepo();
         const { countries, getSelectCountry } = countryRepo();
         const { joborders, getJobOrdersByPrincipal } = joborderRepo();
+        const { positions, getPositionByJobOrder } = positionRepo();
         const { status, errors, processing, storeProcess, getProcessing } = processRepo();
 
         const isSuccess = ref(false);
@@ -144,12 +169,24 @@ export default {
             const arr_joborders = [];
             joborders.value.forEach(item => {
                 arr_joborders.push({
-                    id: item.job_order_number,
+                    id: item.id,
                     name: item.job_order_number
                 });
             });
 
             return arr_joborders;
+        });
+
+        const positionOptions = computed(() => {
+            const arr_position = [];
+            positions.value.forEach(item => {
+                arr_position.push({
+                    id: item.id,
+                    name: item.position_title
+                });
+            });
+
+            return arr_position;
         });
 
         const setPrincipal = async (value) => {
@@ -163,8 +200,14 @@ export default {
             processing.value.country_name = value.name;
         }
 
-        const setJobOrder = (value) => {
-            processing.value.job_order_number = value.id;
+        const setJobOrder = async (value) => {
+            processing.value.job_order_number = value.name;
+            await getPositionByJobOrder(value.id);
+        }
+
+        const setJobOrderPosition = (value) => {
+            processing.value.position_id = value.id;
+            processing.value.position_title = value.name;
         }
 
         const saveChanges = () => {
@@ -181,8 +224,11 @@ export default {
             formData.append('worksite', processing.value.worksite ?? '');
             formData.append('country_id', processing.value.country_id ?? '');
             formData.append('job_order_number', processing.value.job_order_number ?? '');
+            formData.append('position_id', processing.value.position_id ?? '');
             formData.append('date_endorse', (state.date_endorse) ? new Date(state.date_endorse).toISOString() : '');
+            formData.append('deployed_date', (state.deployed_date) ? new Date(state.deployed_date).toISOString() : '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeProcess(formData);
             isSuccess.value = true;
 
@@ -223,12 +269,16 @@ export default {
             setPrincipal,
             setCountry,
             setJobOrder,
+            setJobOrderPosition,
             isClear,
             principals,
             getSelectPrincipal,
             getProcessing,
             jobOrderOptions,
+            positionOptions,
             joborders,
+            positions,
+            getPositionByJobOrder,
             getJobOrdersByPrincipal
         }
     },

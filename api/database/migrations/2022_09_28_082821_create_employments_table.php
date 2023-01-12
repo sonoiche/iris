@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('duration')->nullable();
             $table->text('duties')->nullable();
             $table->integer('country_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

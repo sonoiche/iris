@@ -1,5 +1,5 @@
 <template>
-    <div class="fv-row mb-0 fv-plugins-icon-container" :class="{ 'mb-3' : marginBottomOn, 'fv-plugins-bootstrap5-row-invalid' : errors && errors[id] }">
+    <div class="fv-row mb-0 fv-plugins-icon-container w-full" :class="{ 'mb-3' : marginBottomOn, 'fv-plugins-bootstrap5-row-invalid' : errors && errors[id] }">
         <label :for="id" class="form-label fs-6 fw-bolder mb-3" v-if="label">{{ label }} <span v-if="isRequired" class="text-danger">*</span></label>
         <multiselect
             v-model="modelSelect"

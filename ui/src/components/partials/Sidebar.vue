@@ -3,7 +3,7 @@
         <!--begin::Logo-->
         <div class="app-sidebar-logo d-none d-lg-flex flex-center py-10 px-5 mb-1" id="kt_app_sidebar_logo">
             <!--begin::Logo image-->
-            <a href="#">
+            <a>
                 <img alt="Logo" :src="`${page.base_url}/assets/media/logos/logo.png`" class="h-40px" />
             </a>
             <!--end::Logo image-->
@@ -111,12 +111,20 @@
                             </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.applicant.source' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Source Applicant</span>
-                            </a>
+                            </router-link>
+                        </div>
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.applicant.resume-parser' }" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Resume Parser</span>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -133,40 +141,40 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.process.monitoring.applicants' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Applicant Monitoring</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.process.monitoring.documents' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Document Monitoring</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.process.monitoring.documentlist' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Document List</span>
-                            </a>
+                            </router-link>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
+                        <!-- <div class="menu-item">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Medical</span>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
-                <div class="menu-item py-1" @mouseover="menuHover('web')" @mouseleave="menuHoverLeave('web')" :class="{ 'show menu-dropdown' : page.webHover}">
+                <!-- <div class="menu-item py-1" @mouseover="menuHover('web')" @mouseleave="menuHoverLeave('web')" :class="{ 'show menu-dropdown' : page.webHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
                             <i class="fonticon-layers fs-1"></i>
@@ -179,7 +187,7 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -187,7 +195,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -195,7 +203,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -203,7 +211,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -211,7 +219,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="menu-item py-1" @mouseover="menuHover('report')" @mouseleave="menuHoverLeave('report')" :class="{ 'show menu-dropdown' : page.reportHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
@@ -225,77 +233,69 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.applicant.encoded' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Applicants Encoded</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.applicant.source' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Applicants Source</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.audit.trail' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Audit Trail</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.birthdate' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Birthday</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Contract Expiration</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.deployment' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Deployment Report</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.interview' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Interview Calendar</span>
-                            </a>
+                            </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <router-link :to="{ name: 'client.reports.manpower-request' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Manpower Request</span>
-                            </a>
+                            </router-link>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
+                        <!-- <div class="menu-item">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Status Report</span>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="menu-item py-1" @mouseover="menuHover('settings')" @mouseleave="menuHoverLeave('settings')" :class="{ 'show menu-dropdown' : page.settingsHover}">
@@ -335,7 +335,7 @@
                             </router-link>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

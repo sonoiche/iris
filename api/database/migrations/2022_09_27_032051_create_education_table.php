@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->text('duration')->nullable();
             $table->text('remarks')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

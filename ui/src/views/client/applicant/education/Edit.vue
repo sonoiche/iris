@@ -117,7 +117,8 @@ export default {
         const state = reactive({
             from_date: '',
             to_date: '',
-            isLoading: true
+            isLoading: true,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, studies, education_levels, education, updateEducation, getEducationLevels, getFieldStudy, getEducation } = educationRepo();
 
@@ -155,6 +156,7 @@ export default {
             formData.append('to_date', JSON.stringify(to_date) ?? '');
             formData.append('remarks', education.value.remarks ?? '');
             formData.append('id', education.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateEducation(formData, props.updateId);
             isSuccess.value = true;

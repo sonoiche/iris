@@ -18,6 +18,7 @@
                         label="Expected Salary (in peso)"
                         type="number"
                         id="expected_salary"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -40,6 +41,7 @@
                         id="fname"
                         :errors="errors"
                         is-required
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -48,6 +50,7 @@
                         label="Middle Name"
                         type="text"
                         id="mname"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -58,6 +61,7 @@
                         id="lname"
                         :errors="errors"
                         is-required
+                        @input="autoBackup"
                     />
                 </div>
             </div>
@@ -78,6 +82,7 @@
                         id="mobile_number"
                         :errors="errors"
                         is-required
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -98,6 +103,7 @@
                         id="birthdate"
                         :errors="errors"
                         is-required
+                        @update:modelValue="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -106,6 +112,7 @@
                         label="Email Address"
                         type="email"
                         id="email"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -134,6 +141,7 @@
                         label="Present Address"
                         type="text"
                         id="address"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -142,6 +150,7 @@
                         label="City"
                         type="text"
                         id="city"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -160,6 +169,7 @@
                         label="Postal Code"
                         type="text"
                         id="postal_code"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -168,6 +178,7 @@
                         label="Birthplace"
                         type="text"
                         id="birthplace"
+                        @input="autoBackup"
                     />
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
@@ -176,6 +187,7 @@
                         label="Language Spoken & Written"
                         type="text"
                         id="language_spoken"
+                        @input="autoBackup"
                     />
                 </div>
             </div>
@@ -223,15 +235,19 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import $ from 'jquery';
+import _debounce from 'lodash/debounce';
 import applicantRepo from '@/repositories/applicants/applicant';
 
 export default {
     setup() {
         const router = useRouter();
         const { status, errors, applicant, storeApplicant } = applicantRepo();
+        const state = reactive({
+            authuser: JSON.parse(localStorage.getItem('authuser'))
+        });
         const availabilities = [
             { id: 'Immediate', name: 'Immediate' },
             { id: '1 Week', name: '1 Week' },
@@ -248,15 +264,18 @@ export default {
         const isClear = ref(false);
 
         const setAvailability = (value) => {
-            applicant.value.availability = value;
+            applicant.value.availability = value.id;
+            autoBackup();
         }
 
         const setKeywords = (value) => {
             keywords.value.push(value);
+            autoBackup();
         }
 
         const removeKeywords = (value) => {
             keywords.value.splice(keywords.value.indexOf(value), 1);
+            autoBackup();
         }
 
         const saveChanges = async () => {            
@@ -278,6 +297,7 @@ export default {
             await submitForm();
 
             if(status.value == 200) {
+                localStorage.removeItem('applicant');
                 setTimeout(() => {
                     router.push({
                         name: 'client.applicant.show',
@@ -311,12 +331,15 @@ export default {
             formData.append('language_spoken', applicant.value.language_spoken ?? '');
             formData.append('keywords', keywords.value ?? '');
             formData.append('resume', resume.value ?? '');
+            formData.append('user_id', state.authuser.id);
 
             await storeApplicant(formData);
 
             if(status.value !== 200) {
                 isSuccess.value = true;
                 isContinue.value = true;
+            } else {
+                localStorage.removeItem('applicant');
             }
         }
 
@@ -325,11 +348,47 @@ export default {
             resume.value = file;
         }
 
+        const autoBackup = _debounce(function (event) {
+            if(state.authuser.auto_backup) {
+                let form = {
+                    date_applied: applicant.value.date_applied,
+                    expected_salary: applicant.value.expected_salary,
+                    expected_salary: applicant.value.expected_salary,
+                    availability: applicant.value.availability,
+                    fname: applicant.value.fname,
+                    mname: applicant.value.mname,
+                    lname: applicant.value.lname,
+                    landline: applicant.value.landline,
+                    mobile_number: applicant.value.mobile_number,
+                    alt_mobile_number: applicant.value.alt_mobile_number,
+                    birthdate: applicant.value.birthdate,
+                    email: applicant.value.email,
+                    gender: applicant.value.gender,
+                    address: applicant.value.address,
+                    city: applicant.value.city,
+                    province: applicant.value.province,
+                    postal_code: applicant.value.postal_code,
+                    birthplace: applicant.value.birthplace,
+                    language_spoken: applicant.value.language_spoken
+                }
+                
+                localStorage.setItem('applicant', JSON.stringify(form));
+            }
+        }, 800);
+
+        watch(() => applicant.value.gender, () => {
+            autoBackup();
+        });
+
         onMounted(() => {
+            if(localStorage.getItem('applicant') !== null) {
+                applicant.value = JSON.parse(localStorage.getItem('applicant'));
+            }
             applicant.value.date_applied = new Date();
         });
 
         return {
+            state,
             status,
             errors,
             applicant,
@@ -345,7 +404,8 @@ export default {
             keywords,
             resume,
             onFileChange,
-            isClear
+            isClear,
+            autoBackup
         }
     },
 }

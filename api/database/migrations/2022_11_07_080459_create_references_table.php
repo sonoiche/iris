@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('email')->nullable();
             $table->string('relationship')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

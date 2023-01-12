@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('skill_level');
             $table->text('remarks')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

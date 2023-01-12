@@ -16,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('agency_id')->nullable();
             $table->string('fname')->nullable();
             $table->string('mname')->nullable();
             $table->string('lname')->nullable();
@@ -39,8 +38,8 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        DB::insert('insert into users (id, fname, lname, email, password, status) values (?, ?, ?, ?, ?, ?)', [
-            1, 'Jelson', 'Lanto', 'jelson.lanto@gmail.com', bcrypt('angpogiko23'), 'Active'
+        DB::insert('insert into users (id, fname, lname, email, password, status, role_id) values (?, ?, ?, ?, ?, ?, ?)', [
+            1, 'Rochelle', 'Lanto', 'rochellelanto27@gmail.com', bcrypt('12345678'), 'Active', 1
         ]);
     }
 

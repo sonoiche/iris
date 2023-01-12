@@ -166,6 +166,7 @@ export default {
             formData.append('date_taken', (state.date_taken) ? new Date(state.date_taken).toISOString() : '');
             formData.append('date_result', (state.date_result) ? new Date(state.date_result).toISOString() : '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeMedical(formData);
             isSuccess.value = true;
             isContinue.value = true;

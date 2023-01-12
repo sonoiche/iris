@@ -13,13 +13,7 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
-        $agency_id = $request['agency_id'];
-        $roles = Role::with(['permissions','users'])
-            ->where(function ($query) use ($agency_id) {
-                $query->orWhere('agency_id', $agency_id)
-                    ->orWhere('agency_id', 0);
-            })
-            ->get();
+        $roles = Role::with(['permissions','users'])->get();
         return RoleResource::collection($roles);
     }
 
@@ -37,7 +31,6 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $role            = new Role;
-        $role->agency_id = $request['agency_id'];
         $role->name      = $request['name'];
         $role->save();
 

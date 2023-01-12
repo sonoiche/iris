@@ -24,6 +24,7 @@ import Agency from '@/views/client/settings/config/components/Agency.vue';
 import Notification from '@/views/client/settings/config/components/Notification.vue';
 import Email from '@/views/client/settings/config/components/Email.vue';
 import Manpower from '@/views/client/settings/config/components/Manpower.vue';
+import Applicant from '@/views/client/settings/config/components/Applicant.vue';
 
 export default {
     setup() {
@@ -48,7 +49,8 @@ export default {
         Agency,
         Notification,
         Email,
-        Manpower
+        Manpower,
+        Applicant
     }
 }
 </script>

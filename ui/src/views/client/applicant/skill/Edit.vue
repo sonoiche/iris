@@ -77,7 +77,8 @@ export default {
     },
     setup(props, {emit}) {
         const state = reactive({
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, skill, updateSkill, skill_levels, getSkillLevels, getSkill } = skillRepo();
 
@@ -100,6 +101,7 @@ export default {
             formData.append('skill_level', skill.value.skill_level ?? '');
             formData.append('remarks', skill.value.remarks ?? '');
             formData.append('id', skill.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateSkill(formData, props.updateId);
             isSuccess.value = true;

@@ -77,7 +77,8 @@ export default {
     setup(props, {emit}) {
         const route = useRoute();
         const state = reactive({
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, skill, storeSkill, skill_levels, getSkillLevels } = skillRepo();
 
@@ -107,6 +108,7 @@ export default {
             formData.append('skill_level', skill.value.skill_level ?? '');
             formData.append('remarks', skill.value.remarks ?? '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeSkill(formData);
             isSuccess.value = true;
             isContinue.value = true;

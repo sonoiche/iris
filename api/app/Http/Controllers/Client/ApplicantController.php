@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Client;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client\Lineup;
 use App\Models\Client\Applicant;
+use App\Models\Client\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Client\ApplicantPosition;
 use App\Http\Resources\Applicant\ApplicantResource;
 use App\Http\Requests\Client\Applicant\ApplicantRequest;
 use App\Http\Requests\Client\Applicant\ApplicantUpdateRequest;
 use App\Http\Requests\Client\Applicant\EncodeApplicantRequest;
+use App\Models\Client\ResumeParser;
 
 class ApplicantController extends Controller
 {
@@ -44,6 +48,7 @@ class ApplicantController extends Controller
         $applicant->keywords                = $request['keywords'];
         $applicant->expected_salary         = $request['expected_salary'];
         $applicant->availability            = $request['availability'];
+        $applicant->user_id                 = $request['user_id'];
 
         if($request['resume'] != '' && $request->has('resume')) {
             $file   = $request->file('resume');
@@ -59,6 +64,9 @@ class ApplicantController extends Controller
         }
 
         $applicant->save();
+
+        // insert activity log
+        $this->storeActivityLog('personal', $applicant, 'create');
 
         $data['message']            = 'New applicant has been saved.';
         $data['applicant']          = $applicant;
@@ -140,8 +148,21 @@ class ApplicantController extends Controller
 
         $applicant->save();
 
-        $data['message']            = 'Applicant information has been saved.';
-        $data['applicant']          = $applicant;
+        // insert activity log
+        $this->storeActivityLog('personal', $applicant, 'update');
+
+        // add position applied
+        ApplicantPosition::updateOrCreate(
+            ['applicant_id' => $applicant->applicant_number],
+            [
+                'position_applied'      => $request['position_applied'],
+                'years_of_experience'   => $request['yrs_of_exp'],
+                'user_id'               => $request['user_id']
+            ]
+        );
+
+        $data['message']    = 'Applicant information has been saved.';
+        $data['applicant']  = $applicant;
         return response()->json($data);
     }
 
@@ -162,9 +183,11 @@ class ApplicantController extends Controller
         $applicant->fname               = $request['fname'];
         $applicant->mname               = $request['mname'];
         $applicant->lname               = $request['lname'];
+        $applicant->applicant_number    = $this->generateApplicantNumber();
         $applicant->mobile_number       = $request['mobile_number'];
         $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
         $applicant->keywords            = $request['keywords'];
+        $applicant->user_id             = $request['user_id'];
 
         if($request['resume'] != '' && $request->has('resume')) {
             $file   = $request->file('resume');
@@ -180,6 +203,17 @@ class ApplicantController extends Controller
         }
 
         $applicant->save();
+
+        // insert activity log
+        $this->storeActivityLog('personal', $applicant, 'create');
+
+        // add applicant positions data
+        $position = new ApplicantPosition;
+        $position->applicant_id     = $applicant->id;
+        $position->position_applied = $request['position_applied'];
+        $position->user_id          = $request['user_id'];
+        $position->save();
+
         $data['message']    = 'New applicant has been saved.';
         $data['applicant']  = $applicant;
         return response()->json($data);
@@ -255,6 +289,31 @@ class ApplicantController extends Controller
         return response()->json($json_data);
     }
 
+    public function resumeParser(Request $request)
+    {
+        $resume     = new ResumeParser;
+        $resume->user_id = $request['user_id'];
+
+        if($request['resume'] != '' && $request->has('resume')) {
+            $file   = $request->file('resume');
+            $resumefile = time().'.'.$file->getClientOriginalExtension();
+
+            Storage::disk('public')->putFileAs(
+                'uploads/resume-parser',
+                $file,
+                $resumefile
+            );
+
+            $resume->resumefile = 'storage/uploads/resume-parser/'.$resumefile;
+        }
+
+        $resume->save();
+        $data['resumelink'] = config('app.api_url').'/'.$resume->resumefile;
+        $data['resume_id']  = $resume->id;
+
+        return response()->json($data);
+    }
+
     private function generateApplicantNumber()
     {
         $year = date('Y');
@@ -268,5 +327,19 @@ class ApplicantController extends Controller
         } else {
             return $applicant+1;
         }
+    }
+
+    private function storeActivityLog($type, $applicant, $action)
+    {
+        $user = User::find($applicant->user_id);
+        $activity = new ActivityLog;
+        $activity->user_id          = $user->id;
+        $activity->username         = $user->fname.' '.$user->lname;
+        $activity->activity_type    = 'crud';
+        $activity->applicant_id     = $applicant->applicant_number;
+        $activity->applicant_name   = $applicant->fname.' '.$applicant->lname;
+        $activity->module           = $type;
+        $activity->user_action      = $action;
+        $activity->save();
     }
 }

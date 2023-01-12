@@ -83,6 +83,21 @@ export default function userRepo() {
         }
     }
 
+    const updateBackup = async (data, id) => {
+        errors.value = '';
+        try {
+            let response = await axios.post(`client/users/${id}/backup`, data);
+            alertmessage(response.data.message);
+            status.value = response.status;
+            localStorage.setItem('authuser', JSON.stringify(response.data.user));
+        } catch (e) {
+            if(e.response.status === 422) {
+                errors.value = e.response.data.errors;
+                status.value = e.response.status;
+            }
+        }
+    }
+
     const destroyUser = async (id) => {
         let response = await axios.delete(`client/users/${id}`);
         status.value = response.status;
@@ -112,6 +127,7 @@ export default function userRepo() {
         updateUserPassword,
         destroyUser,
         getSelectUser,
+        updateBackup,
         alertmessage
     }
 

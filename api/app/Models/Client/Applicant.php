@@ -22,7 +22,14 @@ class Applicant extends Model
         'keywords_display',
         'age_gender',
         'applicant_name',
-        'date_applied_display'
+        'date_applied_display',
+        'latest_employment',
+        'updated_at_display',
+        'position_applied',
+        'yrs_of_exp',
+        'passport_date_submitted',
+        'passport_date_issued',
+        'passport_date_expiry'
     ];
 
     public function source()
@@ -35,9 +42,9 @@ class Applicant extends Model
         return $this->hasOne(Nationality::class, 'id', 'nationality_id');
     }
 
-    public function positions()
+    public function position()
     {
-        return $this->hasMany(ApplicantPosition::class, 'applicant_id');
+        return $this->hasOne(ApplicantPosition::class, 'applicant_id', 'applicant_number');
     }
 
     public function educations()
@@ -72,6 +79,15 @@ class Applicant extends Model
     public function getBirthdateDisplayAttribute()
     {
         $date = isset($this->attributes['birthdate']) ? $this->attributes['birthdate'] : '';
+        if($date) {
+            return Carbon::parse($date)->format('d M, Y');
+        }
+        return '';
+    }
+
+    public function getUpdatedAtDisplayAttribute()
+    {
+        $date = isset($this->attributes['updated_at']) ? $this->attributes['updated_at'] : '';
         if($date) {
             return Carbon::parse($date)->format('d M, Y');
         }
@@ -135,5 +151,54 @@ class Applicant extends Model
             return Carbon::parse($date)->format('d M, Y');
         }
         return '';
+    }
+
+    public function getKeywordsAttribute()
+    {
+        $keywords = $this->attributes['keywords'] ?? '';
+        if($keywords) {
+            $content = [];
+            $results = explode(',', $keywords);
+            foreach ($results as $result) {
+                $content[] = [
+                    'id'    => $result,
+                    'name'  => $result
+                ];
+            }
+
+            return json_encode($content);
+        }
+
+        return '';
+    }
+
+    public function getLatestEmploymentAttribute()
+    {
+        return '';
+    }
+
+    public function getPositionAppliedAttribute()
+    {
+        return $this->position->position_applied ?? '';
+    }
+
+    public function getYrsOfExpAttribute()
+    {
+        return $this->position->years_of_experience ?? '';
+    }
+
+    public function getPassportDateSubmittedAttribute()
+    {
+        return $this->passport_date_submitted ?? '';
+    }
+
+    public function getPassportDateIssuedAttribute()
+    {
+        return $this->passport_date_issued ?? '';
+    }
+
+    public function getPassportDateExpiryAttribute()
+    {
+        return $this->passport_date_expiry ?? '';
     }
 }

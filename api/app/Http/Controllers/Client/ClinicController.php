@@ -12,8 +12,7 @@ class ClinicController extends Controller
 {
     public function index(Request $request)
     {
-        $agency_id = $request['agency_id'];
-        $clinics   = Clinic::where('agency_id', $agency_id)->get();
+        $clinics   = Clinic::orderBy('name')->get();
 
         return ClinicResource::collection($clinics);
     }
@@ -31,7 +30,6 @@ class ClinicController extends Controller
         $clinic->contact_number = $request['contact_number'];
         $clinic->contact_person = $request['contact_person'];
         $clinic->remarks        = $request['remarks'];
-        $clinic->agency_id      = $request['agency_id'];
         $clinic->save();
 
         $data['message']        = 'Clinic has been saved.';
@@ -72,12 +70,10 @@ class ClinicController extends Controller
         ];
 
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
 
         $result     = Clinic::when($search, function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');
-            })
-            ->where('agency_id', $agency_id);
+            });
 
         $totalData = $result->count();
 

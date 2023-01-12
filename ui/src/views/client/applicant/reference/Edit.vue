@@ -116,7 +116,8 @@ export default {
     },
     setup(props, {emit}) {
         const state = reactive({
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, reference, updateReference, getReference } = referenceRepo();
 
@@ -136,6 +137,7 @@ export default {
             formData.append('email', reference.value.email ?? '');
             formData.append('relationship', reference.value.relationship ?? '');
             formData.append('id', reference.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateReference(formData, props.updateId);
             isSuccess.value = true;

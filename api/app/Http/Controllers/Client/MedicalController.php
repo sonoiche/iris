@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client\Medical;
+use App\Models\Client\Applicant;
+use App\Models\Client\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Applicant\MedicalRequest;
 use App\Http\Resources\Client\Applicant\MedicalResource;
@@ -30,7 +33,11 @@ class MedicalController extends Controller
         $clinic->date_result    = isset($request['date_result']) ? Carbon::parse($request['date_result'])->format('Y-m-d') : '';
         $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
         $clinic->applicant_id   = $request['applicant_id'];
+        $clinic->user_id        = $request['user_id'];
         $clinic->save();
+
+        // insert activity log
+        $this->storeActivityLog('medical', $clinic, 'create');
 
         $data['message']        = 'Applicant medical has been saved.';
         return response()->json($data);
@@ -53,6 +60,9 @@ class MedicalController extends Controller
         $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
         $clinic->save();
 
+        // insert activity log
+        $this->storeActivityLog('medical', $clinic, 'update');
+
         $data['message']        = 'Applicant medical has been updated.';
         $data['data']           = $clinic;
         return response()->json($data);
@@ -64,5 +74,21 @@ class MedicalController extends Controller
         $clinic->delete();
         $data['message'] = 'Applicant medical has been deleted.';
         return response()->json($data);
+    }
+
+    private function storeActivityLog($type, $applicant, $action)
+    {
+        $user = User::find($applicant->user_id);
+        $applicant = Applicant::where('applicant_number', $applicant->applicant_id)->first();
+
+        $activity = new ActivityLog;
+        $activity->user_id          = $user->id;
+        $activity->username         = $user->fname.' '.$user->lname;
+        $activity->activity_type    = 'crud';
+        $activity->applicant_id     = $applicant->applicant_number;
+        $activity->applicant_name   = $applicant->fname.' '.$applicant->lname;
+        $activity->module           = $type;
+        $activity->user_action      = $action;
+        $activity->save();
     }
 }

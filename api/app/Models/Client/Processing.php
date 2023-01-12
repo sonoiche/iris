@@ -3,6 +3,7 @@
 namespace App\Models\Client;
 
 use App\Models\Client\Country;
+use App\Models\Client\Employer\JobOrderPosition;
 use App\Models\Client\Employer\Principal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +15,7 @@ class Processing extends Model
 
     protected $table = "processings";
     protected $guarded = [];
-    protected $appends = ['country_name','principal_name'];
+    protected $appends = ['country_name','principal_name','position_title'];
 
     public function getCountryNameAttribute()
     {
@@ -27,6 +28,11 @@ class Processing extends Model
         return (isset($this->principal) && $this->principal->name !== '') ? $this->principal->name : '';
     }
 
+    public function getPositionTitleAttribute()
+    {
+        return (isset($this->position) && $this->position->position_title !== '') ? $this->position->position_title : '';
+    }
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');
@@ -35,5 +41,10 @@ class Processing extends Model
     public function principal()
     {
         return $this->belongsTo(Principal::class, 'principal_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(JobOrderPosition::class, 'position_id');
     }
 }

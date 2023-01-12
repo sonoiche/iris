@@ -12,8 +12,7 @@ class DocumentTypeController extends Controller
 {
     public function index(Request $request)
     {
-        $agency_id = $request['agency_id'];
-        $documents    = DocumentType::where('agency_id', $agency_id)->get();
+        $documents    = DocumentType::orderBy('name')->get();
 
         return DocumentTypeResource::collection($documents);
     }
@@ -27,7 +26,7 @@ class DocumentTypeController extends Controller
     {
         $document             = new DocumentType;
         $document->name       = $request['name'];
-        $document->agency_id  = $request['agency_id'];
+        $document->agency_id  = 1;
         $document->save();
 
         $data['message']    = 'Document type has been saved.';
@@ -61,12 +60,10 @@ class DocumentTypeController extends Controller
         ];
 
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
 
         $result     = DocumentType::when($search, function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');
-            })
-            ->where('agency_id', $agency_id);
+            });
 
         $totalData = $result->count();
 

@@ -24,7 +24,7 @@ class StatusController extends Controller
     {
         $status             = new ApplicantStatus;
         $status->name       = $request['name'];
-        $status->agency_id  = $request['agency_id'];
+        $status->agency_id  = 1;
         $status->save();
 
         $data['message']    = 'Applicant status has been saved.';
@@ -58,7 +58,7 @@ class StatusController extends Controller
         ];
 
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
+        $agency_id  = 1;
 
         $result     = ApplicantStatus::when($search, function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');

@@ -31,11 +31,11 @@
                                 <tr v-for="(lineup, index) in lineups" :key="lineup">
                                     <td class="text-center align-middle">{{ index+1 }}</td>
                                     <td class="align-middle">{{ lineup.employer?.name }}</td>
-                                    <td class="align-middle">{{ lineup.manpower_request }}</td>
-                                    <td class="align-middle">{{ lineup.position }}</td>
+                                    <td class="align-middle">{{ lineup.job_order?.job_order_number }}</td>
+                                    <td class="align-middle">{{ lineup.position?.position_title }}</td>
                                     <td class="align-middle">{{ lineup.created_at_display }}</td>
                                     <td class="align-middle">{{ lineup.lineup_status?.name }}</td>
-                                    <td class="align-middle">{{ lineup.user?.name }}</td>
+                                    <td class="align-middle">{{ lineup.user?.fullname }}</td>
                                     <td class="align-middle">{{ lineup.remarks }}</td>
                                     <td class="align-middle"></td>
                                 </tr>

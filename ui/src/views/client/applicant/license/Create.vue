@@ -89,7 +89,8 @@ export default {
             date_issue: '',
             date_taken: '',
             date_expiry: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, license, storeLicense } = licenseRepo();
 
@@ -115,6 +116,7 @@ export default {
             formData.append('date_taken', (state.date_taken) ? new Date(state.date_taken).toISOString() : '');
             formData.append('date_expiry', (state.date_expiry) ? new Date(state.date_expiry).toISOString() : '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeLicense(formData);
             isSuccess.value = true;
             isContinue.value = true;

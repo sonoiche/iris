@@ -117,11 +117,11 @@ export default {
         const isSuccess = ref(false);
 
         const setPrincipal = (value) => {
-            joborder.value.principal_id = value;
+            joborder.value.principal_id = value.id;
         }
 
         const setStatus = (value) => {
-            joborder.value.status = value;
+            joborder.value.status = value.id;
             if(value) {
                 errors.value.status = '';
             }

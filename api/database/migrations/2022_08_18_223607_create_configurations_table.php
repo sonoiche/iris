@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -32,6 +34,10 @@ return new class extends Migration
             $table->text('mr_template')->nullable();
             $table->timestamps();
         });
+
+        DB::insert('insert into configurations (id, agency_name, created_at, updated_at) values (?, ?, ?, ?)', [
+            1, 'CJSeven Inc', Carbon::now(), Carbon::now()
+        ]);
     }
 
     /**

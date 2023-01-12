@@ -23,7 +23,10 @@ return new class extends Migration
             $table->string('worksite')->nullable();
             $table->integer('country_id')->nullable();
             $table->string('job_order_number')->nullable();
+            $table->integer('position_id')->nullable();
             $table->date('date_endorse')->nullable();
+            $table->date('deployed_date')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

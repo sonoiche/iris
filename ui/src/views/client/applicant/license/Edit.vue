@@ -92,7 +92,8 @@ export default {
             date_issue: '',
             date_taken: '',
             date_expiry: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, license, updateLicense, getLicense } = licenseRepo();
 
@@ -111,6 +112,7 @@ export default {
             formData.append('date_taken', (state.date_taken) ? new Date(state.date_taken).toISOString() : '');
             formData.append('date_expiry', (state.date_expiry) ? new Date(state.date_expiry).toISOString() : '');
             formData.append('id', license.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateLicense(formData, props.updateId);
             isSuccess.value = true;

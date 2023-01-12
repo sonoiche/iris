@@ -108,13 +108,18 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity';
+import { ref, reactive } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
 import $ from 'jquery';
 import applicantRepo from '@/repositories/applicants/applicant';
 
 export default {
     setup() {
+        const router = useRouter();
         const { status, errors, applicant, encodeApplicant } = applicantRepo();
+        const state = reactive({
+            authuser: JSON.parse(localStorage.getItem('authuser'))
+        });
         const isSuccess = ref(true);
         const isContinue = ref(false);
         const isClear = ref(false);
@@ -127,7 +132,7 @@ export default {
         }
 
         const setKeywords = (value) => {
-            keywords.value.push(value);
+            keywords.value.push(value[0].name);
         }
 
         const removeKeywords = (value) => {
@@ -174,6 +179,7 @@ export default {
             formData.append('birthplace', applicant.value.birthplace ?? '');
             formData.append('keywords', keywords.value ?? '');
             formData.append('resume', resume.value ?? '');
+            formData.append('user_id', state.authuser.id);
             await encodeApplicant(formData);
 
             if(status.value !== 200) {
@@ -183,6 +189,7 @@ export default {
         }
 
         return {
+            state,
             status,
             errors,
             applicant,

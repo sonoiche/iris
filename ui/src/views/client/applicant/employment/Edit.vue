@@ -122,7 +122,8 @@ export default {
         const state = reactive({
             from_date: '',
             to_date: '',
-            isLoading: true
+            isLoading: true,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, employment, updateEmployment, getEmployment } = employmentRepo();
         const { countries, getSelectCountry } = countryRepo();
@@ -165,6 +166,7 @@ export default {
             formData.append('to_date', JSON.stringify(to_date) ?? '');
             formData.append('duties', employment.value.duties ?? '');
             formData.append('id', employment.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateEmployment(formData, props.updateId);
             isSuccess.value = true;

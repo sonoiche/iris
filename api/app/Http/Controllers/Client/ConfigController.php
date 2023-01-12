@@ -13,9 +13,8 @@ class ConfigController extends Controller
 {
     public function store(ConfigRequest $request)
     {
-        $id     = $request['agency_id'];
         $type   = $request['type'];
-        $config = Configuration::find($id);
+        $config = Configuration::find(1);
         
         switch ($type) {
             case 'agency':

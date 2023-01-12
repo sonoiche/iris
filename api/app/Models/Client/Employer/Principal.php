@@ -100,7 +100,11 @@ class Principal extends Model
         $contact_number = isset($contact->mobile_number) ? '<br><span class="fa fa-mobile fa-fw"></span> '.$contact->mobile_number : '';
         $email = isset($contact->email) ? '<br><i class="fa fa-at fa-fw"></i> '.$contact->email : '';
 
-        return '<span class="fa fa-user fa-fw"></span> '.$contact->name.$contact_number.$email;
+        if(isset($contact->name)) {
+            return '<span class="fa fa-user fa-fw"></span> '.$contact->name.$contact_number.$email;
+        }
+
+        return '';
     }
 
     public function getContactDetailsAttribute()

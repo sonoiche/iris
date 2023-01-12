@@ -184,6 +184,7 @@ export default {
             formData.append('date_submitted', (state.date_submitted) ? new Date(state.date_submitted).toISOString() : '');
             formData.append('type', 'update');
             formData.append('id', document.value.id ?? '');
+            formData.append('user_id', state.authuser.id);
             formData.append('_method', 'PUT');
             await updateDocument(formData, props.updateId);
             isSuccess.value = true;

@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->decimal('expected_salary', 10, 2)->nullable();
             $table->enum('availability', ['Immediate','1 Week','2 Weeks','3 Weeks','1 Month','2 Months'])->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

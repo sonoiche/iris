@@ -119,7 +119,8 @@ export default {
         const state = reactive({
             from_date: '',
             to_date: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, employment, storeEmployment } = employmentRepo();
         const { countries, getSelectCountry } = countryRepo();
@@ -168,6 +169,7 @@ export default {
             formData.append('to_date', JSON.stringify(to_date) ?? '');
             formData.append('duties', employment.value.duties ?? '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeEmployment(formData);
             isSuccess.value = true;
             isContinue.value = true;

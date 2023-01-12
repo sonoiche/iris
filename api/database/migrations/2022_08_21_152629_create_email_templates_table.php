@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
-            $table->integer('agency_id');
             $table->string('title');
             $table->text('content')->nullable();
             $table->timestamps();

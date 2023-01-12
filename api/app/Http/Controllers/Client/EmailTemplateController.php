@@ -20,7 +20,6 @@ class EmailTemplateController extends Controller
         $template             = new EmailTemplate;
         $template->title      = $request['title'];
         $template->content    = $request['content'];
-        $template->agency_id  = $request['agency_id'];
         $template->save();
 
         $data['message']    = 'Email template has been saved.';
@@ -55,12 +54,10 @@ class EmailTemplateController extends Controller
         ];
 
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
 
         $result     = EmailTemplate::when($search, function ($query, $search) {
                 $query->where('title', 'like', '%'.$search.'%');
-            })
-            ->where('agency_id', $agency_id);
+            });
 
         $totalData = $result->count();
 

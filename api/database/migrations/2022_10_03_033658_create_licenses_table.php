@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('date_issue')->nullable();
             $table->date('date_taken')->nullable();
             $table->date('date_expiry')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

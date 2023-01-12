@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from '@vue/runtime-core';
+import { computed, onMounted, ref, reactive } from '@vue/runtime-core';
 import { useRouter } from 'vue-router';
 import principalRepo from '@/repositories/employer/principal';
 import interviewRepo from '@/repositories/applicants/interview';
@@ -127,6 +127,11 @@ export default {
         const { interview, storeInterview, status, errors } = interviewRepo();
         const { joborders, getJobOrderPositions } = joborderRepo();
         const { applicants, getApplicants } = applicantRepo();
+
+        const state = reactive({
+            authuser: JSON.parse(localStorage.getItem('authuser'))
+        });
+
         const selectedApplicants = ref([]);
         const isSuccess = ref(true);
 
@@ -186,6 +191,7 @@ export default {
             formData.append('venue', interview.value.venue ?? '');
             formData.append('remarks', interview.value.remarks ?? '');
             formData.append('applicant_ids', selectedApplicants.value ?? '');
+            formData.append('user_id', state.authuser.id);
             await storeInterview(formData);
 
             isSuccess.value = true;
@@ -203,6 +209,7 @@ export default {
         });
 
         return {
+            state,
             principals,
             getSelectPrincipal,
             setPrincipal,

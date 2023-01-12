@@ -129,4 +129,13 @@ class PositionController extends Controller
         $data['message'] = 'Job order position has been deleted.';
         return response()->json($data);
     }
+
+    public function joborderpositions($id)
+    {
+        $data['data'] = JobOrderPosition::select(['id','position_title'])
+            ->where('job_order_id', $id)->orderBy('position_title')
+            ->get();
+            
+        return response()->json($data);
+    }
 }

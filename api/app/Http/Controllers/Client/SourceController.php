@@ -24,7 +24,6 @@ class SourceController extends Controller
     {
         $source             = new ApplicantSource;
         $source->name       = $request['name'];
-        $source->agency_id  = $request['agency_id'];
         $source->save();
 
         $data['message']    = 'Applicant source has been saved.';
@@ -58,12 +57,10 @@ class SourceController extends Controller
         ];
 
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
 
         $result     = ApplicantSource::when($search, function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');
-            })
-            ->where('agency_id', $agency_id);
+            });
 
         $totalData = $result->count();
 

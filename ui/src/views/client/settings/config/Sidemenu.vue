@@ -47,6 +47,14 @@
                             <span class="menu-title">Manpower Request</span>
                         </a>
                     </li>
+                    <li class="menu-item px-3 pt-0">
+                        <a href="javascript:;" class="menu-link px-3 nav-link" :class="{ 'active' : activeComponent == 'Applicant' }" @click="openComponent('Applicant')">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-vertical"></span>
+                            </span>
+                            <span class="menu-title">Applicant Info Settings</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('interview_date')->nullable();
             $table->string('venue')->nullable();
             $table->text('remarks')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

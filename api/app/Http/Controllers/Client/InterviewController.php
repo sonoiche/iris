@@ -42,6 +42,7 @@ class InterviewController extends Controller
             $interview->venue           = $request['venue'];
             $interview->remarks         = $request['remarks'];
             $interview->applicant_id    = $applicant_id;
+            $interview->user_id         = $request['user_id'];
             $interview->save();
         }
 

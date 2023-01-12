@@ -36,7 +36,7 @@
                                             label="Document Type"
                                             :options="document_types"
                                             :placeholder="`Select Document Type`"
-                                            :defaultValue="{ id: document.document_type, name: document.document_type_name }"
+                                            :defaultValue="{ id: document.document_type_id, name: document.document_type_name }"
                                             id="document_type"
                                             :is-clear="isClear"
                                             @select-value="setDocumentType"
@@ -162,7 +162,7 @@ export default {
         }
 
         const setDocumentType = (value) => {
-            document.value.document_type = value.id;
+            document.value.document_type_id = value.id;
             document.value.document_type_name = value.name;
         }
 
@@ -180,7 +180,7 @@ export default {
         const submitForm = async () => {
             let formData = new FormData();
             formData.append('name', document.value.name ?? '');
-            formData.append('document_type', document.value.document_type ?? '');
+            formData.append('document_type_id', document.value.document_type_id ?? '');
             formData.append('attachment', attachment.value ?? '');
             formData.append('document_number', document.value.document_number ?? '');
             formData.append('place_issue', document.value.place_issue ?? '');
@@ -190,6 +190,7 @@ export default {
             formData.append('date_submitted', (state.date_submitted) ? new Date(state.date_submitted).toISOString() : '');
             formData.append('type', 'create');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeDocument(formData);
             isSuccess.value = true;
             isContinue.value = true;

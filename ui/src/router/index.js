@@ -5,12 +5,22 @@ import store from "@/store";
 import settingsRoute from './settings/index';
 import employerRoute from './employer/index';
 import applicantRoute from './applicant/index';
+import processRoute from './process/index';
+import reportRoute from './reports/index';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import("../views/client/Dashboard.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.getters["auth/authenticated"]) {
+        return next({
+          name: "login"
+        });
+      }
+      next();
+    }
   },
   {
     path: "/auth/register",
@@ -66,7 +76,9 @@ const routes = [
   },
   ...settingsRoute,
   ...employerRoute,
-  ...applicantRoute
+  ...applicantRoute,
+  ...processRoute,
+  ...reportRoute
 ]
 
 const router = createRouter({

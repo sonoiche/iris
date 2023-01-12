@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('date_expiry')->nullable();
             $table->enum('status', ['Fit','Unfit','Pending'])->nullable();
             $table->text('remarks')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

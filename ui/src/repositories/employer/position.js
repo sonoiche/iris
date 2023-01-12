@@ -20,6 +20,11 @@ export default function positionRepo() {
         position.value = response.data.data;
     }
 
+    const getPositionByJobOrder = async (id) => {
+        let response = await axios.get(`client/positions/joborder/${id}`);
+        positions.value = response.data.data;
+    }
+
     const storePosition = async (data) => {
         errors.value = '';
         try {
@@ -87,6 +92,7 @@ export default function positionRepo() {
         status,
         getPositions,
         getPosition,
+        getPositionByJobOrder,
         storePosition,
         updatePosition,
         updateJobDescription,

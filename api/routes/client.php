@@ -7,6 +7,8 @@ use App\Http\Controllers\Client\SkillController;
 use App\Http\Controllers\Client\ClinicController;
 use App\Http\Controllers\Client\ConfigController;
 use App\Http\Controllers\Client\LineupController;
+use App\Http\Controllers\Client\ReportController;
+use App\Http\Controllers\Client\ResumeController;
 use App\Http\Controllers\Client\SourceController;
 use App\Http\Controllers\Client\StatusController;
 use App\Http\Controllers\Client\ContactController;
@@ -20,14 +22,15 @@ use App\Http\Controllers\Client\PositionController;
 use App\Http\Controllers\Client\TrainingController;
 use App\Http\Controllers\Client\ApplicantController;
 use App\Http\Controllers\Client\EducationController;
+use App\Http\Controllers\Client\InterviewController;
 use App\Http\Controllers\Client\PrincipalController;
 use App\Http\Controllers\Client\ReferenceController;
 use App\Http\Controllers\Client\EmploymentController;
+use App\Http\Controllers\Client\MonitoringController;
 use App\Http\Controllers\Client\ProcessingController;
 use App\Http\Controllers\Client\NationalityController;
 use App\Http\Controllers\Client\DocumentTypeController;
 use App\Http\Controllers\Client\EmailTemplateController;
-use App\Http\Controllers\Client\InterviewController;
 use App\Http\Controllers\Fortify\ConfirmablePasswordController;
 use App\Http\Controllers\Fortify\TwoFactorAuthenticationController;
 
@@ -35,6 +38,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('client')->group(function () {
         Route::put('users/{id}/email', [UserController::class, 'updateEmail']);
         Route::put('users/{id}/password', [UserController::class, 'updatePassword']);
+        Route::put('users/{id}/backup', [UserController::class, 'updateBackup']);
         Route::post('users/datatable', [UserController::class, 'datatable']);
         Route::get('users/select-option', [UserController::class, 'selectOption']);
         Route::apiResource('users', UserController::class);
@@ -90,12 +94,14 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('joborders/positions', [JobOrderController::class, 'getJoborderPostions']);
         Route::apiResource('joborders', JobOrderController::class);
 
+        Route::get('positions/joborder/{id}', [PositionController::class, 'joborderpositions']);
         Route::post('positions/datatable', [PositionController::class, 'datatable']);
         Route::put('positions/update-jobdescription/{id}', [PositionController::class, 'updateJobDescription']);
         Route::apiResource('positions', PositionController::class);
 
         Route::post('applicants/encode', [ApplicantController::class, 'encode']);
         Route::post('applicants/datatable', [ApplicantController::class, 'datatable']);
+        Route::post('applicants/resume-parser', [ApplicantController::class, 'resumeParser']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
         Route::apiResource('applicants', ApplicantController::class);
 
@@ -118,5 +124,26 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('lineup', LineupController::class);
         Route::apiResource('processing', ProcessingController::class);
         Route::apiResource('interview', InterviewController::class);
+
+        // monitoring route
+        Route::prefix('process')->group(function () {
+            Route::post('applicants/datatable', [MonitoringController::class, 'applicants']);
+            Route::post('documents/datatable', [MonitoringController::class, 'documents']);
+        });
+
+        // reports route
+        Route::prefix('reports')->group(function () {
+            Route::post('applicant-source', [ReportController::class, 'generateApplicantSource']);
+            Route::post('documents-datatable', [ReportController::class, 'generateDocuments']);
+            Route::post('applicant-encoded', [ReportController::class, 'generateEncodedApplicant']);
+            Route::post('applicant-sources', [ReportController::class, 'generateSourceApplicant']);
+            Route::post('audit-trail', [ReportController::class, 'generateAuditTrail']);
+            Route::post('applicant-birthdate', [ReportController::class, 'generateBirthdateReport']);
+            Route::post('deployment', [ReportController::class, 'generateDeployment']);
+            Route::post('interview', [ReportController::class, 'generateInterview']);
+            Route::post('manpower', [ReportController::class, 'generateManpower']);
+        });
+
+        Route::apiResource('resume-parser', ResumeController::class);
     });
 });

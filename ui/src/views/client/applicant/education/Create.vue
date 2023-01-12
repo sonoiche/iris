@@ -79,11 +79,11 @@
                                 <div class="row mb-6">
                                     <div class="col-lg-6 mb-4 mb-lg-0">
                                         <label class="form-label fs-6 fw-bolder mb-3">From</label>
-                                        <date-picker v-model="page.from_date" inputClassName="form-control form-control-solid fc-calendar" monthPicker />
+                                        <date-picker v-model="state.from_date" inputClassName="form-control form-control-solid fc-calendar" monthPicker />
                                     </div>
                                     <div class="col-lg-6 mb-4 mb-lg-0">
                                         <label class="form-label fs-6 fw-bolder mb-3">To</label>
-                                        <date-picker v-model="page.to_date" inputClassName="form-control form-control-solid fc-calendar" monthPicker />
+                                        <date-picker v-model="state.to_date" inputClassName="form-control form-control-solid fc-calendar" monthPicker />
                                     </div>
                                 </div>
                                 <div class="row mb-6">
@@ -117,10 +117,11 @@ import { useRoute } from 'vue-router';
 export default {
     setup(props, {emit}) {
         const route = useRoute();
-        const page = reactive({
+        const state = reactive({
             from_date: '',
             to_date: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, studies, education_levels, education, storeEducation, getEducationLevels, getFieldStudy } = educationRepo();
 
@@ -149,13 +150,13 @@ export default {
 
         const submitForm = async () => {
             let from_date = {
-                month: page.from_date['month']+1,
-                year: page.from_date['year']
+                month: state.from_date['month']+1,
+                year: state.from_date['year']
             }
 
             let to_date = {
-                month: page.to_date['month']+1,
-                year: page.to_date['year']
+                month: state.to_date['month']+1,
+                year: state.to_date['year']
             }
 
             let formData = new FormData();
@@ -168,6 +169,7 @@ export default {
             formData.append('to_date', JSON.stringify(to_date) ?? '');
             formData.append('remarks', education.value.remarks ?? '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeEducation(formData);
             isSuccess.value = true;
             isContinue.value = true;
@@ -196,7 +198,7 @@ export default {
         });
 
         return {
-            page,
+            state,
             status,
             errors,
             studies,

@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Client\UserRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Client\CreateUserRequest;
+use App\Http\Resources\Client\UserResource;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return UserResource::collection(User::orderBy('fname')->get());
+    }
+
     public function store(CreateUserRequest $request)
     {
         $token              = Str::random(50);
@@ -27,7 +33,6 @@ class UserController extends Controller
         $user->lname        = $request['lname'];
         $user->email        = $request['email'];
         $user->role_id      = $request['role_id'];
-        $user->agency_id    = $request['agency_id'];
         $user->invite_token = $token;
         $user->save();
 
@@ -62,6 +67,18 @@ class UserController extends Controller
         $user->save();
 
         $data['message']    = 'Password has been updated';
+        $data['user']       = $user;
+
+        return response()->json($data);
+    }
+
+    public function updateBackup(Request $request, $id)
+    {
+        $user               = User::find($id);
+        $user->auto_backup  = ($request['auto_backup'] == true) ? 1 : 0;
+        $user->save();
+
+        $data['message']    = 'Data has been updated';
         $data['user']       = $user;
 
         return response()->json($data);
@@ -130,7 +147,6 @@ class UserController extends Controller
         ];
         DB::enableQueryLog();
         $search     = $request['search'];
-        $agency_id  = $request['agency_id'];
 
         $result     = User::join('roles','roles.id','=','users.role_id')
             ->select(['users.*','roles.name as role_name'])
@@ -141,8 +157,7 @@ class UserController extends Controller
                         ->orWhere('lname', 'like', '%'.$search.'%')
                         ->orWhere('email', 'like', '%'.$search.'%');
                 });
-            })
-            ->where('users.agency_id', $agency_id);
+            });
 
         $totalData = $result->count();
 

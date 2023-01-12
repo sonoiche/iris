@@ -117,7 +117,8 @@ export default {
         const state = reactive({
             date_issue: '',
             date_expiry: '',
-            addContinue: false
+            addContinue: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const { status, errors, reference, storeReference } = referenceRepo();
 
@@ -144,6 +145,7 @@ export default {
             formData.append('email', reference.value.email ?? '');
             formData.append('relationship', reference.value.relationship ?? '');
             formData.append('applicant_id', route.params.id);
+            formData.append('user_id', state.authuser.id);
             await storeReference(formData);
             isSuccess.value = true;
             isContinue.value = true;
