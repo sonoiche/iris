@@ -182,7 +182,7 @@ class ReportController extends Controller
         if(!empty($applicants)) {
             foreach ($applicants as $applicant) {
                 $nestedData['id']               = $applicant->id;
-                $nestedData['fullname']         = $applicant->fullname;
+                $nestedData['fullname']         = $applicant->applicant_name;
                 $nestedData['date_applied']     = isset($applicant->date_applied) ? Carbon::parse($applicant->date_applied)->format('d M Y') : '';
                 $nestedData['status']           = $applicant->status_name;
                 $nestedData['contact_number']   = $applicant->contact_number;
