@@ -36,7 +36,7 @@
                             <td class="bordered">{{ applicant.position_applied }}</td>
                             <td class="bordered">{{ applicant.encoder }}</td>
                             <td class="bordered">{{ applicant.source_name }}</td>
-                            <td class="bordered">{{ applicant.updated_at_display }}</td>
+                            <td class="bordered">{{ applicant.updated_at }}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -61,7 +61,7 @@
                                             <button class="btn btn-primary btn-sm me-2 br-0" @click="viewComponent('ApplicantMedical')">Medical</button>
                                             <button class="btn btn-primary btn-sm me-2 br-0" @click="viewComponent('ApplicantLineup')">Lineup</button>
                                             <button class="btn btn-primary btn-sm me-2 br-0" @click="viewComponent('ApplicantProcessing')">Processing</button>
-                                            <button class="btn btn-primary btn-sm me-2 br-0">Payment</button>
+                                            <!-- <button class="btn btn-primary btn-sm me-2 br-0">Payment</button> -->
                                             <button class="btn btn-primary btn-sm me-2 br-0">Remarks</button>
                                         </div>
                                     </div>

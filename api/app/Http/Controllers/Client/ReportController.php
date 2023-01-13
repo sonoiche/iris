@@ -165,7 +165,7 @@ class ReportController extends Controller
     {
         $from   = Carbon::parse($request['from'])->format('Y-m-d');
         $to     = Carbon::parse($request['to'])->format('Y-m-d');
-        $user   = $request['user_id'];
+        $user_id = $request['user_id'];
 
         $applicants = Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
             ->leftJoin('applicant_statuses','applicant_statuses.id','=','lineups.lineup_status_id')
@@ -173,8 +173,8 @@ class ReportController extends Controller
             ->leftJoin('applicant_sources','applicant_sources.id','=','source_id')
             ->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
             ->select('applicants.*','users.fname as first_name','users.lname as last_name','applicant_sources.name as source_name','applicant_positions.position_applied','applicant_statuses.name as status_name')
-            ->when($user, function ($query, $user) {
-                $query->user_id = $user;
+            ->when($user_id, function ($query, $user_id) {
+                $query->where('user_id', $user_id);
             })
             ->whereBetween('applicants.created_at', [$from, $to])->get();
 

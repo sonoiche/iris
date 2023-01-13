@@ -76,10 +76,6 @@
                             <td class="w-50">{{ applicant.availability }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50"><strong>Branch</strong></td>
-                            <td class="w-50"></td>
-                        </tr>
-                        <tr>
                             <td class="w-50"><strong>Landline</strong></td>
                             <td class="w-50">{{ applicant.landline }}</td>
                         </tr>
@@ -101,7 +97,7 @@
                         </tr>
                         <tr>
                             <td class="w-50"><strong>Religion</strong></td>
-                            <td class="w-50"></td>
+                            <td class="w-50">{{ applicant.religion }}</td>
                         </tr>
                     </tbody>
                 </table>

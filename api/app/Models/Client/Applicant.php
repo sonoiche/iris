@@ -29,7 +29,8 @@ class Applicant extends Model
         'yrs_of_exp',
         'passport_date_submitted',
         'passport_date_issued',
-        'passport_date_expiry'
+        'passport_date_expiry',
+        'age'
     ];
 
     public function source()
@@ -132,6 +133,17 @@ class Applicant extends Model
         } else {
             return '';
         }
+    }
+
+    public function getAgeAttribute()
+    {
+        $birthdate = $this->attributes['birthdate'] ?? '';
+
+        if($birthdate) {
+            return Carbon::parse($birthdate)->age;
+        }
+        
+        return '';
     }
 
     public function getApplicantNameAttribute()
