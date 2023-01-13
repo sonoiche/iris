@@ -174,7 +174,7 @@ class ReportController extends Controller
             ->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
             ->select('applicants.*','users.fname as first_name','users.lname as last_name','applicant_sources.name as source_name','applicant_positions.position_applied','applicant_statuses.name as status_name')
             ->when($user_id, function ($query, $user_id) {
-                $query->where('user_id', $user_id);
+                $query->where('applicants.user_id', $user_id);
             })
             ->whereBetween('applicants.created_at', [$from, $to])->get();
 
