@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Client\Applicant;
-use App\Models\Client\ActivityLog;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Client\ActivityLog;
 use App\Models\Client\ApplicantSource;
 use App\Models\Client\Employer\JobOrder;
 use App\Models\Client\Employer\JobOrderPosition;
@@ -167,8 +166,7 @@ class ReportController extends Controller
         $from   = Carbon::parse($request['from'])->format('Y-m-d');
         $to     = Carbon::parse($request['to'])->format('Y-m-d');
         $user_id = $request['user_id'];
-
-        DB::enableQueryLog();
+        
         $applicants = Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
             ->leftJoin('applicant_statuses','applicant_statuses.id','=','lineups.lineup_status_id')
             ->leftjoin('users','users.id','=','applicants.user_id')
@@ -179,7 +177,7 @@ class ReportController extends Controller
                 $query->where('applicants.user_id', $user_id);
             })
             ->whereBetween('applicants.created_at', [$from, $to])->get();
-            return DB::getQueryLog();
+
         $data['data'] = [];
         if(!empty($applicants)) {
             foreach ($applicants as $applicant) {
