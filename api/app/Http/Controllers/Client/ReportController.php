@@ -168,7 +168,7 @@ class ReportController extends Controller
         $to     = Carbon::parse($request['to'])->format('Y-m-d');
         $user_id = $request['user_id'];
 
-        DB::enabledQueryLog();
+        DB::enableQueryLog();
         $applicants = Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
             ->leftJoin('applicant_statuses','applicant_statuses.id','=','lineups.lineup_status_id')
             ->leftjoin('users','users.id','=','applicants.user_id')
