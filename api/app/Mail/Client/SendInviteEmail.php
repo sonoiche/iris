@@ -30,7 +30,7 @@ class SendInviteEmail extends Mailable
      */
     public function build()
     {
-        $agency = Configuration::find($this->user->agency_id);
+        $agency = Configuration::find(1);
         $invite_link = config('app.url')."/auth/register?token=".$this->user->invite_token;
         return $this->subject('Invitation from IRIS Online')
             ->view('emails.invite')
