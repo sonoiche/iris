@@ -9,12 +9,14 @@ use App\Rules\PasswordCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Mail\Client\SendInviteEmail;
+use Illuminate\Support\Facades\Mail;
 use App\Jobs\Client\SendInviteEmailJob;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Client\UserRequest;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\Client\CreateUserRequest;
 use App\Http\Resources\Client\UserResource;
+use App\Http\Requests\Client\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -39,7 +41,8 @@ class UserController extends Controller
         $remarks            = $request['remarks'];
         // send email invitation
         $authuser = User::find($user_id);
-        SendInviteEmailJob::dispatch($user, $authuser, $remarks)->delay(Carbon::now()->addSeconds(5));
+        // SendInviteEmailJob::dispatch($user, $authuser, $remarks)->delay(Carbon::now()->addSeconds(5));
+        Mail::to($user->email)->send(new SendInviteEmail($user, $authuser, $remarks));
 
         $data['message']    = 'Email has been sent to '.$user->fname.' '.$user->lname;
 
