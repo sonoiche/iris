@@ -75,6 +75,7 @@ export default {
         const route = useRoute();
         const state = reactive({
             formData: {
+                user_id: route.query.user_id,
                 report_type: route.query.report_type,
                 from: route.query.from,
                 to: route.query.to
@@ -87,6 +88,7 @@ export default {
 
         onMounted( async () => {
             let formData = new FormData();
+            formData.append('user_id', state.formData.user_id ?? '');
             formData.append('activity_type', state.formData.report_type ?? '');
             formData.append('from', state.formData.from ?? '');
             formData.append('to', state.formData.to ?? '');
