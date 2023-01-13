@@ -41,6 +41,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::put('users/{id}/backup', [UserController::class, 'updateBackup']);
         Route::post('users/datatable', [UserController::class, 'datatable']);
         Route::get('users/select-option', [UserController::class, 'selectOption']);
+        Route::get('activity-logs', [UserController::class, 'activityLogs']);
         Route::apiResource('users', UserController::class);
 
         Route::apiResource('configs', ConfigController::class);

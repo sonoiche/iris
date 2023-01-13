@@ -8,7 +8,7 @@
                         <!--begin::Col-->
                         <div class="col-xl-5 col-xxl-5 mb-xl-5 mb-xxl-10">
                             <!--begin::Card widget 4-->
-                            <div class="card card-flush h-xl-100">
+                            <div class="card card-flush">
                                 <!--begin::Header-->
                                 <div class="card-header pt-5">
                                     <!--begin::Title-->
@@ -76,12 +76,110 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 my-5">
+                                            <div class="card">
+                                                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                                                    <div class="d-flex my-3">
+                                                        <div class="d-flex align-items-center" style="margin-right: 30px;">
+                                                            <i class="fa fa-users fa-3x"></i>
+                                                        </div>
+                                                        <div>
+                                                            <span class="fw-bold fs-3x text-gray-800 lh-1 ls-n2">{{ applicants.length }}</span>
+                                                            <div class="m-0">
+                                                                <span class="fw-bold fs-6 text-gray-400">Encoded Applicants</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-4 my-5">
+                                            <div class="card">
+                                                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                                                    <div class="d-flex my-3">
+                                                        <div class="d-flex align-items-center" style="margin-right: 30px;">
+                                                            <i class="fas fa-building fa-3x"></i>
+                                                        </div>
+                                                        <div>
+                                                            <span class="fw-bold fs-3x text-gray-800 lh-1 ls-n2">{{ principals.length }}</span>
+                                                            <div class="m-0">
+                                                                <span class="fw-bold fs-6 text-gray-400">Encoded Principals</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 my-5">
+                                            <div class="card">
+                                                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                                                    <div class="d-flex my-3">
+                                                        <div class="d-flex align-items-center" style="margin-right: 30px;">
+                                                            <i class="fas fa-street-view fa-3x"></i>
+                                                        </div>
+                                                        <div>
+                                                            <span class="fw-bold fs-3x text-gray-800 lh-1 ls-n2">{{ joborders.length }}</span>
+                                                            <div class="m-0">
+                                                                <span class="fw-bold fs-6 text-gray-400">Manpower Requests</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
+                    <div class="row g-5 g-xxl-10">
+                        <!--begin::Col-->
+                        <div class="col-xl-12 col-xxl-12 mb-xl-5 mb-xxl-10">
+                            <!--begin::Card widget 4-->
+                            <div class="card card-flush">
+                                <!--begin::Header-->
+                                <div class="card-header pt-5">
+                                    <!--begin::Title-->
+                                    <div class="card-title d-flex flex-column">
+                                        <!--begin::Info-->
+                                        <div class="d-flex align-items-center">
+                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">Recent Activity Logs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                    <table class="table align-middle fs-6 gy-5 bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="bordered text-center">#</th>
+                                                <th class="bordered">Date/Time</th>
+                                                <th class="bordered">Applicant Number</th>
+                                                <th class="bordered">Applicant Name</th>
+                                                <th class="bordered">Module</th>
+                                                <th class="bordered">Action Taken</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(result, index) in results" :key="index">
+                                                <td class="bordered text-center">{{ index+1 }}</td>
+                                                <td class="bordered">{{ result.created_at_display }}</td>
+                                                <td class="bordered">{{ result.applicant_id }}</td>
+                                                <td class="bordered">{{ result.applicant_name }}</td>
+                                                <td class="bordered">{{ result.module }}</td>
+                                                <td class="bordered">{{ result.user_action }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,16 +187,41 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
+import axios from 'axios';
+import applicantRepo from '@/repositories/applicants/applicant';
+import principalRepo from '@/repositories/employer/principal';
+import joborderRepo from '@/repositories/employer/joborder';
 
 export default {
     setup() {
         const page = reactive({
-            base_url: process.env.VUE_APP_URL
+            base_url: process.env.VUE_APP_URL,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
+        });
+        const { applicants, getApplicants } = applicantRepo();
+        const { principals, getSelectPrincipal } = principalRepo();
+        const { joborders, getJobOrders } = joborderRepo();
+        const results = ref([]);
+
+        onMounted( async () => {
+            getApplicants();
+            getSelectPrincipal();
+            getJobOrders();
+
+            let response =  await axios.get(`client/activity-logs?user_id=${page.authuser.id}`);
+            results.value = response.data.data;
         });
 
         return {
-            page
+            page,
+            applicants,
+            getApplicants,
+            principals,
+            getSelectPrincipal,
+            joborders,
+            getJobOrders,
+            results
         }
     },
 }

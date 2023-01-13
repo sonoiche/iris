@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Rules\PasswordCheck;
 use Illuminate\Http\Request;
+use App\Models\Client\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Mail\Client\SendInviteEmail;
@@ -148,7 +149,7 @@ class UserController extends Controller
             4   => 'two_step',
             5   => 'created_at'
         ];
-        DB::enableQueryLog();
+        
         $search     = $request['search'];
 
         $result     = User::join('roles','roles.id','=','users.role_id')
@@ -215,6 +216,14 @@ class UserController extends Controller
             ];
         }
         return response()->json($data);
+    }
+
+    public function activityLogs(Request $request)
+    {
+        $user_id        = $request['user_id'];
+        $data['data']   = ActivityLog::where('user_id', $user_id)->latest()->limit(10)->get();
+
+    return response()->json($data);
     }
 
     protected function emailValidator(array $data)
