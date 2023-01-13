@@ -46,11 +46,18 @@
 <script>
 import { reactive, onMounted, ref } from 'vue';
 import axios from 'axios';
+import { useRoute } from 'vue-router';
 
 export default {
     setup(props) {
+        const route = useRoute();
         const state = reactive({
-            formData: JSON.parse(localStorage.getItem('report-interview')),
+            formData: {
+                principal_id: route.query.principal_id,
+                job_order_id: route.query.job_order_id,
+                from: route.query.from,
+                to: route.query.to
+            },
             from: '',
             to: ''
         });

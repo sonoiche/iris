@@ -122,8 +122,8 @@ export default {
                 to: (state.date) ? new Date(state.date[1]).toISOString() : ''
             }
 
-            localStorage.setItem('report-interview', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.interview.list' });
+            // localStorage.setItem('report-interview', JSON.stringify(form));
+            const routeData = router.resolve({ name: 'client.reports.interview.list', query: form });
             window.open(routeData.href, '_blank');
         }
 

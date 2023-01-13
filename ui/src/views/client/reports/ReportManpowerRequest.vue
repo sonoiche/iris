@@ -123,7 +123,7 @@ export default {
             }
 
             localStorage.setItem('report-manpower', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.manpower.list' });
+            const routeData = router.resolve({ name: 'client.reports.manpower.list', query: form });
             window.open(routeData.href, '_blank');
         }
 

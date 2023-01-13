@@ -48,7 +48,12 @@ import axios from 'axios';
 export default {
     setup(props) {
         const state = reactive({
-            formData: JSON.parse(localStorage.getItem('report-manpower')),
+            formData: {
+                principal_id: route.query.principal_id,
+                job_order_id: route.query.job_order_id,
+                from: route.query.from,
+                to: route.query.to
+            },
             from: '',
             to: ''
         });

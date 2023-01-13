@@ -97,8 +97,8 @@ export default {
                 birthmonth: (state.date) ? JSON.stringify(state.date) : ''
             }
 
-            localStorage.setItem('report-birthday', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.birthday.lists' });
+            // localStorage.setItem('report-birthday', JSON.stringify(form));
+            const routeData = router.resolve({ name: 'client.reports.birthday.lists', query: form });
             window.open(routeData.href, '_blank');
         }
 

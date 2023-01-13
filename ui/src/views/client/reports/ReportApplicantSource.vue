@@ -97,12 +97,12 @@ export default {
                 to: (state.date) ? new Date(state.date[1]).toISOString() : ''
             }
 
-            localStorage.setItem('source-applicants', JSON.stringify(form));
+            // localStorage.setItem('source-applicants', JSON.stringify(form));
             if(state.source_id) {
-                const routeData = router.resolve({ name: 'client.reports.applicant.source.applicants', params: { id: state.source_id } });
+                const routeData = router.resolve({ name: 'client.reports.applicant.source.applicants', params: { id: state.source_id }, query: form });
                 window.open(routeData.href, '_blank');
             } else {
-                const routeData = router.resolve({ name: 'client.reports.applicant.source.lists' });
+                const routeData = router.resolve({ name: 'client.reports.applicant.source.lists', query: form });
                 window.open(routeData.href, '_blank');
             }
         }

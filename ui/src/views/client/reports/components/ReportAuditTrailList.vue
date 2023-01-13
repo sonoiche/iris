@@ -72,7 +72,11 @@ import axios from 'axios';
 export default {
     setup(props) {
         const state = reactive({
-            formData: JSON.parse(localStorage.getItem('audit-trail')),
+            formData: {
+                report_type: route.query.report_type,
+                from: route.query.from,
+                to: route.query.to
+            },
             from: '',
             to: '',
             report_name: ''

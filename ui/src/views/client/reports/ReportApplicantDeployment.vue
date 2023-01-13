@@ -90,8 +90,8 @@ export default {
                 to: (state.date) ? new Date(state.date[1]).toISOString() : ''
             }
 
-            localStorage.setItem('report-deployment', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.deployment.list' });
+            // localStorage.setItem('report-deployment', JSON.stringify(form));
+            const routeData = router.resolve({ name: 'client.reports.deployment.list', query: form });
             window.open(routeData.href, '_blank');
         }
 

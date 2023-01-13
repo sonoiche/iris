@@ -118,8 +118,8 @@ export default {
                 to: (state.date) ? new Date(state.date[1]).toISOString() : ''
             }
 
-            localStorage.setItem('audit-trail', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.audit-trail.list' });
+            // localStorage.setItem('audit-trail', JSON.stringify(form));
+            const routeData = router.resolve({ name: 'client.reports.audit-trail.list', query: form });
             window.open(routeData.href, '_blank');
         }
 

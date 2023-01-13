@@ -415,7 +415,7 @@ class ReportController extends Controller
             ->when($job_order_id, function ($query, $job_order_id) {
                 $query->where('job_orders.id', $job_order_id);
             })
-            ->whereBetween('job_orders.created_at', [$from, $to])
+            ->whereRaw("date(job_orders.created_at) between ? and ?", [$from, $to])
             ->get();
 
         $data['data'] = [];

@@ -44,11 +44,16 @@
 <script>
 import { reactive, onMounted, ref } from 'vue';
 import axios from 'axios';
+import { useRoute } from 'vue-router';
 
 export default {
     setup(props) {
+        const route = useRoute();
         const state = reactive({
-            formData: JSON.parse(localStorage.getItem('report-birthday')),
+            formData: {
+                birthmonth: route.query.birthmonth,
+                status_id: route.query.status_id
+            },
             birthmonth: ''
         });
         const applicants = ref([]);

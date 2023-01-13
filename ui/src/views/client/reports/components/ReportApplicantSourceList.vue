@@ -37,7 +37,11 @@ import axios from 'axios';
 export default {
     setup(props) {
         const state = reactive({
-            formData: JSON.parse(localStorage.getItem('source-applicants')),
+            formData: {
+                source_id: route.query.source_id,
+                from: route.query.from,
+                to: route.query.to
+            },
             from: '',
             to: ''
         });
