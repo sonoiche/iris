@@ -151,7 +151,7 @@ class Applicant extends Model
         $fname = isset($this->attributes['fname']) ? $this->attributes['fname'] : '';
         $mname = isset($this->attributes['mname']) ? ' '.$this->attributes['mname'] : '';
         $lname = $this->attributes['lname'] ?? '';
-        $applicant_number = $this->attributes['applicant_number'];
+        $applicant_number = $this->attributes['applicant_number'] ?? '';
 
         return $lname.', '.$fname.$mname.'<br>'.$applicant_number;
     }
