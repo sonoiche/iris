@@ -80,6 +80,7 @@ export default {
 
             await uploadResumeParser(formData);
             if(status.value == 200) {
+                console.log(resumefile.value);
                 client.createResume({ url: resumefile.value }).then( async (result) => {
                     let response = await axios.post(`client/resume-parser`, {
                         content: JSON.stringify(result.data),
