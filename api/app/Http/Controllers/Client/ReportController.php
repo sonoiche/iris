@@ -176,7 +176,7 @@ class ReportController extends Controller
             ->when($user_id, function ($query, $user_id) {
                 $query->where('applicants.user_id', $user_id);
             })
-            ->whereBetweenRaw("date(applicants.created_at) between ? and ?", [$from, $to])->get();
+            ->whereRaw("date(applicants.created_at) between ? and ?", [$from, $to])->get();
 
         $data['data'] = [];
         if(!empty($applicants)) {
