@@ -172,7 +172,7 @@ class ReportController extends Controller
             ->leftjoin('users','users.id','=','applicants.user_id')
             ->leftJoin('applicant_sources','applicant_sources.id','=','source_id')
             ->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
-            ->select('applicants.*','users.fname','users.lname','applicant_sources.name as source_name','applicant_positions.position_applied','applicant_statuses.name as status_name')
+            ->select('applicants.*','users.fname as first_name','users.lname as last_name','applicant_sources.name as source_name','applicant_positions.position_applied','applicant_statuses.name as status_name')
             ->when($user, function ($query, $user) {
                 $query->user_id = $user;
             })
@@ -182,12 +182,12 @@ class ReportController extends Controller
         if(!empty($applicants)) {
             foreach ($applicants as $applicant) {
                 $nestedData['id']               = $applicant->id;
-                $nestedData['fullname']         = $applicant->applicant_name;
+                $nestedData['fullname']         = $applicant->fullname;
                 $nestedData['date_applied']     = isset($applicant->date_applied) ? Carbon::parse($applicant->date_applied)->format('d M Y') : '';
                 $nestedData['status']           = $applicant->status_name;
                 $nestedData['contact_number']   = $applicant->contact_number;
                 $nestedData['position_applied'] = $applicant->position_applied;
-                $nestedData['encoder']          = $applicant->fname.' '.$applicant->lname;
+                $nestedData['encoder']          = $applicant->first_name.' '.$applicant->last_name;
                 $nestedData['source']           = $applicant->source_name;
                 $nestedData['contact_number']   = $applicant->contact_number;
                 $nestedData['updated_at']       = Carbon::parse($applicant->updated_at)->format('d M Y');
