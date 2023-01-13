@@ -255,4 +255,7 @@ export default {
 .w-180px {
     width: 180px !important;
 }
+.paginate_button {
+    cursor: pointer;
+}
 </style>

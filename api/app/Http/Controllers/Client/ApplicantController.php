@@ -267,7 +267,7 @@ class ApplicantController extends Controller
         $data = [];
         if(!empty($applicants)) {
             foreach ($applicants as $key =>  $applicant) {
-                $nestedData['counter']              = $key+1;
+                $nestedData['counter']              = $start+1;
                 $nestedData['applicant_name']       = ['applicant_name' => $applicant->applicant_name, 'applicant_id' => $applicant->applicant_number];
                 $nestedData['mobile_number']        = $applicant->mobile_number;
                 $nestedData['position_applied']     = isset($applicant->position_applied) ? $applicant->position_applied : '--';
