@@ -271,6 +271,7 @@ class ReportController extends Controller
             ->when($user_id, function($query, $user_id) {
                 $query->where('user_id', $user_id);
             })
+            ->whereRaw("date(created_at) between ? and ?", [$from, $to])
             ->latest()
             ->get();
 
