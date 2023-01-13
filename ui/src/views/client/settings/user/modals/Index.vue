@@ -59,6 +59,7 @@
                                 id="role_id"
                                 :errors="errors"
                                 is-required
+                                @select-value="setRole"
                             />
                         </div>
                     </div>
@@ -104,7 +105,8 @@ export default {
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
             authuser: JSON.parse(localStorage.getItem('authuser')),
-            isLoading: true
+            isLoading: true,
+            role_id: ''
         })
         const isSuccess = ref(false);
         const { errors, status, storeUser, updateUser } = userRepo();
@@ -117,7 +119,7 @@ export default {
             formData.append('mname', props.user.mname ?? '');
             formData.append('lname', props.user.lname ?? '');
             formData.append('email', props.user.email ?? '');
-            formData.append('role_id', props.user.role_id ?? '');
+            formData.append('role_id', page.role_id ?? '');
             formData.append('remarks', props.user.remarks ?? '');
             formData.append('agency_id', page.authuser.agency_id);
             formData.append('user_id', page.authuser.id);
@@ -142,6 +144,10 @@ export default {
             emit('close-modal');
         }
 
+        const setRole = (value) => {
+            page.role_id = value.id;
+        }
+
         onBeforeUpdate(() => {
             getRoles(page.authuser.agency_id);
         });
@@ -156,7 +162,8 @@ export default {
             storeUser,
             updateUser,
             roles,
-            getRoles
+            getRoles,
+            setRole
         }
     },
 }
