@@ -78,6 +78,6 @@ class ConfigController extends Controller
 
     public function show($id)
     {
-        return new ConfigResource(Configuration::find($id));
+        return new ConfigResource(Configuration::find(1));
     }
 }
