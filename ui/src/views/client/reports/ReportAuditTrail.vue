@@ -73,11 +73,12 @@
 <script>
 import { computed, reactive, onMounted } from 'vue';
 import userRepo from '@/repositories/settings/users';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
     setup(props) {
         const router = useRouter();
+        const route = useRoute();
         const { users, getUsers } = userRepo();
         const state = reactive({
             user_id: '',

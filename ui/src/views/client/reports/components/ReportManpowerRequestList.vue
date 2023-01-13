@@ -43,10 +43,12 @@
 
 <script>
 import { reactive, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 export default {
     setup(props) {
+        const route = useRoute()
         const state = reactive({
             formData: {
                 principal_id: route.query.principal_id,
