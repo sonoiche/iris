@@ -226,7 +226,7 @@
                             <i class="fonticon-stats fs-1"></i>
                         </span>
                     </span>
-                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 437px);">
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 380px);">
                         <div class="menu-item">
                             <div class="menu-content">
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Reports</span>
@@ -384,6 +384,13 @@
                         </div>
                     </div>
                 </div>
+                <a href="#!" class="menu-item py-1" @click="logOut">
+                    <span class="menu-link menu-center">
+                        <span class="menu-icon me-0">
+                            <i class="fonticon-back fs-1"></i>
+                        </span>
+                    </span>
+                </a>
             </div>
             <!--end::Menu-->
         </div>
@@ -393,9 +400,11 @@
 
 <script>
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
+        const router = useRouter();
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
             dashboardHover: false,
@@ -427,10 +436,17 @@ export default {
             page.settingsHover =  false;
         }
 
+        const logOut = () => {
+            localStorage.removeItem('authuser');
+            localStorage.removeItem('applicant');
+            window.location.href = '/auth/login';
+        }
+
         return {
             page,
             menuHover,
-            menuHoverLeave
+            menuHoverLeave,
+            logOut
         }
     },
 }

@@ -121,7 +121,7 @@ class TwoFactorAuthenticationController extends Controller
                 break;
         }
         
-        $data['errors']['code'] = ["Code is invalid."];
+        $data['errors']['code'] = ["Auhentication Code is invalid. Please try again."];
         return response()->json($data);
     }
 

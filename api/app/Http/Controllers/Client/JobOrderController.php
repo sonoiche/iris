@@ -18,7 +18,9 @@ class JobOrderController extends Controller
     public function index(Request $request)
     {
         $principal_id = $request['principal_id'];
-        $joborders    = JobOrder::when($principal_id, function ($query, $principal_id) {
+        $joborders    = JobOrder::join('job_order_positions','job_order_positions.job_order_id','=','job_orders.id')
+            ->select('job_orders.*','job_order_positions.position_title')
+            ->when($principal_id, function ($query, $principal_id) {
                 $query->where('principal_id', $principal_id);
             })
             ->get();

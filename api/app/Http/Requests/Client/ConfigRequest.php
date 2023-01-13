@@ -25,7 +25,7 @@ class ConfigRequest extends FormRequest
     {
         return [
             'agency_name'               => 'required_if:type,agency',
-            'agency_website'            => 'url',
+            'agency_website'            => 'sometimes|nullable|url',
             'logo'                      => 'sometimes|nullable|mimes:jpg,png,bmp,gif,jpeg',
             'sender_name'               => 'required_if:type,email',
             'sender_email'              => 'required_if:type,email|email'

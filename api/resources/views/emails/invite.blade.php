@@ -14,23 +14,20 @@
 					<div style="text-align:left; margin: 0 20px; padding: 40px; background-color:#ffffff; border-radius: 6px">
 						<!--begin:Email content-->
 						<div style="padding-bottom: 30px; font-size: 17px;">
-							<strong>Welcome to {{ $agency->agency_name }}!</strong>
+							<strong>Welcome to IRIS Online!</strong>
 						</div>
-						<div style="padding-bottom: 30px">You have been invited to join the {{ $agency->agency_name }} team from 
+						<div style="padding-bottom: 30px">You have been invited to join the IRIS Online team from 
 						<a href="mailto:{{ $authuser->email }}" rel="noopener" target="_blank" style="text-decoration:none;color:">{{ $authuser->email }}</a>, with a message {{ $remarks }}. To get started, accept the invite below:</div>
 						<div style="padding-bottom: 40px; text-align:center;">
 							<a href="{{ $invite_link }}" rel="noopener" style="text-decoration:none;display:inline-block;text-align:center;padding:0.75575rem 1.3rem;font-size:0.925rem;line-height:1.5;border-radius:0.35rem;color:#ffffff;background-color:#333;border:0px;margin-right:0.75rem!important;font-weight:600!important;outline:none!important;vertical-align:middle" target="_blank">Accept Invite</a>
 						</div>
 						<div style="padding-bottom: 30px">Joining the team will give you access to the team's dashboard, including information about our products.</div>
 						<div style="padding-bottom: 10px">Kind regards,
-						<br>{{ $agency->agency_name }}. 
+						<br>IRIS Online. 
 						<tr>
 							<td align="center" valign="center" style="font-size: 13px; text-align:center;padding: 20px; color: #6d6e7c;">
 								<p>{{ $agency->address }}</p>
-								<p>Copyright &copy;
-                                    @if(isset($agency->agency_website) && $agency->agency_website != '')
-								        <a href="{{ $agency->agency_website }}" rel="noopener" target="_blank">{{ $agency->agency_name }}</a>.
-                                    @endif
+								<p>Copyright &copy; <a href="https://irisonlie.app" rel="noopener" target="_blank">IRIS Online</a>.
                                 </p>
 							</td>
 						</tr></br></div>

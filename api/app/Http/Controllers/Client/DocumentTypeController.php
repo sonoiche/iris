@@ -26,7 +26,6 @@ class DocumentTypeController extends Controller
     {
         $document             = new DocumentType;
         $document->name       = $request['name'];
-        $document->agency_id  = 1;
         $document->save();
 
         $data['message']    = 'Document type has been saved.';

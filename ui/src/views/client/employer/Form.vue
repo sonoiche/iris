@@ -247,15 +247,15 @@ export default {
         }
 
         const setCountry = (value) => {
-            principal.value.country_id = value;
+            principal.value.country_id = value.id;
         }
 
         const setIndustry = (value) => {
-            principal.value.industry_id = value;
+            principal.value.industry_id = value.id;
         }
 
         const setUser = (value) => {
-            assigned_users.value.push(value);
+            assigned_users.value.push(value.id);
         }
 
         const removeUser = (value) => {

@@ -131,6 +131,7 @@ export default {
             const endDate = new Date();
             const startDate = new Date(new Date().setDate(endDate.getDate() - 7));
             state.date = [startDate, endDate];
+            getSelectPrincipal();
         });
 
         return {
