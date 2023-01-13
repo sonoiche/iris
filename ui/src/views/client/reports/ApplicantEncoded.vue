@@ -97,8 +97,8 @@ export default {
                 to: (state.date) ? new Date(state.date[1]).toISOString() : ''
             }
 
-            localStorage.setItem('encoded-applicants', JSON.stringify(form));
-            const routeData = router.resolve({ name: 'client.reports.applicant.encoded.list' });
+            // localStorage.setItem('encoded-applicants', JSON.stringify(form));
+            const routeData = router.resolve({ name: 'client.reports.applicant.encoded.list', query: form });
             window.open(routeData.href, '_blank');
         }
 
