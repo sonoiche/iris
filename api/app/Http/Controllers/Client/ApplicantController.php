@@ -266,8 +266,10 @@ class ApplicantController extends Controller
 
         $data = [];
         if(!empty($applicants)) {
+            $i = 1;
             foreach ($applicants as $key =>  $applicant) {
-                $nestedData['counter']              = $start+1;
+                $applicant->setAttribute('number', $i);
+                $nestedData['counter']              = $i;
                 $nestedData['applicant_name']       = ['applicant_name' => $applicant->applicant_name, 'applicant_id' => $applicant->applicant_number];
                 $nestedData['mobile_number']        = $applicant->mobile_number;
                 $nestedData['position_applied']     = isset($applicant->position_applied) ? $applicant->position_applied : '--';
@@ -275,6 +277,7 @@ class ApplicantController extends Controller
                 $nestedData['status']               = isset($applicant->lineup) ? $applicant->lineup->lineup_status->name : '';
                 $nestedData['latest_remarks']       = $applicant->remarks;
                 $nestedData['action']               = ['id' => $applicant->id, 'applicant_id' => $applicant->applicant_number];
+                $i++;
                 $data[]                             = $nestedData;
             }
         }
