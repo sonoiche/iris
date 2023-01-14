@@ -28,13 +28,13 @@
                     <tbody>
                         <tr v-for="(applicant, index) in applicants" :key="index">
                             <td class="bordered text-center">{{ index+1 }}</td>
-                            <td class="bordered">{{ applicant.deployed_date }}</td>
+                            <td class="bordered">{{ applicant.interview_date }}</td>
                             <td class="bordered">{{ applicant.fullname }}</td>
                             <td class="bordered">{{ applicant.email }}</td>
+                            <td class="bordered">{{ applicant.mobile_number }}</td>
+                            <td class="bordered">{{ applicant.principal_name }}</td>
                             <td class="bordered">{{ applicant.job_order }}</td>
-                            <td class="bordered">{{ applicant.worksite }}</td>
-                            <td class="bordered">{{ applicant.country }}</td>
-                            <td class="bordered">{{ applicant.salary }}</td>
+                            <td class="bordered">{{ applicant.venue }}</td>
                         </tr>
                     </tbody>
                 </table>

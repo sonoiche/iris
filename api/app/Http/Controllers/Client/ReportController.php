@@ -370,7 +370,7 @@ class ReportController extends Controller
             ->leftJoin('principals','principals.id','=','interviews.principal_id')
             ->leftJoin('job_orders','job_orders.id','=','interviews.job_order_id')
             ->leftJoin('job_order_positions','job_order_positions.id','=','interviews.position_id')
-            ->select('applicants.*','principals.name as principal_name','job_orders.job_order_number as order_number','job_order_positions.position_title')
+            ->select('applicants.*','principals.name as principal_name','job_orders.job_order_number as order_number','job_order_positions.position_title','interviews.interview_date','interviews.venue')
             ->when($principal_id, function ($query, $principal_id) {
                 $query->where('principals.id', $principal_id);
             })
