@@ -25,9 +25,9 @@
                                                         <div>
                                                             <span class="fw-bolder text-muted mr-10">Name:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.fullname }} - {{ applicant.applicant_number }}</span><br>
                                                             <span class="fw-bolder text-muted mr-10">Contact Number:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.mobile_number }}</span><br>
-                                                            <span class="fw-bolder text-muted mr-10">Status:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.status }}</span><br>
-                                                            <span class="fw-bolder text-muted mr-10">Lineup to:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.lineup_status }}</span><br>
-                                                            <span class="fw-bolder text-muted mr-10">Principal:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.principal?.name }}</span><br>
+                                                            <span class="fw-bolder text-muted mr-10">Status:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.lineup_status }}</span><br>
+                                                            <span class="fw-bolder text-muted mr-10">Lineup to:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.joborder }}</span><br>
+                                                            <span class="fw-bolder text-muted mr-10">Principal:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.principal_name }}</span><br>
                                                             <span class="fw-bolder text-muted mr-10">Position Applied:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.position_applied }}</span><br>
                                                         </div>
                                                     </div>

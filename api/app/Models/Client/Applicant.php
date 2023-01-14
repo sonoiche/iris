@@ -2,6 +2,8 @@
 
 namespace App\Models\Client;
 
+use App\Models\Client\Employer\JobOrder;
+use App\Models\Client\Employer\Principal;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,7 +32,10 @@ class Applicant extends Model
         'passport_date_submitted',
         'passport_date_issued',
         'passport_date_expiry',
-        'age'
+        'age',
+        'lineup_status',
+        'joborder',
+        'principal_name'
     ];
 
     public function source()
@@ -56,6 +61,44 @@ class Applicant extends Model
     public function lineup()
     {
         return $this->hasOne(Lineup::class, 'applicant_id', 'applicant_number');
+    }
+
+    public function getLineupStatusAttribute()
+    {
+        if(isset($this->lineup)) {
+            $lineup_status_id = $this->lineup->lineup_status_id;
+            $status = ApplicantStatus::find($lineup_status_id);
+
+            return $status->name;
+        }
+
+        return '';
+    }
+
+    public function getJoborderAttribute()
+    {
+        if(isset($this->lineup)) {
+            $job_order_id = $this->lineup->job_order_id;
+            $result = JobOrder::join('job_order_positions','job_order_positions.job_order_id','=','job_orders.id')
+                ->select('job_orders.job_order_number','job_order_positions.position_title')
+                ->find($job_order_id);
+
+            return $result->job_order_number.' - '.$result->position_title;
+        }
+
+        return '';
+    }
+
+    public function getPrincipalNameAttribute()
+    {
+        if(isset($this->lineup)) {
+            $principal_id = $this->lineup->principal_id;
+            $principal = Principal::find($principal_id);
+
+            return $principal->name;
+        }
+
+        return '';
     }
 
     public function getDisplayPhotoAttribute()
