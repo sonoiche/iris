@@ -20,7 +20,7 @@
                                                     <div class="col-lg-12 mb-4 mb-lg-0">
                                                         <BaseSelect 
                                                             label="Source of Applicant"
-                                                            :options="sources"
+                                                            :options="sourceOptions"
                                                             :placeholder="`Select Source`"
                                                             :id="`source_id`"
                                                             @select-value="setApplicantSource"
@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import sourceRepo from '@/repositories/settings/source';
 import skillRepo from '@/repositories/applicants/skill';
 import reportRepo from '@/repositories/applicants/reports';
@@ -198,15 +198,27 @@ export default {
             course: '',
             skill: ''
         });
-        const { sources, getSourceOptions } = sourceRepo();
+        const { sources, getSources } = sourceRepo();
         const { skill_levels, getSkillLevels } = skillRepo();
         const { status, applicants, generateApplicantSource } = reportRepo();
         
         const isSuccess = ref(false);
         const isApplicantSourceGenerated = ref(false);
 
+        const sourceOptions = computed(() => {
+            const arr_sources = [];
+            sources.value.forEach(item => {
+                arr_sources.push({
+                    id: item.id,
+                    name: item.name
+                });
+            });
+
+            return arr_sources;
+        });
+
         const setApplicantSource = (value) => {
-            form.source_id = value;
+            form.source_id = value.id;
         }
 
         const setSkillLevel = (value) => {
@@ -255,14 +267,13 @@ export default {
         }
 
         onMounted(() => {
-            getSourceOptions();
             getSkillLevels();
+            getSources();
         });
 
         return {
             form,
             sources,
-            getSourceOptions,
             skill_levels,
             getSkillLevels,
             isSuccess,
@@ -273,7 +284,9 @@ export default {
             setSkillLevel,
             generateSource,
             isApplicantSourceGenerated,
-            refreshPage
+            refreshPage,
+            sourceOptions,
+            getSources
         }
     }
 }

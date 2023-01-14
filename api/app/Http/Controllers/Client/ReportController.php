@@ -8,6 +8,7 @@ use App\Models\Client\Applicant;
 use App\Http\Controllers\Controller;
 use App\Models\Client\ActivityLog;
 use App\Models\Client\ApplicantSource;
+use App\Models\Client\ApplicantStatus;
 use App\Models\Client\Employer\JobOrder;
 use App\Models\Client\Employer\JobOrderPosition;
 
@@ -72,7 +73,7 @@ class ReportController extends Controller
                     });
             })
             ->when($source_id, function ($query, $source_id) {
-                $query->where('source$source_id', $source_id);
+                $query->where('source_id', $source_id);
             })
             ->when($experience, function ($query, $experience) use ($yrs_min, $yrs_max) {
                 $query->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
@@ -333,6 +334,7 @@ class ReportController extends Controller
                 $query->where('principals.id', $principal_id);
             })
             ->whereBetween('date_applied', [$from, $to])
+            ->where('lineups.lineup_status_id', ApplicantStatus::DEPLOYED)
             ->orderBy('applicants.fname')
             ->get();
 

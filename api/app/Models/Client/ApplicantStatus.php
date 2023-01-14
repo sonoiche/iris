@@ -13,5 +13,5 @@ class ApplicantStatus extends Model
     protected $table = "applicant_statuses";
     protected $guarded = [];
 
-    CONST DEPLOYED = 10;
+    CONST DEPLOYED = 9;
 }

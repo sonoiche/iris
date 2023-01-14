@@ -127,10 +127,10 @@ export default {
                             </a>
                             <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-180px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;" class="menu-link px-3 send-email">Send Email</a>
+                                    <a href="javascript:;" class="menu-link px-3 send-email" style="display: none">Send Email</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;" class="menu-link px-3 change-status">Change Lineup Status</a>
+                                    <a href="javascript:;" class="menu-link px-3 change-status" style="display: none">Change Lineup Status</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" class="menu-link px-3 edit-applicant">Edit</a>
