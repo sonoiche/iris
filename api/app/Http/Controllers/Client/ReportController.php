@@ -329,7 +329,7 @@ class ReportController extends Controller
             ->leftJoin('processings','processings.applicant_id','=','applicants.applicant_number')
             ->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
             ->leftJoin('countries','countries.id','=','processings.country_id')
-            ->select('applicants.*','applicant_positions.position_applied','job_orders.job_order_number as order_number','job_order_positions.position_title','processings.worksite','countries.name as country_name')
+            ->select('applicants.*','applicant_positions.position_applied','job_orders.job_order_number as order_number','job_order_positions.position_title','processings.worksite','countries.name as country_name','processings.deployed_date')
             ->when($principal_id, function ($query, $principal_id) {
                 $query->where('principals.id', $principal_id);
             })
@@ -343,7 +343,7 @@ class ReportController extends Controller
             foreach ($applicants as $applicant) {
                 $nestedData['id']               = $applicant->id;
                 $nestedData['fullname']         = $applicant->fname.' '.$applicant->lname;
-                $nestedData['deployed_date']    = '';
+                $nestedData['deployed_date']    = isset($applicant->deployed_date) ? Carbon::parse($applicant->deployed_date)->format('d F Y') : '';
                 $nestedData['email']            = $applicant->email;
                 $nestedData['job_order']        = $applicant->order_number.' '.$applicant->position_title;
                 $nestedData['destination']      = $applicant->worksite;
