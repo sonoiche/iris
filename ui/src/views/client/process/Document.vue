@@ -253,6 +253,7 @@ export default {
         }
 
         onMounted( async () => {
+            initDatatable();
             await getStatuses();
             await getSelectPrincipal();
 
