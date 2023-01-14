@@ -216,7 +216,7 @@ export default {
                     type: this.twofactortype
                 });
 				
-                if(response.status === 200 && response.data.errors.code[0] == null) {
+                if(response.status === 200) {
                     localStorage.setItem('authuser', JSON.stringify(response.data.user));
 					localStorage.setItem('auth-qrcode', response.data.qrcode);
                     window.location.href = '/client/dashboard';
