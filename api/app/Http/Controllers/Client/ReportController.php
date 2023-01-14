@@ -333,7 +333,7 @@ class ReportController extends Controller
             ->when($principal_id, function ($query, $principal_id) {
                 $query->where('principals.id', $principal_id);
             })
-            ->whereBetween('date_applied', [$from, $to])
+            ->whereBetween('processings.deployed_date', [$from, $to])
             ->where('lineups.lineup_status_id', ApplicantStatus::DEPLOYED)
             ->orderBy('applicants.fname')
             ->get();
