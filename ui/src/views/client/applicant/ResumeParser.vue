@@ -39,6 +39,174 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div v-if="applicant.fname != '' && isResumeDataOpen">
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-header border-0">
+                                            <div class="card-title">
+                                                <h3 class="fw-bolder m-0">Personal Information</h3>
+                                            </div>
+                                        </div>
+                                        <div class="collapse show">
+                                            <div class="card-body border-top p-9">
+                                                <div class="row mb-6">
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseInput
+                                                            v-model="applicant.fname"
+                                                            label="First Name"
+                                                            type="text"
+                                                            id="fname"
+                                                            :errors="errors"
+                                                            is-required
+                                                        />
+                                                    </div>
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseInput
+                                                            v-model="applicant.mname"
+                                                            label="Middle Name"
+                                                            type="text"
+                                                            id="mname"
+                                                        />
+                                                    </div>
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseInput
+                                                            v-model="applicant.lname"
+                                                            label="Last Name"
+                                                            type="text"
+                                                            id="lname"
+                                                            :errors="errors"
+                                                            is-required
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-6">
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseInput
+                                                            v-model="applicant.email"
+                                                            label="Email Address"
+                                                            type="text"
+                                                            id="email"
+                                                        />
+                                                    </div>
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseDatePicker
+                                                            v-model="applicant.birthdate"
+                                                            :defaultValue="applicant.birthdate"
+                                                            label="Birthdate"
+                                                            id="birthdate"
+                                                        />
+                                                    </div>
+                                                    <div class="col-lg-4 mb-4 mb-lg-0">
+                                                        <BaseInput
+                                                            v-model="applicant.mobile_number"
+                                                            label="Mobile Number (Main)"
+                                                            type="text"
+                                                            id="mobile_number"
+                                                        />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-header border-0">
+                                            <div class="card-title">
+                                                <h3 class="fw-bolder m-0">Educations</h3>
+                                            </div>
+                                        </div>
+                                        <div class="collapse show">
+                                            <div class="card-body border-top p-9">
+                                                <div v-for="education in educations" :key="education">
+                                                    <div class="row mb-6">
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <BaseSelect
+                                                                label="Educational Level"
+                                                                :options="education_levels"
+                                                                :placeholder="`Select Educational Level`"
+                                                                :defaultValue="{ id: education.education_level, name: education.education_level_name }"
+                                                                id="education_level"
+                                                                :errors="errors"
+                                                                is-required
+                                                                @select-value="setEducation"
+                                                            />
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <BaseInput
+                                                                v-model="education.accreditation.inputStr"
+                                                                label="Course"
+                                                                type="text"
+                                                                id="course"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <div class="col-lg-12 mb-4 mb-lg-0">
+                                                            <BaseInput
+                                                                v-model="education.organization"
+                                                                label="University / School"
+                                                                type="text"
+                                                                id="school"
+                                                                :errors="errors"
+                                                                is-required
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-header border-0">
+                                            <div class="card-title">
+                                                <h3 class="fw-bolder m-0">Work Experience</h3>
+                                            </div>
+                                        </div>
+                                        <div class="collapse show">
+                                            <div class="card-body border-top p-9">
+                                                <div v-for="employment in employments" :key="employment">
+                                                    <div class="row mb-6">
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <BaseInput
+                                                                v-model="employment.jobTitle"
+                                                                label="Position"
+                                                                type="text"
+                                                                id="position"
+                                                                :errors="errors"
+                                                                is-required
+                                                            />
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <BaseInput
+                                                                v-model="employment.organization"
+                                                                label="Company Name"
+                                                                type="text"
+                                                                id="company_name"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <div class="col-lg-12 mb-4 mb-lg-0">
+                                                            <BaseInput
+                                                                v-model="employment.location"
+                                                                label="Company Address"
+                                                                type="text"
+                                                                id="company_address"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-6 mt-3">
+                                        <div class="col-lg-12 mb-4 mb-lg-0">
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-outline-danger" @click="cancelParser" style="margin-right: 10px">Cancel</button>
+                                                <base-button :success="isSuccess" @submit-form="submitApplicant" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -49,18 +217,30 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 import applicantRepo from '@/repositories/applicants/applicant';
+import educationRepo from '@/repositories/applicants/education';
 
 export default {
     setup(props) {
-        const { status, errors, resumefile, resume_id, uploadResumeParser } = applicantRepo();
+        const { status, errors, resumefile, resume_id, uploadResumeParser, getResumeParser, resumeData, deleteResumeParser } = applicantRepo();
+        const { education_levels } = educationRepo();
         const state = reactive({
-            authuser: JSON.parse(localStorage.getItem('authuser'))
+            authuser: JSON.parse(localStorage.getItem('authuser')),
+            education: []
         });
         const isSuccess = ref(true);
         const resume = ref('');
+        const applicant = ref({
+            fname: '',
+            mname: '',
+            lname: '',
+            email: ''
+        });
+        const educations = ref([]);
+        const employments = ref([]);
+        const isResumeDataOpen = ref(false);
 
         // resume parser
         const { AffindaCredential, AffindaAPI } = require("@affinda/affinda");
@@ -95,8 +275,33 @@ export default {
                     console.error(err);
                 });
             }
+        }
+
+        const setEducation = (evt) => {
+            state.education.push(evt);
+        }
+
+        const submitApplicant = () => {
+            console.log(applicant.value);
+            console.log(educations.value);
+            console.log(employments.value);
+        }
+
+        const cancelParser = () => {
 
         }
+
+        onMounted( async () => {
+            await getResumeParser(state);
+            applicant.value.fname = resumeData.value.name?.first;
+            applicant.value.mname = resumeData.value.name?.middle;
+            applicant.value.lname = resumeData.value.name?.last;
+            applicant.value.email = (resumeData.value.emails.length) ? resumeData.value.emails[0] : '';
+            applicant.value.mobile_number = (resumeData.value.phoneNumbers.length) ? resumeData.value.phoneNumbers[0] : '';
+            educations.value = resumeData.value.education;
+            employments.value = resumeData.value.workExperience;
+            isResumeDataOpen.value = (resumeData.value.name.length);
+        });
 
         return {
             status,
@@ -105,10 +310,21 @@ export default {
             resume,
             resume_id,
             resumefile,
+            education_levels,
             isSuccess,
             uploadResumeParser,
             onFileChange,
-            saveChanges
+            saveChanges,
+            applicant,
+            educations,
+            employments,
+            getResumeParser,
+            resumeData,
+            setEducation,
+            submitApplicant,
+            deleteResumeParser,
+            cancelParser,
+            isResumeDataOpen
         }
     }
 }

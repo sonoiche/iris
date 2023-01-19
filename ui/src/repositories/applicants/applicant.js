@@ -6,6 +6,7 @@ export default function applicantRepo() {
     const applicants = ref([]);
     const applicant  = ref([]);
     const applicantOptions = ref([]);
+    const resumeData = ref([]);
     const resumefile = ref('');
     const resume_id = ref('');
     const errors = ref([]);
@@ -88,6 +89,16 @@ export default function applicantRepo() {
         }
     }
 
+    const getResumeParser = async (state) => {
+        let response = await axios.get(`client/applicants/get-resume?user_id=${state.authuser.id}`);
+        resumeData.value = response.data.data;
+    }
+
+    const deleteResumeParser = async (state) => {
+        let response = await axios.delete(`client/applicants/delete-resume?user_id=${state.authuser.id}`);
+        status.value = response.data.data;
+    }
+
     const destroyApplicant = async (id) => {
         let response = await axios.delete(`client/applicants/${id}`);
         alertmessage(response.data.message);
@@ -121,6 +132,9 @@ export default function applicantRepo() {
         destroyApplicant,
         applicantOptions,
         getOptionApplicants,
+        getResumeParser,
+        deleteResumeParser,
+        resumeData,
         alertmessage
     }
 

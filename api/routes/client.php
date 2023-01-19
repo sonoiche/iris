@@ -104,6 +104,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('applicants/datatable', [ApplicantController::class, 'datatable']);
         Route::post('applicants/resume-parser', [ApplicantController::class, 'resumeParser']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
+        Route::get('applicants/get-resume', [ApplicantController::class, 'getResumeData']);
+        Route::delete('applicants/delete-resume', [ApplicantController::class, 'deleteResume']);
         Route::apiResource('applicants', ApplicantController::class);
 
         Route::get('educations/levels', [EducationController::class, 'levels']);

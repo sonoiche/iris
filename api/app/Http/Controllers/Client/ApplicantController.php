@@ -317,6 +317,24 @@ class ApplicantController extends Controller
         return response()->json($data);
     }
 
+    public function getResumeData(Request $request)
+    {
+        $user_id = $request['user_id'];
+        $resume = ResumeParser::where('user_id', $user_id)->first();
+        $data['data'] = json_decode($resume->content, true);
+
+        return response()->json($data);
+    }
+
+    public function deleteResume(Request $request)
+    {
+        $user_id = $request['user_id'];
+        $resume = ResumeParser::where('user_id', $user_id)->first();
+        $resume->delete();
+
+        return response()->json(200);
+    }
+
     private function generateApplicantNumber()
     {
         $year = date('Y');
