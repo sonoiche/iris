@@ -7,12 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Client\ApplicantStatus;
 use App\Http\Requests\Client\StatusRequest;
 use App\Http\Resources\Client\StatusResource;
+use App\Models\Client\Lineup;
 
 class StatusController extends Controller
 {
     public function index()
     {
-        return StatusResource::collection(ApplicantStatus::orderBy('id')->get());
+        $data['data'] = ApplicantStatus::orderBy('id')->get();
+        $data['pluckStatus'] = ApplicantStatus::orderBy('id')->pluck('name');
+        $data['seriesStatus'] = $this->getChart();
+
+        return response()->json($data);
+        
     }
 
     public function show($id)
@@ -99,5 +105,16 @@ class StatusController extends Controller
         ];
 
         return response()->json($json_data);
+    }
+
+    private function getChart()
+    {
+        $statuses = ApplicantStatus::orderBy('id')->get();
+        $result   = [];
+        foreach ($statuses as $item) {
+            $result[] = Lineup::where('lineup_status_id', $item->id)->count();
+        }
+
+        return $result;
     }
 }

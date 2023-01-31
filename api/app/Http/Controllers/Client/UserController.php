@@ -221,7 +221,8 @@ class UserController extends Controller
     public function activityLogs(Request $request)
     {
         $user_id        = $request['user_id'];
-        $data['data']   = ActivityLog::where('user_id', $user_id)->latest()->limit(10)->get();
+        $limit          = $request['limit'] ?? 10;
+        $data['data']   = ActivityLog::where('user_id', $user_id)->latest()->limit($limit)->get();
 
     return response()->json($data);
     }

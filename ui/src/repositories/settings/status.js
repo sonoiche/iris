@@ -5,6 +5,8 @@ export default function statusRepo() {
 
     const results = ref([]);
     const result  = ref([]);
+    const arrayStatus = ref([]);
+    const seriesStatus = ref([]);
     const errors = ref([]);
     const message = ref('');
     const status = ref('');
@@ -13,6 +15,8 @@ export default function statusRepo() {
     const getStatuses = async () => {
         let response = await axios.get(`client/status`);
         results.value = response.data.data;
+        arrayStatus.value = response.data.pluckStatus;
+        seriesStatus.value = response.data.seriesStatus;
     }
 
     const getStatus = async (id) => {
@@ -68,6 +72,8 @@ export default function statusRepo() {
     return {
         results,
         result,
+        arrayStatus,
+        seriesStatus,
         errors,
         message,
         status,

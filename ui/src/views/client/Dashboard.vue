@@ -6,7 +6,7 @@
                 <div id="kt_app_content_container" class="app-container container-fluid" style="padding-left: 100px !important;">
                     <div class="row g-5 g-xxl-10">
                         <!--begin::Col-->
-                        <div class="col-xl-5 col-xxl-5 mb-xl-5 mb-xxl-10">
+                        <div class="col-xl-6 col-xxl-6 mb-xl-5 mb-xxl-10">
                             <!--begin::Card widget 4-->
                             <div class="card card-flush">
                                 <!--begin::Header-->
@@ -64,7 +64,7 @@
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
-                        <div class="col-xl-7 col-xxl-7 mb-5 mb-xxl-10">
+                        <div class="col-xl-6 col-xxl-6 mb-5 mb-xxl-10">
                             <div class="card card-flush h-xl-100">
                                 <!--begin::Header-->
                                 <div class="card-header pt-5">
@@ -140,7 +140,7 @@
                     <!--end::Row-->
                     <div class="row g-5 g-xxl-10">
                         <!--begin::Col-->
-                        <div class="col-xl-12 col-xxl-12 mb-xl-5 mb-xxl-10">
+                        <div class="col-xl-6 col-xxl-6 mb-xl-5 mb-xxl-10">
                             <!--begin::Card widget 4-->
                             <div class="card card-flush">
                                 <!--begin::Header-->
@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                                    <table class="table align-middle fs-6 gy-5 bordered">
+                                    <table class="table align-middle fs-6 gy-5 table-row-dashed">
                                         <thead>
                                             <tr>
                                                 <th class="bordered text-center">#</th>
@@ -179,6 +179,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-6 col-xxl-6 mb-xl-5 mb-xxl-10">
+                            <!--begin::Card widget 4-->
+                            <StatisticsChart />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,8 +196,12 @@ import axios from 'axios';
 import applicantRepo from '@/repositories/applicants/applicant';
 import principalRepo from '@/repositories/employer/principal';
 import joborderRepo from '@/repositories/employer/joborder';
+import StatisticsChart from '@/components/StatisticsChart';
 
 export default {
+    components: {
+        StatisticsChart
+    },
     setup() {
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
@@ -209,7 +217,7 @@ export default {
             getSelectPrincipal();
             getJobOrders();
 
-            let response =  await axios.get(`client/activity-logs?user_id=${page.authuser.id}`);
+            let response =  await axios.get(`client/activity-logs?user_id=${page.authuser.id}&limit=5`);
             results.value = response.data.data;
         });
 

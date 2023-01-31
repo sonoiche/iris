@@ -16,6 +16,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import Multiselect from 'vue-multiselect';
 import Datepicker from '@vuepic/vue-datepicker';
 import VueScrollingTable from 'vue-scrolling-table';
+import HighchartsVue from 'highcharts-vue';
 
 import Header from '@/components/partials/Header.vue';
 import Loading from '@/components/modules/Loading.vue';
@@ -36,6 +37,7 @@ const app = createApp(App)
     app.use(store)
     app.use(router)
     app.use(VueSweetalert2)
+    app.use(HighchartsVue)
     app.component('Header', Header)
     app.component('BaseInput', BaseInput)
     app.component('BaseSelect', BaseSelect)
