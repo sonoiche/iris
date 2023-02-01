@@ -288,14 +288,14 @@
                                 <span class="menu-title">Manpower Request</span>
                             </router-link>
                         </div>
-                        <!-- <div class="menu-item">
-                            <a class="menu-link">
+                        <div class="menu-item">
+                            <router-link :to="{ name: 'client.reports.status' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Status Report</span>
-                            </a>
-                        </div> -->
+                            </router-link>
+                        </div>
                     </div>
                 </div>
                 <div class="menu-item py-1" @mouseover="menuHover('settings')" @mouseleave="menuHoverLeave('settings')" :class="{ 'show menu-dropdown' : page.settingsHover}">

@@ -140,6 +140,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('documents-datatable', [ReportController::class, 'generateDocuments']);
             Route::post('applicant-encoded', [ReportController::class, 'generateEncodedApplicant']);
             Route::post('applicant-sources', [ReportController::class, 'generateSourceApplicant']);
+            Route::post('applicant-status', [ReportController::class, 'generateStatusApplicant']);
             Route::post('audit-trail', [ReportController::class, 'generateAuditTrail']);
             Route::post('applicant-birthdate', [ReportController::class, 'generateBirthdateReport']);
             Route::post('deployment', [ReportController::class, 'generateDeployment']);

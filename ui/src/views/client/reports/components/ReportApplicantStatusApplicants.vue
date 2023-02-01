@@ -1,7 +1,7 @@
 <template>
     <div class="mt-8">
         <div class="text-center">
-            <h1>Applicant Source {{ source.name }}</h1>
+            <h1>Applicant Status {{ status.name }}</h1>
             <p>From: {{ state.from }} - {{ state.to }}</p>
         </div>
         <div class="mt-3" style="width: 90%; float: right; margin-right: 70px;">
@@ -23,7 +23,6 @@
                             <th class="bordered">Status</th>
                             <th class="bordered">Position Applied</th>
                             <th class="bordered">Encoder</th>
-                            <th class="bordered">Source</th>
                             <th class="bordered">Last Updated</th>
                         </tr>
                     </thead>
@@ -37,7 +36,6 @@
                             <td class="bordered">{{ applicant.status }}</td>
                             <td class="bordered">{{ applicant.position_applied }}</td>
                             <td class="bordered">{{ applicant.encoder }}</td>
-                            <td class="bordered">{{ applicant.source_name }}</td>
                             <td class="bordered">{{ applicant.updated_at }}</td>
                         </tr>
                     </tbody>
@@ -57,35 +55,35 @@ export default {
         const route = useRoute();
         const state = reactive({
             formData: {
-                source_id: route.query.source_id,
+                status_id: route.query.status_id,
                 from: route.query.from,
                 to: route.query.to
             },
             from: '',
             to: ''
         });
-        const source = ref([]);
+        const status = ref([]);
         const applicants = ref([]);
-        const source_id = ref(route.params.id);
+        const status_id = ref(route.params.id);
 
         onMounted( async () => {
             let formData = new FormData();
-            formData.append('source_id', route.params.id ?? state.formData.source_id);
+            formData.append('status_id', route.params.id ?? state.formData.status_id);
             formData.append('from', state.formData.from ?? '');
             formData.append('to', state.formData.to ?? '');
 
-            let response =  await axios.post(`client/reports/applicant-sources`, formData);
+            let response =  await axios.post(`client/reports/applicant-status`, formData);
             applicants.value = response.data.data;
-            source.value = response.data.source;
+            status.value = response.data.status;
             state.from = response.data.from;
             state.to = response.data.to;
         });
 
         return {
             state,
-            source,
+            status,
             applicants,
-            source_id
+            status_id
         }
     }
 }

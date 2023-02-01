@@ -11,6 +11,7 @@ use App\Models\Client\ApplicantSource;
 use App\Models\Client\ApplicantStatus;
 use App\Models\Client\Employer\JobOrder;
 use App\Models\Client\Employer\JobOrderPosition;
+use App\Models\Client\Lineup;
 
 class ReportController extends Controller
 {
@@ -248,7 +249,7 @@ class ReportController extends Controller
             foreach ($sources as $source) {
                 $array_results[] = [
                     'source_name'       => $source->name,
-                    'applicant_count'   => '<a href="'.url(config('app.url').'/client/reports/applicant/source-applicants').'/'.$source->id.'" target="_blank">'.Applicant::where('source_id', $source->id)->whereBetween('date_applied', [$from, $to])->count().'</a>'
+                    'applicant_count'   => '<a href="'.url(config('app.url').'/client/reports/applicant/source-applicants').'/'.$source->id.'?from='.$from.'&to='.$to.'" target="_blank">'.Applicant::where('source_id', $source->id)->whereBetween('date_applied', [$from, $to])->count().'</a>'
                 ];
             }
 
@@ -436,6 +437,59 @@ class ReportController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function generateStatusApplicant(Request $request)
+    {
+        $from           = Carbon::parse($request['from'])->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $status_id      = $request['status_id'];
+        
+        $data['from']   = Carbon::parse($request['from'])->format('d F Y');
+        $data['to']     = Carbon::parse($request['to'])->format('d F Y');
+
+        $array_results = [];
+        if(isset($status_id)) {
+            $data['status'] = ApplicantStatus::find($status_id);
+            $applicants     = Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
+                ->leftjoin('users','users.id','=','applicants.user_id')
+                ->leftJoin('applicant_statuses','applicant_statuses.id','=','lineups.lineup_status_id')
+                ->leftJoin('applicant_positions','applicant_positions.applicant_id','=','applicants.applicant_number')
+                ->select('applicants.*','users.fname as first_name','users.lname as last_name','applicant_positions.position_applied','applicant_statuses.name as status_name')
+                ->where('lineups.lineup_status_id', $status_id)
+                ->whereBetween('date_applied', [$from, $to])
+                ->orderBy('applicants.fname')
+                ->get();
+
+            $data['data'] = [];
+            if(!empty($applicants)) {
+                foreach ($applicants as $applicant) {
+                    $nestedData['id']               = $applicant->id;
+                    $nestedData['fullname']         = $applicant->fname.' '.$applicant->lname;
+                    $nestedData['mobile_number']    = $applicant->mobile_number;
+                    $nestedData['email']            = $applicant->email;
+                    $nestedData['date_applied']     = isset($applicant->date_applied) ? Carbon::parse($applicant->date_applied)->format('d M Y') : '';
+                    $nestedData['status']           = $applicant->status_name;
+                    $nestedData['position_applied'] = $applicant->position_applied;
+                    $nestedData['encoder']          = $applicant->first_name.' '.$applicant->last_name;
+                    $nestedData['updated_at']       = Carbon::parse($applicant->updated_at)->format('d M Y');
+                    $data['data'][]                 = $nestedData;
+                }
+            }
+
+            return response()->json($data);
+        } else {
+            $statuses = ApplicantStatus::orderBy('name')->get();
+            foreach ($statuses as $status) {
+                $array_results[] = [
+                    'status_name'       => $status->name,
+                    'applicant_count'   => '<a href="'.url(config('app.url').'/client/reports/applicant/status-applicants').'/'.$status->id.'?from='.$from.'&to='.$to.'" target="_blank">'.Lineup::where('lineup_status_id', $status->id)->whereRaw("date(updated_at) between ? and ?", [$from, $to])->count().'</a>'
+                ];
+            }
+
+            $data['data'] = $array_results;
+            return response()->json($data);
+        }
     }
 
 }

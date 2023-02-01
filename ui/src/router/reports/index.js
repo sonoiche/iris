@@ -14,6 +14,9 @@ import ReportApplicantInterview from '@/views/client/reports/ReportApplicantInte
 import ReportApplicantInterviewList from '@/views/client/reports/components/ReportApplicantInterviewList.vue';
 import ReportManpowerRequest from '@/views/client/reports/ReportManpowerRequest.vue';
 import ReportManpowerRequestList from '@/views/client/reports/components/ReportManpowerRequestList.vue';
+import ReportApplicantStatus from '@/views/client/reports/ReportApplicantStatus.vue';
+import ReportApplicantStatusList from '@/views/client/reports/components/ReportApplicantStatusList.vue';
+import ReportApplicantStatusApplicants from '@/views/client/reports/components/ReportApplicantStatusApplicants.vue';
 
 const routes = [
     {
@@ -202,6 +205,45 @@ const routes = [
         path: '/client/reports/manpower-request/list',
         name: 'client.reports.manpower.list',
         component: ReportManpowerRequestList,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/reports/applicant-status',
+        name: 'client.reports.status',
+        component: ReportApplicantStatus,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/reports/applicant-status/list',
+        name: 'client.reports.status.list',
+        component: ReportApplicantStatusList,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/reports/applicant/status-applicants/:id',
+        name: 'client.reports.applicant.status.applicants',
+        component: ReportApplicantStatusApplicants,
         beforeEnter: (to, from, next) => {
             if (!store.getters["auth/authenticated"]) {
                 return next({
