@@ -40,7 +40,7 @@ class Education extends Model
             $from = json_decode($item[0], true);
             $to   = json_decode($item[1], true);
 
-            if(isset($from) && isset($to)) {
+            if(isset($from['month']) && isset($from['year']) && isset($to['month']) && isset($to['year'])) {
                 return str_pad($from['month'], 2, '0', STR_PAD_LEFT).'/'.$from['year']. ' - ' .str_pad($to['month'], 2, '0', STR_PAD_LEFT).'/'.$to['year'];
             }
         }
