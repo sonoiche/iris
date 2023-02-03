@@ -60,7 +60,7 @@ class Education extends Model
         $data = json_decode($from[0], true);
         return [
             'month' => str_pad($data['month'], 2, '0', STR_PAD_LEFT) - 1,
-            'year'  => $data['year']
+            'year'  => $data['year'] ?? ''
         ];
     }
 
@@ -70,7 +70,7 @@ class Education extends Model
         $data = json_decode($to[1], true);
         return [
             'month' => str_pad($data['month'], 2, '0', STR_PAD_LEFT) - 1,
-            'year'  => $data['year']
+            'year'  => $data['year'] ?? ''
         ];
     }
 }
