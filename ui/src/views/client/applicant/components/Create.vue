@@ -224,7 +224,7 @@
             </div>
             <div class="row mb-6 mt-3">
                 <div class="col-lg-12 mb-4 mb-lg-0">
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end" v-if="isCanWrite('Add Applicant')">
                         <base-button :success="isSuccess" :btn-text="`Save & Add Another`" @submit-form="saveChanges" /> &nbsp;&nbsp;
                         <base-button :success="isContinue" :btn-text="`Save & Continue`" @submit-form="saveContinue" />
                     </div>
@@ -380,6 +380,22 @@ export default {
             autoBackup();
         });
 
+        const isCanWrite = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_write == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
         onMounted(() => {
             if(localStorage.getItem('applicant') !== null) {
                 applicant.value = JSON.parse(localStorage.getItem('applicant'));
@@ -405,7 +421,8 @@ export default {
             resume,
             onFileChange,
             isClear,
-            autoBackup
+            autoBackup,
+            isCanWrite
         }
     },
 }

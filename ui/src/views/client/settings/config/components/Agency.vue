@@ -57,7 +57,7 @@
                                             <label class="form-label fs-6 fw-bolder mb-3">Agency Logo</label>
                                             <div class="image-input image-input-outline" style="width: 100%">
                                                 <div class="image-input-wrapper h-125px" style="width: 100%">
-                                                    <img :src="photo_url" class="img-fluid">
+                                                    <img :src="photo_url" class="img-fluid" style="height: 125px; width: 100%; object-fit: cover;">
                                                 </div>
                                                 <label
                                                     class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -153,11 +153,12 @@ export default {
         }
 
         onMounted( async () => {
-            await getConfig(page.authuser.agency_id);
+            await getConfig();
             form.agency_name = config.value.agency_name;
             form.agency_url = config.value.agency_website;
             form.agency_address = config.value.address;
             form.agency_contact = config.value.contact_number;
+            photo_url.value = config.value.display_logo ?? '';
             page.isLoading = false;
         });
 

@@ -26,6 +26,16 @@ class ActivityLog extends Model
         return '';
     }
 
+    public function getUserActionAttribute()
+    {
+        $user_action = $this->attributes['user_action'] ?? '';
+        if($user_action) {
+            return ucfirst($user_action);
+        }
+
+        return '';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

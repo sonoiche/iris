@@ -40,6 +40,7 @@
                             </label>
                         </div>
                         <button class="btn btn-primary w-100" @click="selectOption">Continue</button>
+                        <button @click="cancel" class="btn btn-light me-3 w-100" style="margin-top: 15px">Cancel</button>
                     </div>
 
                     <div v-else>
@@ -82,8 +83,8 @@
                             </div>
                         </div>
                         <div v-if="authOption == 'sms'">
-                            <h3 class="text-dark fw-bolder fs-3 mb-5">SMS: Verify Your Mobile Number</h3>
-                            <div class="text-muted fw-bold mb-10">Enter your mobile phone number with country code and we will send you a verification code upon request.</div>
+                            <h3 class="text-dark fw-bolder fs-3 mb-5">SMS Authentication Enabled</h3>
+                            <div class="text-muted fw-bold mb-10">We will send you a verification code to this number everytime you logged in.</div>
                             <div class="form">
                                 <div class="mb-10 fv-row">
                                     <BaseInput 
@@ -99,7 +100,7 @@
                                     <div>
                                         <button @click="enable2FA" class="btn btn-primary me-3" v-if="page.authuser.two_factor_secret == null">Enable 2FA Authentication</button> 
                                         <button type="submit" class="btn btn-primary" @click="saveSmsAuthNumber">
-                                            <span class="indicator-label">Submit</span>
+                                            <span class="indicator-label">Save Changes</span>
                                             <span class="indicator-progress">Please wait... 
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         </button>

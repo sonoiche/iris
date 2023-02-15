@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between">
                 <h3>Total Results Found: {{ applicants.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -35,7 +35,7 @@
                             <td class="bordered">{{ applicant.contact_number }}</td>
                             <td class="bordered">{{ applicant.position_applied }}</td>
                             <td class="bordered">{{ applicant.encoder }}</td>
-                            <td class="bordered">{{ applicant.source_name }}</td>
+                            <td class="bordered">{{ applicant.source }}</td>
                             <td class="bordered">{{ applicant.updated_at }}</td>
                         </tr>
                     </tbody>
@@ -64,6 +64,16 @@ export default {
         });
         const applicants = ref([]);
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('user_id', state.formData.user_id ?? '');
+            formData.append('from', state.formData.from ?? '');
+            formData.append('to', state.formData.to ?? '');
+
+            let response = await axios.post(`client/reports/export/applicant-encoded`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('user_id', state.formData.user_id ?? '');
@@ -78,7 +88,8 @@ export default {
 
         return {
             state,
-            applicants
+            applicants,
+            exportToExcel
         }
     }
 }
@@ -92,5 +103,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>

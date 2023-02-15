@@ -1,14 +1,15 @@
 <template>
     <div class="mt-8">
         <div class="text-center">
-            <h1>Deployment Report by {{ principal_name }}</h1>
+            <h1 v-if="principal_name">Deployment Report by {{ principal_name }}</h1>
+            <h1 v-else>Deployment Report</h1>
             <p>From: {{ state.from }} - {{ state.to }}</p>
         </div>
         <div class="mt-3" style="width: 90%; float: right; margin-right: 70px;">
             <div class="d-flex justify-content-between">
                 <h3>Total Results Found: {{ applicants.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -63,6 +64,16 @@ export default {
         const applicants = ref([]);
         const principal_name = ref('');
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('principal_id', state.formData.principal_id ?? '');
+            formData.append('from', state.formData.from ?? '');
+            formData.append('to', state.formData.to ?? '');
+
+            let response = await axios.post(`client/reports/export/deployment`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('principal_id', state.formData.principal_id ?? '');
@@ -79,7 +90,8 @@ export default {
         return {
             state,
             applicants,
-            principal_name
+            principal_name,
+            exportToExcel
         }
     }
 }
@@ -93,5 +105,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>

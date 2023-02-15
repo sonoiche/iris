@@ -23,10 +23,13 @@ Route::prefix('client')->group(function () {
         Route::post('register', [RegisterController::class, 'register']);
         Route::post('check-password', [RegisterController::class, 'checkPassword']);
         Route::post('check-invite-token', [RegisterController::class, 'checkInviteToken']);
+        Route::post('send-password-link', [RegisterController::class, 'sendPasswordLink']);
+        Route::post('change-password', [RegisterController::class, 'changePassword']);
+        Route::get('get-password-reset/{code}', [RegisterController::class, 'passwordReset']);
     });
 
     Route::middleware('auth:api')->get('/authuser', function (Request $request) {
-        return $request->user();
+        return $request->user()->load('role.permissions');
     });
 });
 

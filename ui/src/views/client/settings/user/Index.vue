@@ -10,7 +10,7 @@
                                 <div class="card-title">
                                     <h3 class="fw-bolder m-0">User List</h3>
                                 </div>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center" v-if="isCanWrite('User Manager')">
                                     <button class="btn btn-primary btn-sm" @click="addUser">Add New User</button>
                                 </div>
                             </div>
@@ -123,14 +123,14 @@ export default {
                             return `
                                 <div class="d-flex align-items-center">
                                     <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <a href="view.html">
+                                        <a href="#!">
                                             <div class="symbol-label">
                                                 <img src="${data['photo']}" class="w-100" />
                                             </div>
                                         </a>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <a href="view.html" class="text-gray-800 text-hover-primary mb-1">${data['fullname']}</a>
+                                        <a href="#!" class="text-gray-800 text-hover-primary mb-1">${data['fullname']}</a>
                                         <span>${data['email']}</span>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@ export default {
                     { 'data': 'created_at', searchable: false, orderable: true },
                     { 'data': 'action', searchable: false, orderable: false, className: "text-center",
                         render: function(data, type, row, meta) {
-                            if(data != page.authuser.id) {
+                            if(data != page.authuser.id && isCanDelete('User Manager')) {
                                 return `
                                 <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Actions
                                     <span class="svg-icon svg-icon-5 m-0">
@@ -181,6 +181,38 @@ export default {
             initDatatable(data);
         }, 500);
 
+        const isCanWrite = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_write == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
+        const isCanDelete = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_delete == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
         onMounted(() => {
             initDatatable();
 
@@ -206,7 +238,9 @@ export default {
             closeModalUser,
             refresh,
             user,
-            getUser
+            getUser,
+            isCanWrite,
+            isCanDelete
         }
     },
     components: {

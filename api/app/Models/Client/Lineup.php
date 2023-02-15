@@ -20,6 +20,8 @@ class Lineup extends Model
     protected $guarded = [];
     protected $appends = ['created_at_display'];
 
+    CONST FOR_INTERVIEW = 3;
+
     public function getCreatedAtDisplayAttribute()
     {
         $date = isset($this->attributes['created_at']) ? $this->attributes['created_at'] : '';

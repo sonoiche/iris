@@ -15,9 +15,45 @@
                             <BaseSelect
                                 label="Status"
                                 :placeholder="`Enter Status`"
-                                :id="`status`"
+                                :id="`status_id`"
                                 :options="statusOptions"
+                                :errors="errors"
+                                is-required
                                 @select-value="setStatus"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-1" v-if="isForInterview">
+                        <div class="col-lg-6">
+                            <BaseDatePicker
+                                v-model="page.interview_date"
+                                :defaultValue="page.interview_date"
+                                label="Interview Date"
+                                id="interview_date"
+                                :errors="errors"
+                                is-required
+                            />
+                        </div>
+                        <div class="col-lg-6">
+                            <BaseInput
+                                v-model="page.time"
+                                label="Interview Time"
+                                type="time"
+                                id="time"
+                                :errors="errors"
+                                is-required
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-1" v-if="isForInterview">
+                        <div class="col-lg-12">
+                            <BaseInput
+                                v-model="page.venue"
+                                label="Interview Venue"
+                                type="text"
+                                id="venue"
+                                :errors="errors"
+                                is-required
                             />
                         </div>
                     </div>
@@ -64,14 +100,23 @@ export default {
             isLoading: true,
             disabled: true,
             remarks: '',
-            status_id: ''
+            status_id: '',
+            interview_date: '',
+            time: '',
+            venue: ''
         })
         const isSuccess = ref(false);
+        const isForInterview = ref(false);
         const { errors, status, updateLineup } = lineupRepo();
         const { results, getStatuses } = statusRepo();
 
         const setStatus = (value) => {
             page.status_id = value.id;
+            if(value.id == 3) {
+                isForInterview.value = true;
+            } else {
+                isForInterview.value = false;
+            }
         }
 
         const saveChanges = async () => {
@@ -80,7 +125,11 @@ export default {
             formData.append('position_id', props.state.lineup.position_id ?? '');
             formData.append('status_id', page.status_id ?? '');
             formData.append('remarks', page.remarks ?? '');
+            formData.append('interview_date', page.interview_date ? new Date(page.interview_date).toISOString() : '');
+            formData.append('interview_time', page.time ?? '');
+            formData.append('venue', page.venue ?? '');
             formData.append('applicants', props.state.applicant_ids ?? '');
+            formData.append('user_id', page.authuser.id);
 
             await updateLineup(formData);
 
@@ -123,7 +172,8 @@ export default {
             setStatus,
             results,
             getStatuses,
-            statusOptions
+            statusOptions,
+            isForInterview
         }
     },
 }

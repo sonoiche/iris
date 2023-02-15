@@ -59,6 +59,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('document-types', DocumentTypeController::class);
 
         Route::post('email-template/datatable', [EmailTemplateController::class, 'datatable']);
+        Route::post('email-template/send', [EmailTemplateController::class, 'sendEmail']);
         Route::apiResource('email-template', EmailTemplateController::class);
 
         Route::get('roles/permissions', [RoleController::class, 'getPermissions']);
@@ -103,9 +104,13 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('applicants/encode', [ApplicantController::class, 'encode']);
         Route::post('applicants/datatable', [ApplicantController::class, 'datatable']);
         Route::post('applicants/resume-parser', [ApplicantController::class, 'resumeParser']);
+        Route::post('applicants/trashed', [ApplicantController::class, 'getTrashed']);
+        Route::post('applicants/store-resume', [ApplicantController::class, 'storeResume']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
         Route::get('applicants/get-resume', [ApplicantController::class, 'getResumeData']);
+        Route::get('applicants/{id}/return', [ApplicantController::class, 'returnApplicant']);
         Route::delete('applicants/delete-resume', [ApplicantController::class, 'deleteResume']);
+        Route::delete('applicants/{id}/permanent', [ApplicantController::class, 'permanentDelete']);
         Route::apiResource('applicants', ApplicantController::class);
 
         Route::get('educations/levels', [EducationController::class, 'levels']);
@@ -146,6 +151,15 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('deployment', [ReportController::class, 'generateDeployment']);
             Route::post('interview', [ReportController::class, 'generateInterview']);
             Route::post('manpower', [ReportController::class, 'generateManpower']);
+
+            Route::post('export/applicant-encoded', [ReportController::class, 'exportEncodedApplicant']);
+            Route::post('export/applicant-source', [ReportController::class, 'exportApplicantSource']);
+            Route::post('export/audit-trail', [ReportController::class, 'exportActivityLog']);
+            Route::post('export/birthday', [ReportController::class, 'exportBirthday']);
+            Route::post('export/deployment', [ReportController::class, 'exportDeployment']);
+            Route::post('export/interview', [ReportController::class, 'exportInterview']);
+            Route::post('export/manpower', [ReportController::class, 'exportManpower']);
+            Route::post('export/applicant-status', [ReportController::class, 'exportStatus']);
         });
 
         Route::apiResource('resume-parser', ResumeController::class);

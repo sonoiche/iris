@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\Client;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client\EmailTemplate;
+use App\Jobs\Client\SendEmailApplicantJob;
 use App\Http\Requests\Client\EmailTemplateRequest;
 use App\Http\Resources\Client\EmailTemplateResource;
+use App\Models\Client\Applicant;
 
 class EmailTemplateController extends Controller
 {
+    public function index()
+    {
+        return new EmailTemplateResource(EmailTemplate::orderBy('title')->get());
+    }
+    
     public function show($id)
     {
         return new EmailTemplateResource(EmailTemplate::find($id));
@@ -97,5 +105,19 @@ class EmailTemplateController extends Controller
         ];
 
         return response()->json($json_data);
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $applicant_id    = $request['applicant_id'];
+        $template_id     = $request['template_id'];
+        $content         = $request['content'];
+        $template        = EmailTemplate::find($template_id);
+        $applicant       = Applicant::where('applicant_number', $applicant_id)->first();
+        
+        SendEmailApplicantJob::dispatch($applicant, $template, $content)->delay(Carbon::now()->addSeconds(5));
+
+        $data['message'] = 'Email has been sent.';
+        return response()->json($data);
     }
 }

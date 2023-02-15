@@ -1,14 +1,14 @@
 <template>
     <div class="mt-8">
         <div class="text-center">
-            <h1>Interview Calendar Report</h1>
+            <h1>Manpower Request Report</h1>
             <p>From: {{ state.from }} - {{ state.to }}</p>
         </div>
         <div class="mt-3" style="width: 90%; float: right; margin-right: 70px;">
             <div class="d-flex justify-content-between">
                 <h3>Total Results Found: {{ joborders.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -28,7 +28,7 @@
                         <tr v-for="(joborder, index) in joborders" :key="index">
                             <td class="bordered text-center">{{ index+1 }}</td>
                             <td class="bordered">{{ joborder.created_at }}</td>
-                            <td class="bordered">{{ joborder.principal }}</td>
+                            <td class="bordered">{{ joborder.principal_name }}</td>
                             <td class="bordered">{{ joborder.job_order }}</td>
                             <td class="bordered">{{ joborder.status }}</td>
                             <td class="bordered">{{ joborder.fullname }}</td>
@@ -61,6 +61,17 @@ export default {
         });
         const joborders = ref([]);
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('principal_id', state.formData.principal_id ?? '');
+            formData.append('job_order_id', state.formData.job_order_id ?? '');
+            formData.append('from', state.formData.from ?? '');
+            formData.append('to', state.formData.to ?? '');
+
+            let response = await axios.post(`client/reports/export/manpower`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('principal_id', state.formData.principal_id ?? '');
@@ -76,7 +87,8 @@ export default {
 
         return {
             state,
-            joborders
+            joborders,
+            exportToExcel
         }
     }
 }
@@ -90,5 +102,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>

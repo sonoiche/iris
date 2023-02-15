@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="ol-md-4">
-                                <div class="card h-md-100">
+                                <div class="card h-md-100" v-if="isCanWrite('Role Manager')">
                                     <div class="card-body d-flex flex-center">
                                         <button type="button" class="btn btn-clear d-flex flex-column flex-center" @click="addRole">
                                             <img src="/assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-150px mb-7" />
@@ -125,6 +125,22 @@ export default {
             }
         }
 
+        const isCanWrite = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_write == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
         onMounted(() => {
             getRoles(page.authuser.agency_id);
             setTimeout(() => {
@@ -143,7 +159,8 @@ export default {
             addRole,
             editRole,
             closeModalRole,
-            getPermissionText
+            getPermissionText,
+            isCanWrite
         }
     },
     components: {

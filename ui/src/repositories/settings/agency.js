@@ -15,8 +15,8 @@ export default function configRepo() {
         configs.value = response.data.data;
     }
 
-    const getConfig = async (id) => {
-        let response = await axios.get(`client/configs/${id}`);
+    const getConfig = async () => {
+        let response = await axios.get(`client/configs/1`);
         config.value = response.data.data;
     }
 

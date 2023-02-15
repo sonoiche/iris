@@ -4,7 +4,7 @@
 		<tbody>
 			<tr>
 				<td align="center" valign="center" style="text-align:center; padding: 40px">
-					<a href="https://keenthemes.com/" rel="noopener" target="_blank">
+					<a href="https://irisonlie.app" rel="noopener" target="_blank">
 						<img alt="Logo" src="../../assets/media/logos/mail.svg" />
 					</a>
 				</td>

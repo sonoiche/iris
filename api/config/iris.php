@@ -176,7 +176,16 @@ return [
                     'can_read'   => false,
                     'can_write'  => false,
                     'can_delete' => false
-                ]
+                ],
+                [
+                    'name'       => 'Resume Parser',
+                    'read'       => true,
+                    'write'      => true,
+                    'delete'     => false,
+                    'can_read'   => false,
+                    'can_write'  => false,
+                    'can_delete' => false
+                ],
             ]
         ],
         [
@@ -220,47 +229,47 @@ return [
                 ]
             ]
         ],
-        [
-            'menu'  => 'Web Management',
-            'items'  => [
-                [
-                    'name'       => 'Job Openings',
-                    'read'       => true,
-                    'write'      => true,
-                    'delete'     => true,
-                    'can_read'   => false,
-                    'can_write'  => false,
-                    'can_delete' => false
-                ],
-                [
-                    'name'       => 'Announcements',
-                    'read'       => true,
-                    'write'      => true,
-                    'delete'     => true,
-                    'can_read'   => false,
-                    'can_write'  => false,
-                    'can_delete' => false
-                ],
-                [
-                    'name'       => 'Online Applicant',
-                    'read'       => true,
-                    'write'      => true,
-                    'delete'     => true,
-                    'can_read'   => false,
-                    'can_write'  => false,
-                    'can_delete' => false
-                ],
-                [
-                    'name'       => 'Unposted Job',
-                    'read'       => true,
-                    'write'      => true,
-                    'delete'     => true,
-                    'can_read'   => false,
-                    'can_write'  => false,
-                    'can_delete' => false
-                ]
-            ]
-        ],
+        // [
+        //     'menu'  => 'Web Management',
+        //     'items'  => [
+        //         [
+        //             'name'       => 'Job Openings',
+        //             'read'       => true,
+        //             'write'      => true,
+        //             'delete'     => true,
+        //             'can_read'   => false,
+        //             'can_write'  => false,
+        //             'can_delete' => false
+        //         ],
+        //         [
+        //             'name'       => 'Announcements',
+        //             'read'       => true,
+        //             'write'      => true,
+        //             'delete'     => true,
+        //             'can_read'   => false,
+        //             'can_write'  => false,
+        //             'can_delete' => false
+        //         ],
+        //         [
+        //             'name'       => 'Online Applicant',
+        //             'read'       => true,
+        //             'write'      => true,
+        //             'delete'     => true,
+        //             'can_read'   => false,
+        //             'can_write'  => false,
+        //             'can_delete' => false
+        //         ],
+        //         [
+        //             'name'       => 'Unposted Job',
+        //             'read'       => true,
+        //             'write'      => true,
+        //             'delete'     => true,
+        //             'can_read'   => false,
+        //             'can_write'  => false,
+        //             'can_delete' => false
+        //         ]
+        //     ]
+        // ],
         [
             'menu'  => 'Reports',
             'items'  => [

@@ -32,7 +32,7 @@
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Employers</span>
                             </div>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Manpower Request')">
                             <router-link class="menu-link" :to="{ name: 'client.joborder' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -40,7 +40,7 @@
                                 <span class="menu-title">Manpower Request</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('My Manpower Request')">
                             <router-link class="menu-link" :to="{ name: 'client.joborder.owned' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -48,7 +48,7 @@
                                 <span class="menu-title">My Manpower Request</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Employer Manager')">
                             <router-link class="menu-link" :to="{ name: 'client.employer' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -70,7 +70,7 @@
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Applicants</span>
                             </div>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Add Applicant')">
                             <router-link class="menu-link" :to="{ name: 'client.applicant.create' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -78,7 +78,7 @@
                                 <span class="menu-title">Add Applicant</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicant Pipeline')">
                             <router-link class="menu-link" :to="{ name: 'client.applicant.pipeline' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -86,7 +86,7 @@
                                 <span class="menu-title">Applicant Pipeline</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Interview Schedule')">
                             <router-link class="menu-link" :to="{ name: 'client.interview' }">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -94,7 +94,7 @@
                                 <span class="menu-title">Interview Schedule</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Quick Encode')">
                             <router-link :to="{ name: 'client.applicant.encode' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -102,7 +102,7 @@
                                 <span class="menu-title">Quick Encode</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Search Applicant')">
                             <router-link :to="{ name: 'client.applicant.search' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -110,7 +110,7 @@
                                 <span class="menu-title">Search Applicant</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Source Applicant')">
                             <router-link :to="{ name: 'client.applicant.source' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -118,7 +118,7 @@
                                 <span class="menu-title">Source Applicant</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Resume Parser')">
                             <router-link :to="{ name: 'client.applicant.resume-parser' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -140,7 +140,7 @@
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Processing</span>
                             </div>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicant Monitoring')">
                             <router-link :to="{ name: 'client.process.monitoring.applicants' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -148,7 +148,7 @@
                                 <span class="menu-title">Applicant Monitoring</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Document Monitoring')">
                             <router-link :to="{ name: 'client.process.monitoring.documents' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -156,7 +156,7 @@
                                 <span class="menu-title">Document Monitoring</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Document List')">
                             <router-link :to="{ name: 'client.process.monitoring.documentlist' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -232,7 +232,7 @@
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Reports</span>
                             </div>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicants Encoded')">
                             <router-link :to="{ name: 'client.reports.applicant.encoded' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -240,7 +240,7 @@
                                 <span class="menu-title">Applicants Encoded</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicants Source')">
                             <router-link :to="{ name: 'client.reports.applicant.source' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -248,7 +248,7 @@
                                 <span class="menu-title">Applicants Source</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Audit Trail')">
                             <router-link :to="{ name: 'client.reports.audit.trail' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -256,7 +256,7 @@
                                 <span class="menu-title">Audit Trail</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Birthday')">
                             <router-link :to="{ name: 'client.reports.birthdate' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -264,7 +264,7 @@
                                 <span class="menu-title">Birthday</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Deployment Report')">
                             <router-link :to="{ name: 'client.reports.deployment' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -272,7 +272,7 @@
                                 <span class="menu-title">Deployment Report</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Interview Calendar')">
                             <router-link :to="{ name: 'client.reports.interview' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -280,7 +280,7 @@
                                 <span class="menu-title">Interview Calendar</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Manpower Request')">
                             <router-link :to="{ name: 'client.reports.manpower-request' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -288,7 +288,7 @@
                                 <span class="menu-title">Manpower Request</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Status Report')">
                             <router-link :to="{ name: 'client.reports.status' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -310,7 +310,7 @@
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Settings</span>
                             </div>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Account Configuration')">
                             <router-link :to="{ name: 'client.settings.configuration' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -318,7 +318,7 @@
                                 <span class="menu-title">Account Configuration</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicant Source')">
                             <router-link :to="{ name: 'client.settings.sources' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -326,7 +326,7 @@
                                 <span class="menu-title">Applicant Source</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Applicant Status')">
                             <router-link :to="{ name: 'client.settings.status' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -334,15 +334,15 @@
                                 <span class="menu-title">Applicant Status</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link">
+                        <div class="menu-item" v-if="isCanRead('Applicant Trashbox')">
+                            <router-link :to="{ name: 'client.settings.applicant' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Applicant Trashbox</span>
-                            </a>
+                            </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Clinic Manager')">
                             <router-link :to="{ name: 'client.settings.clinic' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -350,7 +350,7 @@
                                 <span class="menu-title">Clinic Manager</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Document Type')">
                             <router-link :to="{ name: 'client.settings.document' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -358,7 +358,7 @@
                                 <span class="menu-title">Document Type</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Email Template')">
                             <router-link :to="{ name: 'client.settings.email' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -366,7 +366,7 @@
                                 <span class="menu-title">Email Template</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('Role Manager')">
                             <router-link :to="{ name: 'client.settings.role' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -374,7 +374,7 @@
                                 <span class="menu-title">Role Manager</span>
                             </router-link>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" v-if="isCanRead('User Manager')">
                             <router-link :to="{ name: 'client.settings.user' }" class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -407,13 +407,15 @@ export default {
         const router = useRouter();
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
+            root_url: process.env.VUE_APP_ENDPOINT,
             dashboardHover: false,
             employerHover: false,
             applicantHover: false,
             processHover: false,
             webHover: false,
             reportHover: false,
-            settingsHover: false
+            settingsHover: false,
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
 
         const menuHover = (type) => {
@@ -442,11 +444,28 @@ export default {
             window.location.href = '/auth/login';
         }
 
+        const isCanRead = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_read == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
         return {
             page,
             menuHover,
             menuHoverLeave,
-            logOut
+            logOut,
+            isCanRead
         }
     },
 }

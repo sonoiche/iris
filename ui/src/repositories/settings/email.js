@@ -10,8 +10,8 @@ export default function emailTemplateRepo() {
     const status = ref('');
     const swal = inject('$swal');
 
-    const getEmailTemplates = async (agency_id) => {
-        let response = await axios.get(`client/email-template?agency_id=${agency_id}`);
+    const getEmailTemplates = async () => {
+        let response = await axios.get(`client/email-template`);
         templates.value = response.data.data;
     }
 
@@ -55,6 +55,20 @@ export default function emailTemplateRepo() {
         status.value = response.status;
     }
 
+    const sendEmailToApplicant = async (data) => {
+        errors.value = '';
+        try {
+            let response = await axios.post(`client/email-template/send`, data);
+            alertmessage(response.data.message);
+            status.value = response.status;
+        } catch (e) {
+            if(e.response.status === 422) {
+                errors.value = e.response.data.errors;
+                status.value = e.response.status;
+            }
+        }
+    }
+
     const alertmessage = (message) => {
         swal({
             icon: 'success',
@@ -76,6 +90,7 @@ export default function emailTemplateRepo() {
         storeEmailTemplate,
         updateEmailTemplate,
         destroyEmailTemplate,
+        sendEmailToApplicant,
         alertmessage
     }
 

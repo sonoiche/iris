@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Client\Permission;
+use App\Models\Client\Role;
 use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -66,5 +68,31 @@ class User extends Authenticatable
     {
         $date = $this->attributes['created_at'];
         return Carbon::parse($date)->format('d M, Y');
+    }
+
+    public function getCheckRole($feature, $type)
+    {
+        $role_id = $this->attributes['role_id'] ?? '';
+        if($role_id) {
+            $permission = Permission::where('role_id', $role_id)->where('name', $feature)->first();
+            switch ($type) {
+                case 'can_read':
+                    return ($permission->can_read == 1);
+                    break;
+
+                case 'can_write':
+                    return ($permission->can_write == 1);
+                    break;
+
+                case 'can_delete':
+                    return ($permission->can_delete == 1);
+                    break;
+            }
+        }
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

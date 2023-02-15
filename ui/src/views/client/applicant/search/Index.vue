@@ -53,6 +53,7 @@
                 </div>
             </div>
         </div>
+        <ModalEmail :is-active="modalActive" :applicant_id="state.activeApplcantId" @close-modal="closeModal" />
     </div>
 </template>
 
@@ -62,10 +63,14 @@ import _debounce from 'lodash/debounce';
 import $ from 'jquery';
 import { useRouter } from 'vue-router';
 import applicantRepo from '@/repositories/applicants/applicant';
+import ModalEmail from '@/views/client/applicant/search/modals/ModalEmail.vue';
 require('/public/assets/js/datatables.js');
 require('/public/assets/plugins/custom/datatables/datatables.bundle.css');
 
 export default {
+    components: {
+        ModalEmail
+    },
     setup() {
         const swal = inject('$swal');
         const router = useRouter();
@@ -74,10 +79,12 @@ export default {
             placeholder: '',
             search_table: '',
             isLoading: true,
-            idToDelete: 0
+            idToDelete: 0,
+            activeApplcantId: ''
         });
         const initialize = ref(false);
         const totalCount = ref(0);
+        const modalActive = ref(false);
 
         const initDatatable = (result = {}) => {
             window.$ = window.jQuery = require('jquery');
@@ -127,7 +134,7 @@ export default {
                             </a>
                             <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-180px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="javascript:;" class="menu-link px-3 send-email" style="display: none">Send Email</a>
+                                    <a href="javascript:;" class="menu-link px-3 send-email">Send Email</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="javascript:;" class="menu-link px-3 change-status" style="display: none">Change Lineup Status</a>
@@ -163,8 +170,8 @@ export default {
             });
         }
 
-        const removeApplicant = (id) => {
-            state.idToDelete = id;
+        const removeApplicant = (evt) => {
+            state.idToDelete = evt.id;
             swal({
                 title: 'Are you sure?',
                 text: "You want to delete this?",
@@ -196,12 +203,18 @@ export default {
             });
         }
 
-        const sendEmail = () => {
-
+        const sendEmail = (evt) => {
+            modalActive.value = true;
+            state.activeApplcantId = evt.applicant_id;
         }
 
         const changeStatus = () => {
 
+        }
+
+        const closeModal = () => {
+            modalActive.value = false;
+            state.activeApplcantId = '';
         }
 
         onMounted(() => {
@@ -245,7 +258,9 @@ export default {
             removeApplicant,
             viewApplicant,
             sendEmail,
-            changeStatus
+            changeStatus,
+            modalActive,
+            closeModal
         }
     },
 }

@@ -1283,7 +1283,7 @@
 									<!--end::Title-->
 									<!--begin::Text-->
 									<span class="fw-normal fs-4 text-gray-600">Email us to
-									<a href="https://keenthemes.com/support" class="fw-bold fs-4 text-gray-800 text-hover-primary">support@keenthemes.com</a></span>
+									<a href="https://irisonlie.appsupport" class="fw-bold fs-4 text-gray-800 text-hover-primary">support@keenthemes.com</a></span>
 									<!--end::Text-->
 								</div>
 								<!--end::Block-->
@@ -1310,7 +1310,7 @@
 										<h4 class="fw-bolder text-gray-900 mb-6">More for Metronic</h4>
 										<!--end::Subtitle-->
 										<!--begin::Link-->
-										<a href="https://keenthemes.com/faqs" class="text-gray-700 text-hover-primary fs-5 mb-6">FAQ</a>
+										<a href="https://irisonlie.appfaqs" class="text-gray-700 text-hover-primary fs-5 mb-6">FAQ</a>
 										<!--end::Link-->
 										<!--begin::Link-->
 										<a href="documentation/getting-started.html" class="text-gray-700 text-hover-primary fs-5 mb-6">Documentaions</a>
@@ -1325,7 +1325,7 @@
 										<a href="https://devs.keenthemes.com/" class="text-gray-700 text-hover-primary fs-5 mb-6">Support Forum</a>
 										<!--end::Link-->
 										<!--begin::Link-->
-										<a href="https://keenthemes.com/blog" class="text-gray-700 text-hover-primary fs-5">Blog</a>
+										<a href="https://irisonlie.appblog" class="text-gray-700 text-hover-primary fs-5">Blog</a>
 										<!--end::Link-->
 									</div>
 									<!--end::Links-->
@@ -1389,14 +1389,14 @@
 								</a>
 								<!--end::Logo image-->
 								<!--begin::Logo image-->
-								<span class="mx-5 fs-6 fw-bold text-gray-700 pt-1" href="https://keenthemes.com/">Copyright © KeenThemes 2022</span>
+								<span class="mx-5 fs-6 fw-bold text-gray-700 pt-1" href="https://irisonlie.app">Copyright © KeenThemes 2022</span>
 								<!--end::Logo image-->
 							</div>
 							<!--end::Copyright-->
 							<!--begin::Menu-->
 							<ul class="menu menu-gray-700 menu-hover-primary fw-bold fs-5 fs-md-5 order-1 mb-5 mb-md-0">
 								<li class="menu-item">
-									<a href="https://keenthemes.com/" target="_blank" class="menu-link px-2">About</a>
+									<a href="https://irisonlie.app" target="_blank" class="menu-link px-2">About</a>
 								</li>
 								<li class="menu-item">
 									<a href="https://devs.keenthemes.com/" target="_blank" class="menu-link px-2">Support</a>

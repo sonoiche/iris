@@ -5,6 +5,7 @@ export default function applicantRepo() {
 
     const applicants = ref([]);
     const applicant  = ref([]);
+    const applicant_number = ref('');
     const applicantOptions = ref([]);
     const resumeData = ref([]);
     const resumefile = ref('');
@@ -22,6 +23,11 @@ export default function applicantRepo() {
     const getApplicant = async (id) => {
         let response = await axios.get(`client/applicants/${id}`);
         applicant.value = response.data.data;
+    }
+
+    const getTrashedApplicants = async () => {
+        let response = await axios.get(`client/applicants/trashed`);
+        applicants.value = response.data.data;
     }
 
     const getOptionApplicants = async () => {
@@ -92,15 +98,43 @@ export default function applicantRepo() {
     const getResumeParser = async (state) => {
         let response = await axios.get(`client/applicants/get-resume?user_id=${state.authuser.id}`);
         resumeData.value = response.data.data;
+        resume_id.value  = response.data.resume_id;
     }
 
     const deleteResumeParser = async (state) => {
         let response = await axios.delete(`client/applicants/delete-resume?user_id=${state.authuser.id}`);
-        status.value = response.data.data;
+        status.value = response.status;
+    }
+
+    const storeApplicantFromResume = async (data) => {
+        errors.value = '';
+        try {
+            let response = await axios.post(`client/applicants/store-resume`, data);
+            alertmessage(response.data.message);
+            applicant_number.value = response.data.applicant_number;
+            status.value = response.status;
+        } catch (e) {
+            if(e.response.status === 422) {
+                errors.value = e.response.data.errors;
+                status.value = e.response.status;
+            }
+        }
     }
 
     const destroyApplicant = async (id) => {
         let response = await axios.delete(`client/applicants/${id}`);
+        alertmessage(response.data.message);
+        status.value = response.status;
+    }
+    
+    const returnApplicant = async (id) => {
+        let response = await axios.get(`client/applicants/${id}/return`);
+        alertmessage(response.data.message);
+        status.value = response.status;
+    }
+    
+    const permanentDestroyApplicant = async (id) => {
+        let response = await axios.delete(`client/applicants/${id}/permanent`);
         alertmessage(response.data.message);
         status.value = response.status;
     }
@@ -135,6 +169,11 @@ export default function applicantRepo() {
         getResumeParser,
         deleteResumeParser,
         resumeData,
+        applicant_number,
+        getTrashedApplicants,
+        permanentDestroyApplicant,
+        returnApplicant,
+        storeApplicantFromResume,
         alertmessage
     }
 

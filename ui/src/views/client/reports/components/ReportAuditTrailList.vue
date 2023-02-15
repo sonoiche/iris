@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between mb-6">
                 <h3>Total Results Found: {{ results.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -86,6 +86,17 @@ export default {
         });
         const results = ref([]);
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('user_id', state.formData.user_id ?? '');
+            formData.append('activity_type', state.formData.report_type ?? '');
+            formData.append('from', state.formData.from ?? '');
+            formData.append('to', state.formData.to ?? '');
+
+            let response = await axios.post(`client/reports/export/audit-trail`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('user_id', state.formData.user_id ?? '');
@@ -102,7 +113,8 @@ export default {
 
         return {
             state,
-            results
+            results,
+            exportToExcel
         }
     }
 }
@@ -116,5 +128,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>

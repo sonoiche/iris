@@ -10,7 +10,7 @@
                                 <div class="card-title">
                                     <h3 class="fw-bolder m-0">Manpower Request</h3>
                                 </div>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center" v-if="isCanWrite('Manpower Request')">
                                     <router-link class="btn btn-primary btn-sm" :to="{ name: 'client.joborder.create' }">Add Manpower Request</router-link>
                                 </div>
                             </div>
@@ -123,23 +123,59 @@ export default {
                     { 'data': 'position', searchable: false, orderable: false, className: "text-center" },
                     { 'data': 'action', searchable: false, orderable: false, className: "text-center",
                         render: function(data, type, row, meta) {
-                            return `
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Actions
-                                <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                    </svg>
-                                </span>
-                            </a>
-                            <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="javascript:;" class="menu-link px-3 edit-joborder">Edit</a>
+                            if(isCanWrite('Manpower Request') && isCanDelete('Manpower Request')) {
+                                return `
+                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Actions
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;" class="menu-link px-3 edit-joborder">Edit</a>
+                                    </div>
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;" class="menu-link px-3 remove-joborder">Delete</a>
+                                    </div>
                                 </div>
-                                <div class="menu-item px-3">
-                                    <a href="javascript:;" class="menu-link px-3 remove-joborder">Delete</a>
+                                `
+                            }
+
+                            if(!isCanWrite('Manpower Request') && isCanDelete('Manpower Request')) {
+                                return `
+                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Actions
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;" class="menu-link px-3 remove-joborder">Delete</a>
+                                    </div>
                                 </div>
-                            </div>
-                            `
+                                `
+                            }
+
+                            if(isCanWrite('Manpower Request') && !isCanDelete('Manpower Request')) {
+                                return `
+                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Actions
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                    <div class="menu-item px-3">
+                                        <a href="javascript:;" class="menu-link px-3 edit-joborder">Edit</a>
+                                    </div>
+                                </div>
+                                `
+                            }
                         }
                     }
                 ]
@@ -209,6 +245,38 @@ export default {
             modalActive.value = false;
         }
 
+        const isCanWrite = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_write == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
+        const isCanDelete = (name) => {
+            if(page.authuser.role_id != 1) {
+                let permissions = page.authuser.role?.permissions;
+                let array_permission = false;
+                permissions.forEach(item => {
+                    if(item.name == name) {
+                        array_permission = item.can_delete == 1;
+                    }
+                });
+
+                return array_permission;
+            }
+
+            return true;
+        }
+
         onMounted( async () => {
             await getFilters();
             initDatatable();
@@ -241,7 +309,9 @@ export default {
             saveFilter,
             clearFilter,
             hasFilter,
-            isClear
+            isClear,
+            isCanWrite,
+            isCanDelete
         }
     },
     components: {

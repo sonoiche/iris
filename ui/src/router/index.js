@@ -74,6 +74,19 @@ const routes = [
       next();
     }
   },
+  {
+    path: "/auth/password/reset/:code",
+    name: "password.reset.code",
+    component: () => import("../views/client/auth/PasswordReset.vue"),
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth/authenticated"]) {
+        return next({
+          name: "login"
+        });
+      }
+      next();
+    }
+  },
   ...settingsRoute,
   ...employerRoute,
   ...applicantRoute,

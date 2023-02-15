@@ -4,14 +4,23 @@ namespace App\Http\Controllers\Client;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Exports\StatusExport;
+use App\Models\Client\Lineup;
+use App\Exports\ActivityExport;
+use App\Exports\BirthdayExport;
+use App\Exports\ManpowerExport;
+use App\Exports\ApplicantExport;
+use App\Exports\InterviewExport;
 use App\Models\Client\Applicant;
-use App\Http\Controllers\Controller;
+use App\Exports\DeploymentExport;
 use App\Models\Client\ActivityLog;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ApplicantSourceExport;
 use App\Models\Client\ApplicantSource;
 use App\Models\Client\ApplicantStatus;
 use App\Models\Client\Employer\JobOrder;
 use App\Models\Client\Employer\JobOrderPosition;
-use App\Models\Client\Lineup;
 
 class ReportController extends Controller
 {
@@ -187,11 +196,10 @@ class ReportController extends Controller
                 $nestedData['fullname']         = $applicant->fullname;
                 $nestedData['date_applied']     = isset($applicant->date_applied) ? Carbon::parse($applicant->date_applied)->format('d M Y') : '';
                 $nestedData['status']           = $applicant->status_name;
-                $nestedData['contact_number']   = $applicant->contact_number;
+                $nestedData['contact_number']   = $applicant->mobile_number;
                 $nestedData['position_applied'] = $applicant->position_applied;
                 $nestedData['encoder']          = $applicant->first_name.' '.$applicant->last_name;
                 $nestedData['source']           = $applicant->source_name;
-                $nestedData['contact_number']   = $applicant->contact_number;
                 $nestedData['updated_at']       = Carbon::parse($applicant->updated_at)->format('d M Y');
                 $data['data'][]                 = $nestedData;
             }
@@ -427,7 +435,7 @@ class ReportController extends Controller
             foreach ($joborders as $joborder) {
                 $nestedData['id']               = $joborder->id;
                 $nestedData['principal_name']   = $joborder->principal_name;
-                $nestedData['job_order']        = $joborder->order_number;
+                $nestedData['job_order']        = $joborder->job_order_number;
                 $nestedData['fullname']         = $joborder->fname.' '.$joborder->lname;
                 $nestedData['status']           = $joborder->status;
                 $nestedData['position_count']   = JobOrderPosition::where('job_order_id',$joborder->id)->count();
@@ -490,6 +498,113 @@ class ReportController extends Controller
             $data['data'] = $array_results;
             return response()->json($data);
         }
+    }
+
+    // export to excel part
+    public function exportEncodedApplicant(Request $request) 
+    {
+        $from       = $request['from'];
+        $to         = $request['to'];
+        $user_id    = $request['user_id'];
+        $filename   = time();
+
+        Excel::store(new ApplicantExport($from, $to, $user_id), 'Applicant-Encoded-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Applicant-Encoded-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportApplicantSource(Request $request) 
+    {
+        $from       = $request['from'];
+        $to         = $request['to'];
+        $source_id  = $request['source_id'];
+        $filename   = time();
+
+        Excel::store(new ApplicantSourceExport($from, $to, $source_id), 'Applicant-Source-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Applicant-Source-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportActivityLog(Request $request) 
+    {
+        $from           = $request['from'];
+        $to             = $request['to'];
+        $user_id        = $request['user_id'];
+        $report_type    = $request['activity_type'];
+        $filename       = time();
+        
+        Excel::store(new ActivityExport($from, $to, $user_id, $report_type), 'Activity-Report-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Activity-Report-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportBirthday(Request $request) 
+    {
+        $month          = $request['birthmonth'];
+        $status_id      = $request['status_id'];
+        $filename       = time();
+        
+        Excel::store(new BirthdayExport($month, $status_id), 'Applicant-Birthday-Report-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Applicant-Birthday-Report-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportDeployment(Request $request) 
+    {
+        $from           = $request['from'];
+        $to             = $request['to'];
+        $principal_id   = $request['principal_id'];
+        $filename       = time();
+        
+        Excel::store(new DeploymentExport($from, $to, $principal_id), 'Deployment-Report-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Deployment-Report-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportInterview(Request $request) 
+    {
+        $from           = $request['from'];
+        $to             = $request['to'];
+        $principal_id   = $request['principal_id'];
+        $job_order_id   = $request['job_order_id'];
+        $filename       = time();
+        
+        Excel::store(new InterviewExport($from, $to, $principal_id, $job_order_id), 'Interview-Calendar-Report-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Interview-Calendar-Report-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportManpower(Request $request) 
+    {
+        $from           = $request['from'];
+        $to             = $request['to'];
+        $principal_id   = $request['principal_id'];
+        $job_order_id   = $request['job_order_id'];
+        $filename       = time();
+        
+        Excel::store(new ManpowerExport($from, $to, $principal_id, $job_order_id), 'Manpower-Request-Report-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Manpower-Request-Report-'.$filename.'.xlsx';
+
+        return response()->json($data);
+    }
+
+    public function exportStatus(Request $request) 
+    {
+        $from           = $request['from'];
+        $to             = $request['to'];
+        $status_id      = $request['status_id'];
+        $filename       = time();
+        
+        Excel::store(new StatusExport($from, $to, $status_id), 'Applicant-Status-'.$filename.'.xlsx', 'export');
+        $data['filename'] = config('app.api_url').'/storage/exports/Applicant-Status-'.$filename.'.xlsx';
+
+        return response()->json($data);
     }
 
 }

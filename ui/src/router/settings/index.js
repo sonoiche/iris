@@ -7,6 +7,7 @@ import EmailIndex from '@/views/client/settings/email/Index.vue';
 import RoleIndex from '@/views/client/settings/role/Index.vue';
 import RoleShow from '@/views/client/settings/role/Show.vue';
 import UserIndex from '@/views/client/settings/user/Index.vue';
+import ApplicantTrashed from '@/views/client/settings/trashed/Index.vue';
 
 import store from "@/store";
 
@@ -119,6 +120,19 @@ const routes = [
         path: '/client/settings/user',
         name: 'client.settings.user',
         component: UserIndex,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters["auth/authenticated"]) {
+                return next({
+                    name: "login"
+                });
+            }
+            next();
+        }
+    },
+    {
+        path: '/client/settings/applicants',
+        name: 'client.settings.applicant',
+        component: ApplicantTrashed,
         beforeEnter: (to, from, next) => {
             if (!store.getters["auth/authenticated"]) {
                 return next({

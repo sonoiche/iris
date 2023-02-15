@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client\Lineup;
 use App\Models\Client\Applicant;
+use App\Models\Client\Interview;
 use App\Models\Client\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\Client\Employer\JobOrder;
+use App\Http\Requests\Client\LineupRequest;
 use App\Models\Client\Employer\JobOrderPosition;
 use App\Http\Resources\Client\Applicant\LineupResource;
 
@@ -64,7 +67,7 @@ class LineupController extends Controller
         return LineupResource::collection($lineups);
     }
 
-    public function lieupUpdate(Request $request)
+    public function lieupUpdate(LineupRequest $request)
     {
         $applicant_ids  = $request['applicants'];
         $position_id    = $request['position_id'];
@@ -72,12 +75,32 @@ class LineupController extends Controller
 
         foreach (explode(',', $applicant_ids) as $applicant_id) {
             $lineup = Lineup::updateOrCreate(
-                ['applicant_id' => $applicant_id, 'position_id' => $position_id],
+                ['applicant_id'     => $applicant_id, 'position_id' => $position_id],
                 ['lineup_status_id' => $status_id, 'remarks' => $request['remarks']]
             );
 
             // insert activity log
             $this->storeActivityLog('lineup', $lineup, 'update');
+        }
+
+        if($status_id == Lineup::FOR_INTERVIEW) {
+            $ids = explode(',', $applicant_ids);
+            $lineups = Lineup::whereIn('applicant_id', $ids)->get();
+            $interview_date = Carbon::parse($request['interview_date'])->format('Y-m-d').' '.$request['interview_time'].':00';
+            foreach ($lineups as $lineup) {
+                Interview::updateOrCreate(
+                    ['applicant_id'     => $applicant_id],
+                    [
+                        'position_id'       => $lineup->position_id,
+                        'principal_id'      => $lineup->principal_id,
+                        'job_order_id'      => $lineup->job_order_id,
+                        'interview_date'    => $interview_date,
+                        'venue'             => $request['venue'],
+                        'remarks'           => $request['remarks'],
+                        'user_id'           => $request['user_id']
+                    ]
+                );
+            }
         }
 
         $data['message'] = 'Applicant lineup has been updated.';

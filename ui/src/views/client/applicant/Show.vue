@@ -34,6 +34,9 @@
                                                 </div>
                                                 <div class="col-lg-5 col-md-12">
                                                     <h4>Recent Activities</h4>
+                                                    <div v-for="log in logs" :key="log" style="margin: 5px 0;">
+                                                        <span class="fw-bolder text-muted mr-10">&bull; {{ log.user_action }} {{ log.module }} by {{ log.username }} on {{ log.created_at_display }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,7 +65,7 @@
                                             <button class="btn btn-primary btn-sm me-2 br-0" @click="viewComponent('ApplicantLineup')">Lineup</button>
                                             <button class="btn btn-primary btn-sm me-2 br-0" @click="viewComponent('ApplicantProcessing')">Processing</button>
                                             <!-- <button class="btn btn-primary btn-sm me-2 br-0">Payment</button> -->
-                                            <button class="btn btn-primary btn-sm me-2 br-0">Remarks</button>
+                                            <!-- <button class="btn btn-primary btn-sm me-2 br-0">Remarks</button> -->
                                         </div>
                                     </div>
                                 </div>
@@ -80,6 +83,7 @@
 import applicantRepo from '@/repositories/applicants/applicant';
 import { ref, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 import ApplicantOverview from '@/views/client/applicant/components/ApplicantOverview.vue';
 import ApplicantEducation from '@/views/client/applicant/education/Index.vue';
 import ApplicantCreateEducation from '@/views/client/applicant/education/Create.vue';
@@ -118,6 +122,7 @@ export default {
             applicant_id: route.params.id
         });
         const currentComponent = ref('ApplicantOverview');
+        const logs = ref([]);
 
         const viewComponent = (component) => {
             currentComponent.value = component;
@@ -131,6 +136,9 @@ export default {
         onMounted( async () => {
             await getApplicant(route.params.id);
             state.isLoading = false;
+
+            let response = await axios.get(`client/activity-logs?applicant_id=${route.params.id}&limit=5`);
+            logs.value = response.data.data;
         });
 
         return {
@@ -139,7 +147,8 @@ export default {
             getApplicant,
             currentComponent,
             viewComponent,
-            changeComponent
+            changeComponent,
+            logs
         }
     },
     components: {

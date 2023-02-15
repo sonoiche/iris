@@ -66,7 +66,7 @@ class UserController extends Controller
     public function updatePassword(Request $request, $id)
     {
         $this->passwordValidator($request->all())->validate();
-        $user               = User::find($id);
+        $user               = User::with('role')->find($id);
         $user->password     = bcrypt($request['password']);
         $user->save();
 
@@ -78,7 +78,7 @@ class UserController extends Controller
 
     public function updateBackup(Request $request, $id)
     {
-        $user               = User::find($id);
+        $user               = User::with('role')->find($id);
         $user->auto_backup  = ($request['auto_backup'] == true) ? 1 : 0;
         $user->save();
 
@@ -90,7 +90,7 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $id)
     {
-        $user            = User::find($id);
+        $user            = User::with('role')->find($id);
         $user->fname     = $request['fname'];
         $user->lname     = $request['lname'];
         $user->contact_number = $request['contact_number'];
@@ -118,7 +118,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $data['user'] = $user = User::find($id);
+        $data['user'] = $user = User::with('role')->find($id);
         $data['code'] = '';
         if($user->two_factor_secret) {
             foreach (json_decode(decrypt($user->two_factor_recovery_codes, true)) as $code) {
@@ -221,8 +221,13 @@ class UserController extends Controller
     public function activityLogs(Request $request)
     {
         $user_id        = $request['user_id'];
+        $applicant_id   = $request['applicant_id'];
         $limit          = $request['limit'] ?? 10;
-        $data['data']   = ActivityLog::where('user_id', $user_id)->latest()->limit($limit)->get();
+        $data['data']   = ActivityLog::with('user')->when($user_id, function ($query, $user_id) {
+            $query->where('user_id', $user_id);
+        })->when($applicant_id, function ($query, $applicant_id) {
+            $query->where('applicant_id', $applicant_id);
+        })->latest()->limit($limit)->get();
 
     return response()->json($data);
     }

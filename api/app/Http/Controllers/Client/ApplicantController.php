@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Client;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Client\Skill;
 use Illuminate\Http\Request;
 use App\Models\Client\Lineup;
 use App\Models\Client\Applicant;
+use App\Models\Client\Education;
+use App\Models\Client\Reference;
+use App\Models\Client\Employment;
 use App\Models\Client\ActivityLog;
 use Illuminate\Support\Facades\DB;
+use App\Models\Client\ResumeParser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Client\ApplicantPosition;
@@ -16,7 +21,6 @@ use App\Http\Resources\Applicant\ApplicantResource;
 use App\Http\Requests\Client\Applicant\ApplicantRequest;
 use App\Http\Requests\Client\Applicant\ApplicantUpdateRequest;
 use App\Http\Requests\Client\Applicant\EncodeApplicantRequest;
-use App\Models\Client\ResumeParser;
 
 class ApplicantController extends Controller
 {
@@ -322,6 +326,7 @@ class ApplicantController extends Controller
         $user_id = $request['user_id'];
         $resume = ResumeParser::where('user_id', $user_id)->first();
         $data['data'] = json_decode($resume->content, true);
+        $data['resume_id']  = $resume->id;
 
         return response()->json($data);
     }
@@ -333,6 +338,190 @@ class ApplicantController extends Controller
         $resume->delete();
 
         return response()->json(200);
+    }
+
+    public function getTrashed(Request $request)
+    {
+        $columns = [
+            0   => '',
+            1   => 'lname',
+            2   => 'mobile_number',
+            3   => 'position_applied',
+            4   => 'date_applied',
+            5   => 'status',
+            6   => 'latest_remarks'
+        ];
+
+        $search     = $request['search'];
+
+        $result     = Applicant::onlyTrashed()
+            ->with('lineup.lineup_status')
+            ->when($search, function ($query, $search) {
+            $query->where(function ($queryString) use ($search) {
+                $queryString->orWhere('fname', 'like', '%'.$search.'%')
+                    ->orWhere('mname', 'like', '%'.$search.'%')
+                    ->orWhere('lname', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%')
+                    ->orWhere('mobile_number', 'like', '%'.$search.'%')
+                    ->orWhere('applicant_number', 'like', '%'.$search.'%');
+            });
+        });
+
+        $totalData = $result->count();
+
+        $totalFiltered = $totalData;
+
+        $limit  = $request['length'];
+        $start  = $request['start'];
+
+        $order  = $columns[$request['order.0.column']];
+        $dir    = $request['order.0.dir'];
+
+        $applicants = $result->offset($start)
+            ->limit($limit)
+            ->when($order, function ($query, $order) use ($dir) {
+                if($order != '') {
+                    $query->orderBy($order, $dir);
+                }
+            })
+            ->get();
+
+        $data = [];
+        if(!empty($applicants)) {
+            $i = 1;
+            foreach ($applicants as $key =>  $applicant) {
+                $applicant->setAttribute('number', $i);
+                $nestedData['counter']              = $i;
+                $nestedData['applicant_name']       = ['applicant_name' => $applicant->applicant_name, 'applicant_id' => $applicant->applicant_number];
+                $nestedData['mobile_number']        = $applicant->mobile_number;
+                $nestedData['position_applied']     = isset($applicant->position_applied) ? $applicant->position_applied : '--';
+                $nestedData['date_applied_display'] = (isset($applicant->date_applied) && $applicant->position_applied) ? Carbon::parse($applicant->date_applied)->format('d M, Y') : '';
+                $nestedData['status']               = isset($applicant->lineup) ? $applicant->lineup->lineup_status->name : '';
+                $nestedData['latest_remarks']       = $applicant->remarks;
+                $nestedData['action']               = ['id' => $applicant->id, 'applicant_id' => $applicant->applicant_number];
+                $i++;
+                $data[]                             = $nestedData;
+            }
+        }
+
+        $json_data = [
+            "draw"            => intval($request['draw']),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        ];
+
+        return response()->json($json_data);
+    }
+
+    public function destroy($id)
+    {
+        $applicant = Applicant::find($id);
+        $applicant->delete();
+
+        $data['message'] = 'Applicant has been deleted.';
+        return response()->json($data);
+    }
+
+    public function permanentDelete($id)
+    {
+        $applicant = Applicant::withTrashed()->find($id);
+        $applicant->forcedelete();
+
+        $data['message'] = 'Applicant has been permanently deleted.';
+        return response()->json($data);
+    }
+
+    public function returnApplicant($id)
+    {
+        $applicant = Applicant::withTrashed()->find($id);
+        $applicant->deleted_at = null;
+        $applicant->save();
+
+        $data['message'] = 'Applicant data has been retrieved.';
+        return response()->json($data);
+    }
+
+    public function storeResume(Request $request)
+    {
+        $applicant = new Applicant;
+        $applicant->date_applied        = Carbon::now()->format('Y-m-d');
+        $applicant->applicant_number    = $this->generateApplicantNumber();
+        $applicant->fname               = $request['fname'];
+        $applicant->mname               = $request['mname'];
+        $applicant->lname               = $request['lname'];
+        $applicant->email               = $request['email'];
+        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->mobile_number       = $request['mobile_number'];
+        $applicant->user_id             = $request['user_id'];
+        $applicant->save();
+
+        // saves educations
+        $educations = json_decode($request['educations'], true);
+        $education_levels = json_decode($request['education_levels'], true);
+        foreach ($educations as $key => $item) {
+            $education = new Education;
+            $education->course          = $item['course'];
+            $education->school          = $item['school'];
+            $education->education_level = $education_levels[$key];
+            $education->applicant_id    = $applicant->applicant_number;
+            $education->user_id         = $request['user_id'];
+            $education->save();
+        }
+
+        // saves experiences
+        $employments = json_decode($request['employments'], true);
+        foreach ($employments as $item) {
+            $employment = new Employment;
+            $employment->position        = $item['position'];
+            $employment->company_name    = $item['company_name'];
+            $employment->company_address = $item['company_address'];
+            $employment->applicant_id    = $applicant->applicant_number;
+            $employment->user_id         = $request['user_id'];
+            $employment->save();
+        }
+
+        // saves skills
+        $skills = json_decode($request['skills'], true);
+        $skill_levels   = json_decode($request['skill_levels'], true);
+        $skill_remarks  = json_decode($request['skill_remarks'], true);
+        foreach ($skills as $key => $item) {
+            $skill = new Skill;
+            $skill->name            = $item['name'];
+            $skill->skill_level     = $skill_levels[$key];
+            $skill->applicant_id    = $applicant->applicant_number;
+            $skill->user_id         = $request['user_id'];
+            $skill->save();
+        }
+
+        // saves references
+        $references = json_decode($request['references'], true);
+        foreach ($references as $key => $item) {
+            $reference = new Reference;
+            $reference->name            = $item['name'];
+            $reference->position        = $item['position'];
+            $reference->company         = $item['company'];
+            $reference->contact_number  = $item['contact_number'];
+            $reference->email           = $item['email'];
+            $reference->relationship    = $item['relationship'];
+            $reference->applicant_id    = $applicant->applicant_number;
+            $reference->user_id         = $request['user_id'];
+            $reference->save();
+        }
+
+        // remove resume content once inserted
+        if($applicant->id) {
+            $resume_id  = $request['resume_id'];
+            $resume     = ResumeParser::find($resume_id);
+            $resume->delete();
+        }
+
+        // insert activity log
+        $this->storeActivityLog('personal', $applicant, 'create');
+
+        $data['message'] = 'Applicant information from resume has been saved.';
+        $data['applicant_number'] = $applicant->applicant_number;
+        return response()->json($data);
     }
 
     private function generateApplicantNumber()

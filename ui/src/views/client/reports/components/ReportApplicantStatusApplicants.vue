@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between">
                 <h3>Total Results Found: {{ applicants.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -66,6 +66,16 @@ export default {
         const applicants = ref([]);
         const status_id = ref(route.params.id);
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('status_id', route.params.id ?? state.formData.status_id);
+            formData.append('from', state.formData.from ?? '');
+            formData.append('to', state.formData.to ?? '');
+
+            let response = await axios.post(`client/reports/export/applicant-status`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('status_id', route.params.id ?? state.formData.status_id);
@@ -83,7 +93,8 @@ export default {
             state,
             status,
             applicants,
-            status_id
+            status_id,
+            exportToExcel
         }
     }
 }
@@ -97,5 +108,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>

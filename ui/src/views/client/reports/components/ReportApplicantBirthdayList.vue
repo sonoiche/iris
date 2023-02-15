@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between">
                 <h3>Total Results Found: {{ applicants.length }}</h3>
                 <div>
-                    <button class="btn btn-success">Export to Excel</button>
+                    <button class="btn btn-success hide-on-print" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="row mb-6">
@@ -31,7 +31,7 @@
                             <td class="bordered">{{ applicant.birthdate }}</td>
                             <td class="bordered">{{ applicant.age }}</td>
                             <td class="bordered">{{ applicant.status }}</td>
-                            <td class="bordered">{{ applicant.contact_number }}</td>
+                            <td class="bordered">{{ applicant.mobile_number }}</td>
                             <td class="bordered">{{ applicant.email }}</td>
                         </tr>
                     </tbody>
@@ -58,6 +58,15 @@ export default {
         });
         const applicants = ref([]);
 
+        const exportToExcel = async () => {
+            let formData = new FormData();
+            formData.append('status_id', state.formData.status_id ?? '');
+            formData.append('birthmonth', state.formData.birthmonth ?? '');
+
+            let response = await axios.post(`client/reports/export/birthday`, formData);
+            window.open(response.data.filename);
+        }
+
         onMounted( async () => {
             let formData = new FormData();
             formData.append('status_id', state.formData.status_id ?? '');
@@ -70,7 +79,8 @@ export default {
 
         return {
             state,
-            applicants
+            applicants,
+            exportToExcel
         }
     }
 }
@@ -84,5 +94,10 @@ export default {
 .table.gy-5 th, .table.gy-5 td {
     padding-top: 7px;
     padding-bottom: 7px;
+}
+@media print {
+    .hide-on-print {
+        display: none;
+    }
 }
 </style>
