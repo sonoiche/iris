@@ -90,14 +90,16 @@ class LineupController extends Controller
             $data = [];
             foreach ($lineups as $lineup) {
                 $data[] = [
-                    'applicant_id'      => $applicant_id,
+                    'applicant_id'      => $lineup->applicant_id,
                     'position_id'       => $lineup->position_id,
                     'principal_id'      => $lineup->principal_id,
                     'job_order_id'      => $lineup->job_order_id,
                     'interview_date'    => $interview_date,
                     'venue'             => $request['venue'],
                     'remarks'           => $request['remarks'],
-                    'user_id'           => $request['user_id']
+                    'user_id'           => $request['user_id'],
+                    'created_at'        => Carbon::now(),
+                    'updated_at'        => Carbon::now()
                 ];
             }
 
