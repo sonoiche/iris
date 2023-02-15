@@ -19,7 +19,7 @@ class License extends Model
     {
         $this->attributes['date_issue'] = null;
         if(isset($value)) {
-            $this->attributes['date_issue'] = Carbon::parse($value)->format('Y-m-d');
+            $this->attributes['date_issue'] = Carbon::parse($value)->addDay()->format('Y-m-d');
         }
     }
 
@@ -27,7 +27,7 @@ class License extends Model
     {
         $this->attributes['date_taken'] = null;
         if(isset($value)) {
-            $this->attributes['date_taken'] = Carbon::parse($value)->format('Y-m-d');
+            $this->attributes['date_taken'] = Carbon::parse($value)->addDay()->format('Y-m-d');
         }
     }
 
@@ -35,7 +35,7 @@ class License extends Model
     {
         $this->attributes['date_expiry'] = null;
         if(isset($value)) {
-            $this->attributes['date_expiry'] = Carbon::parse($value)->format('Y-m-d');
+            $this->attributes['date_expiry'] = Carbon::parse($value)->addDay()->format('Y-m-d');
         }
     }
 

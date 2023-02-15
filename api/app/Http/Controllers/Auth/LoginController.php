@@ -61,7 +61,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validator($request->all())->validate();
-        $datetimenow = Carbon::now()->format('Y-m-d h:i:s');
+        $datetimenow = Carbon::now()->addDay()->format('Y-m-d h:i:s');
         $request->validate([
             'email' => ['required','email'],
             'password' => ['required']

@@ -32,7 +32,7 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $applicant = new Applicant;
-        $applicant->date_applied            = isset($request['date_applied']) ? Carbon::parse($request['date_applied'])->format('Y-m-d') : '';
+        $applicant->date_applied            = isset($request['date_applied']) ? Carbon::parse($request['date_applied'])->addDay()->format('Y-m-d') : '';
         $applicant->applicant_number        = $this->generateApplicantNumber();
         $applicant->fname                   = $request['fname'];
         $applicant->mname                   = $request['mname'];
@@ -41,7 +41,7 @@ class ApplicantController extends Controller
         $applicant->landline                = $request['landline'];
         $applicant->mobile_number           = $request['mobile_number'];
         $applicant->alt_mobile_number       = $request['alt_mobile_number'];
-        $applicant->birthdate               = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->birthdate               = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->addDay()->format('Y-m-d') : '';
         $applicant->gender                  = $request['gender'];
         $applicant->birthplace              = $request['birthplace'];
         $applicant->address                 = $request['address'];
@@ -85,7 +85,7 @@ class ApplicantController extends Controller
     public function update(ApplicantUpdateRequest $request, $id)
     {
         $applicant = Applicant::find($id);
-        $applicant->date_applied            = isset($request['date_applied']) ? Carbon::parse($request['date_applied'])->format('Y-m-d') : '';
+        $applicant->date_applied            = isset($request['date_applied']) ? Carbon::parse($request['date_applied'])->addDay()->format('Y-m-d') : '';
         $applicant->fname                   = $request['fname'];
         $applicant->mname                   = $request['mname'];
         $applicant->lname                   = $request['lname'];
@@ -93,7 +93,7 @@ class ApplicantController extends Controller
         $applicant->landline                = $request['landline'];
         $applicant->mobile_number           = $request['mobile_number'];
         $applicant->alt_mobile_number       = $request['alt_mobile_number'];
-        $applicant->birthdate               = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->birthdate               = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->addDay()->format('Y-m-d') : '';
         $applicant->gender                  = $request['gender'];
         $applicant->birthplace              = $request['birthplace'];
         $applicant->address                 = $request['address'];
@@ -115,9 +115,9 @@ class ApplicantController extends Controller
         $applicant->religion                = $request['religion'];
         $applicant->passport_number         = $request['passport_number'];
         $applicant->passport_place_issued   = $request['passport_place_issued'];
-        $applicant->passport_date_issued    = isset($request['passport_date_issued']) ? Carbon::parse($request['passport_date_issued'])->format('Y-m-d') : '';
-        $applicant->passport_date_submitted = isset($request['passport_date_submitted']) ? Carbon::parse($request['passport_date_submitted'])->format('Y-m-d') : '';
-        $applicant->passport_date_expiry    = isset($request['passport_date_expiry']) ? Carbon::parse($request['passport_date_expiry'])->format('Y-m-d') : '';
+        $applicant->passport_date_issued    = isset($request['passport_date_issued']) ? Carbon::parse($request['passport_date_issued'])->addDay()->format('Y-m-d') : '';
+        $applicant->passport_date_submitted = isset($request['passport_date_submitted']) ? Carbon::parse($request['passport_date_submitted'])->addDay()->format('Y-m-d') : '';
+        $applicant->passport_date_expiry    = isset($request['passport_date_expiry']) ? Carbon::parse($request['passport_date_expiry'])->addDay()->format('Y-m-d') : '';
         $applicant->sss_number              = $request['sss_number'];
         $applicant->tin_number              = $request['tin_number'];
         $applicant->philhealth              = $request['philhealth'];
@@ -189,7 +189,7 @@ class ApplicantController extends Controller
         $applicant->lname               = $request['lname'];
         $applicant->applicant_number    = $this->generateApplicantNumber();
         $applicant->mobile_number       = $request['mobile_number'];
-        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->addDay()->format('Y-m-d') : '';
         $applicant->keywords            = $request['keywords'];
         $applicant->user_id             = $request['user_id'];
 
@@ -445,13 +445,13 @@ class ApplicantController extends Controller
     public function storeResume(Request $request)
     {
         $applicant = new Applicant;
-        $applicant->date_applied        = Carbon::now()->format('Y-m-d');
+        $applicant->date_applied        = Carbon::now()->addDay()->format('Y-m-d');
         $applicant->applicant_number    = $this->generateApplicantNumber();
         $applicant->fname               = $request['fname'];
         $applicant->mname               = $request['mname'];
         $applicant->lname               = $request['lname'];
         $applicant->email               = $request['email'];
-        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->format('Y-m-d') : '';
+        $applicant->birthdate           = isset($request['birthdate']) ? Carbon::parse($request['birthdate'])->addDay()->format('Y-m-d') : '';
         $applicant->mobile_number       = $request['mobile_number'];
         $applicant->user_id             = $request['user_id'];
         $applicant->save();

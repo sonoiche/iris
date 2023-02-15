@@ -29,8 +29,8 @@ class TrainingController extends Controller
         $training->provider             = $request['provider'];
         $training->certificate_number   = $request['certificate_number'];
         $training->place_issue          = $request['place_issue'];
-        $training->date_issue           = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $training->date_expiry          = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $training->date_issue           = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $training->date_expiry          = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $training->remarks              = $request['remarks'];
         $training->applicant_id         = $request['applicant_id'];
         $training->user_id              = $request['user_id'];
@@ -55,8 +55,8 @@ class TrainingController extends Controller
         $training->provider             = $request['provider'];
         $training->certificate_number   = $request['certificate_number'];
         $training->place_issue          = $request['place_issue'];
-        $training->date_issue           = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $training->date_expiry          = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $training->date_issue           = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $training->date_expiry          = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $training->remarks              = $request['remarks'];
         $training->save();
 

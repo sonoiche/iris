@@ -31,9 +31,9 @@ class DocumentController extends Controller
         $document->document_number  = $request['document_number'];
         $document->place_issue      = $request['place_issue'];
         $document->remarks          = $request['remarks'];
-        $document->date_issue       = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $document->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
-        $document->date_submitted   = isset($request['date_submitted']) ? Carbon::parse($request['date_submitted'])->format('Y-m-d') : '';
+        $document->date_issue       = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $document->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
+        $document->date_submitted   = isset($request['date_submitted']) ? Carbon::parse($request['date_submitted'])->addDay()->format('Y-m-d') : '';
         $document->applicant_id     = $request['applicant_id'];
         $document->user_id          = $request['user_id'];
 
@@ -72,9 +72,9 @@ class DocumentController extends Controller
         $document->document_number  = $request['document_number'];
         $document->place_issue      = $request['place_issue'];
         $document->remarks          = $request['remarks'];
-        $document->date_issue       = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $document->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
-        $document->date_submitted   = isset($request['date_submitted']) ? Carbon::parse($request['date_submitted'])->format('Y-m-d') : '';
+        $document->date_issue       = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $document->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
+        $document->date_submitted   = isset($request['date_submitted']) ? Carbon::parse($request['date_submitted'])->addDay()->format('Y-m-d') : '';
 
         if($request['attachment'] != '' && $request->has('attachment')) {
             $this->removeAttachment($document->attachment);

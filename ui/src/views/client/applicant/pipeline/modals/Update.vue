@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { computed, onBeforeUpdate, reactive, ref } from 'vue';
+import { computed, onBeforeUpdate, reactive, ref, watch } from 'vue';
 import lineupRepo from '@/repositories/applicants/lineup';
 import statusRepo from '@/repositories/settings/status';
 
@@ -159,6 +159,10 @@ export default {
 
         onBeforeUpdate( async () => {
             await getStatuses();
+        });
+
+        watch(() => page.interview_date, () => {
+            console.log(page.interview_date);
         });
 
         return {

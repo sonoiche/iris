@@ -27,7 +27,7 @@ class ReportController extends Controller
     public function generateApplicantSource(Request $request)
     {
         $course = $request['course'];
-        $date_applied = (isset($request['date_applied']) && $request['date_applied'] != null) ? Carbon::parse($request['date_applied'])->format('Y-m-d') : '';
+        $date_applied = (isset($request['date_applied']) && $request['date_applied'] != null) ? Carbon::parse($request['date_applied'])->addDay()->format('Y-m-d') : '';
         $gender = $request['gender'];
         $keyword = $request['keyword'];
         $location = $request['location'];
@@ -108,8 +108,8 @@ class ReportController extends Controller
 
         $document_type  = $request['document_type_id'];
         $filter_by      = $request['filter_by'];
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         
         $result     = Applicant::join('documents','documents.applicant_id','=','applicants.applicant_number')
             ->leftJoin('document_types','document_types.id','=','documents.document_type_id')
@@ -174,8 +174,8 @@ class ReportController extends Controller
 
     public function generateEncodedApplicant(Request $request)
     {
-        $from   = Carbon::parse($request['from'])->format('Y-m-d');
-        $to     = Carbon::parse($request['to'])->format('Y-m-d');
+        $from   = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to     = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $user_id = $request['user_id'];
         
         $applicants = Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
@@ -213,8 +213,8 @@ class ReportController extends Controller
 
     public function generateSourceApplicant(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $source_id      = $request['source_id'];
         
         $data['from']   = Carbon::parse($request['from'])->format('d F Y');
@@ -268,8 +268,8 @@ class ReportController extends Controller
 
     public function generateAuditTrail(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');        
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');        
         $data['from']   = Carbon::parse($request['from'])->format('d F Y');
         $data['to']     = Carbon::parse($request['to'])->format('d F Y');
         $report_type    = $request['activity_type'];
@@ -325,8 +325,8 @@ class ReportController extends Controller
 
     public function generateDeployment(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $principal_id   = $request['principal_id'];
         
         $data['from']   = Carbon::parse($request['from'])->format('d F Y');
@@ -367,8 +367,8 @@ class ReportController extends Controller
 
     public function generateInterview(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $principal_id   = $request['principal_id'];
         $job_order_id   = $request['job_order_id'];
         
@@ -410,8 +410,8 @@ class ReportController extends Controller
 
     public function generateManpower(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $principal_id   = $request['principal_id'];
         $job_order_id   = $request['job_order_id'];
         
@@ -449,8 +449,8 @@ class ReportController extends Controller
 
     public function generateStatusApplicant(Request $request)
     {
-        $from           = Carbon::parse($request['from'])->format('Y-m-d');
-        $to             = Carbon::parse($request['to'])->format('Y-m-d');
+        $from           = Carbon::parse($request['from'])->addDay()->format('Y-m-d');
+        $to             = Carbon::parse($request['to'])->addDay()->format('Y-m-d');
         $status_id      = $request['status_id'];
         
         $data['from']   = Carbon::parse($request['from'])->format('d F Y');

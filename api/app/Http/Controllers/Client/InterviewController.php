@@ -31,7 +31,7 @@ class InterviewController extends Controller
         $position_id    = $request['position_id'];
         $applicant_ids  = explode(',', $request['applicant_ids']);
         $position       = JobOrderPosition::find($position_id);
-        $interview_date = Carbon::parse($request['interview_date'])->format('Y-m-d').' '.$request['time'].':00';
+        $interview_date = Carbon::parse($request['interview_date'])->addDay()->format('Y-m-d').' '.$request['time'].':00';
 
         foreach ($applicant_ids as $applicant_id) {
             $interview = new Interview;

@@ -82,8 +82,8 @@ class PrincipalController extends Controller
         $principal->mobile_number           = $request['mobile_number'];
         $principal->country_id              = $request['country_id'];
         $principal->accreditation_number    = $request['accreditation_number'];
-        $principal->date_issue              = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $principal->date_expiry             = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $principal->date_issue              = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $principal->date_expiry             = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $principal->industry_id             = $request['industry_id'];
         $principal->assigned_users          = $request['assigned_users'];
         $principal->remarks                 = $request['remarks'];
@@ -123,8 +123,8 @@ class PrincipalController extends Controller
         $principal->mobile_number           = $request['mobile_number'];
         $principal->country_id              = $request['country_id'];
         $principal->accreditation_number    = $request['accreditation_number'];
-        $principal->date_issue              = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->format('Y-m-d') : '';
-        $principal->date_expiry             = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $principal->date_issue              = isset($request['date_issue']) ? Carbon::parse($request['date_issue'])->addDay()->format('Y-m-d') : '';
+        $principal->date_expiry             = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $principal->industry_id             = $request['industry_id'];
         $principal->assigned_users          = $request['assigned_users'];
         $principal->remarks                 = $request['remarks'];

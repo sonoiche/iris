@@ -32,7 +32,7 @@ class ProcessingController extends Controller
                 'country_id'        => $request['country_id'],
                 'job_order_number'  => $request['job_order_number'],
                 'position_id'       => $request['position_id'],
-                'date_endorse'      => isset($request['date_endorse']) ? Carbon::parse($request['date_endorse'])->format('Y-m-d') : '',
+                'date_endorse'      => isset($request['date_endorse']) ? Carbon::parse($request['date_endorse'])->addDay()->format('Y-m-d') : '',
                 'user_id'           => $user_id
             ]
         );

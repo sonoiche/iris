@@ -122,9 +122,9 @@ class JobOrderController extends Controller
         $job_order                   = new JobOrder;
         $job_order->principal_id     = $principal_id;
         $job_order->job_order_number = $this->generateJobOrder($principal_id);
-        $job_order->date_receive     = isset($request['date_receive']) ? Carbon::parse($request['date_receive'])->format('Y-m-d') : '';
-        $job_order->date_needed      = isset($request['date_needed']) ? Carbon::parse($request['date_needed'])->format('Y-m-d') : '';
-        $job_order->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $job_order->date_receive     = isset($request['date_receive']) ? Carbon::parse($request['date_receive'])->addDay()->format('Y-m-d') : '';
+        $job_order->date_needed      = isset($request['date_needed']) ? Carbon::parse($request['date_needed'])->addDay()->format('Y-m-d') : '';
+        $job_order->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $job_order->job_type         = $request['job_type'];
         $job_order->status           = $request['status'];
         $job_order->user_id          = $request['user_id'];
@@ -142,9 +142,9 @@ class JobOrderController extends Controller
     public function update(JobOrderRequest $request, $id)
     {
         $job_order                   = JobOrder::find($id);
-        $job_order->date_receive     = isset($request['date_receive']) ? Carbon::parse($request['date_receive'])->format('Y-m-d') : '';
-        $job_order->date_needed      = isset($request['date_needed']) ? Carbon::parse($request['date_needed'])->format('Y-m-d') : '';
-        $job_order->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $job_order->date_receive     = isset($request['date_receive']) ? Carbon::parse($request['date_receive'])->addDay()->format('Y-m-d') : '';
+        $job_order->date_needed      = isset($request['date_needed']) ? Carbon::parse($request['date_needed'])->addDay()->format('Y-m-d') : '';
+        $job_order->date_expiry      = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $job_order->job_type         = $request['job_type'];
         $job_order->status           = $request['status'];
         $job_order->save();

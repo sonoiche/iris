@@ -28,10 +28,10 @@ class MedicalController extends Controller
         $clinic->clinic_id      = $request['clinic_id'];
         $clinic->status         = $request['status'];
         $clinic->remarks        = $request['remarks'];
-        $clinic->date_referred  = isset($request['date_referred']) ? Carbon::parse($request['date_referred'])->format('Y-m-d') : '';
-        $clinic->date_taken     = isset($request['date_taken']) ? Carbon::parse($request['date_taken'])->format('Y-m-d') : '';
-        $clinic->date_result    = isset($request['date_result']) ? Carbon::parse($request['date_result'])->format('Y-m-d') : '';
-        $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $clinic->date_referred  = isset($request['date_referred']) ? Carbon::parse($request['date_referred'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_taken     = isset($request['date_taken']) ? Carbon::parse($request['date_taken'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_result    = isset($request['date_result']) ? Carbon::parse($request['date_result'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $clinic->applicant_id   = $request['applicant_id'];
         $clinic->user_id        = $request['user_id'];
         $clinic->save();
@@ -54,10 +54,10 @@ class MedicalController extends Controller
         $clinic->clinic_id      = $request['clinic_id'];
         $clinic->status         = $request['status'];
         $clinic->remarks        = $request['remarks'];
-        $clinic->date_referred  = isset($request['date_referred']) ? Carbon::parse($request['date_referred'])->format('Y-m-d') : '';
-        $clinic->date_taken     = isset($request['date_taken']) ? Carbon::parse($request['date_taken'])->format('Y-m-d') : '';
-        $clinic->date_result    = isset($request['date_result']) ? Carbon::parse($request['date_result'])->format('Y-m-d') : '';
-        $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->format('Y-m-d') : '';
+        $clinic->date_referred  = isset($request['date_referred']) ? Carbon::parse($request['date_referred'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_taken     = isset($request['date_taken']) ? Carbon::parse($request['date_taken'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_result    = isset($request['date_result']) ? Carbon::parse($request['date_result'])->addDay()->format('Y-m-d') : '';
+        $clinic->date_expiry    = isset($request['date_expiry']) ? Carbon::parse($request['date_expiry'])->addDay()->format('Y-m-d') : '';
         $clinic->save();
 
         // insert activity log
