@@ -84,7 +84,7 @@ class LineupController extends Controller
         }
 
         if($status_id == Lineup::FOR_INTERVIEW) {
-            $ids = explode(',', $applicant_ids);
+            return $ids = explode(',', $applicant_ids);
             $lineups = Lineup::whereIn('applicant_id', $ids)->get();
             $interview_date = Carbon::parse($request['interview_date'])->addDay()->format('Y-m-d').' '.$request['interview_time'].':00';
             $data = [];
