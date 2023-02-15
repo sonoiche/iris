@@ -87,20 +87,21 @@ class LineupController extends Controller
             $ids = explode(',', $applicant_ids);
             $lineups = Lineup::whereIn('applicant_id', $ids)->get();
             $interview_date = Carbon::parse($request['interview_date'])->format('Y-m-d').' '.$request['interview_time'].':00';
+            $data = [];
             foreach ($lineups as $lineup) {
-                Interview::updateOrCreate(
-                    ['applicant_id'     => $applicant_id],
-                    [
-                        'position_id'       => $lineup->position_id,
-                        'principal_id'      => $lineup->principal_id,
-                        'job_order_id'      => $lineup->job_order_id,
-                        'interview_date'    => $interview_date,
-                        'venue'             => $request['venue'],
-                        'remarks'           => $request['remarks'],
-                        'user_id'           => $request['user_id']
-                    ]
-                );
+                $data[] = [
+                    'applicant_id'      => $applicant_id,
+                    'position_id'       => $lineup->position_id,
+                    'principal_id'      => $lineup->principal_id,
+                    'job_order_id'      => $lineup->job_order_id,
+                    'interview_date'    => $interview_date,
+                    'venue'             => $request['venue'],
+                    'remarks'           => $request['remarks'],
+                    'user_id'           => $request['user_id']
+                ];
             }
+
+            Interview::insert($data);
         }
 
         $data['message'] = 'Applicant lineup has been updated.';
