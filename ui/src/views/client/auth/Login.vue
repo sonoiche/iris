@@ -233,7 +233,7 @@ export default {
                     type: this.twofactortype
                 });
 				
-                if(response.status === 200 && response.data.errors.length == 0) {
+                if(response.status == 200 && response.data.errors.length == 0) {
                     localStorage.setItem('authuser', JSON.stringify(response.data.user));
 					localStorage.setItem('auth-qrcode', response.data.qrcode);
                     window.location.href = '/client/dashboard';
@@ -244,11 +244,11 @@ export default {
                     window.location.href = `/auth/login?msg=${response.data.errors.code[0]}`;
 				}
 
-                if(response.status === 422) {
+                if(response.status == 422) {
                     this.errors = response.data.errors;
                 }
             } catch (e) {
-                if(e.response.status === 422) {
+                if(e.response.status == 422) {
                     this.errors = e.response.data.errors;
                 }
             }
