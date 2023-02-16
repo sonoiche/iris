@@ -231,20 +231,20 @@ export default {
 				code: this.authentication_code,
 				type: this.twofactortype
 			});
-			
-			if(response.status == 200 && response.data.errors.length == 0) {
-				localStorage.setItem('authuser', JSON.stringify(response.data.user));
-				localStorage.setItem('auth-qrcode', response.data.qrcode);
-				window.location.href = '/client/dashboard';
-			} else {
-				localStorage.removeItem('authuser');
-				localStorage.removeItem('auth-qrcode');
-				localStorage.removeItem('token');
-				window.location.href = `/auth/login?msg=${response.data.errors.code[0]}`;
-			}
 
 			if(response.status == 422) {
 				this.errors = response.data.errors;
+			} else {
+				if(response.status == 200) {
+					localStorage.setItem('authuser', JSON.stringify(response.data.user));
+					localStorage.setItem('auth-qrcode', response.data.qrcode);
+					window.location.href = '/client/dashboard';
+				} else {
+					localStorage.removeItem('authuser');
+					localStorage.removeItem('auth-qrcode');
+					localStorage.removeItem('token');
+					window.location.href = `/auth/login?msg=${response.data.errors.code[0]}`;
+				}
 			}
 		}
     },
