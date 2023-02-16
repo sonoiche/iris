@@ -381,8 +381,8 @@ export default {
         });
 
         const isCanWrite = (name) => {
-            if(page.authuser.role_id != 1) {
-                let permissions = page.authuser.role?.permissions;
+            if(state.authuser.role_id != 1) {
+                let permissions = state.authuser.role?.permissions;
                 let array_permission = false;
                 permissions.forEach(item => {
                     if(item.name == name) {
