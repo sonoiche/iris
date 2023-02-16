@@ -226,32 +226,26 @@ export default {
 			this.completed = false;
         },
 		async challengeLogin() {
-			try {
-                let response = await axios.post(`client/two-factor-authentication/challenge`, {
-                    user_id: this.user.id,
-                    code: this.authentication_code,
-                    type: this.twofactortype
-                });
-				
-                if(response.status == 200 && response.data.errors.length == 0) {
-                    localStorage.setItem('authuser', JSON.stringify(response.data.user));
-					localStorage.setItem('auth-qrcode', response.data.qrcode);
-                    window.location.href = '/client/dashboard';
-                } else {
-					localStorage.removeItem('authuser');
-					localStorage.removeItem('auth-qrcode');
-					localStorage.removeItem('token');
-                    window.location.href = `/auth/login?msg=${response.data.errors.code[0]}`;
-				}
+			let response = await axios.post(`client/two-factor-authentication/challenge`, {
+				user_id: this.user.id,
+				code: this.authentication_code,
+				type: this.twofactortype
+			});
+			
+			if(response.status == 200 && response.data.errors.length == 0) {
+				localStorage.setItem('authuser', JSON.stringify(response.data.user));
+				localStorage.setItem('auth-qrcode', response.data.qrcode);
+				window.location.href = '/client/dashboard';
+			} else {
+				localStorage.removeItem('authuser');
+				localStorage.removeItem('auth-qrcode');
+				localStorage.removeItem('token');
+				window.location.href = `/auth/login?msg=${response.data.errors.code[0]}`;
+			}
 
-                if(response.status == 422) {
-                    this.errors = response.data.errors;
-                }
-            } catch (e) {
-                if(e.response.status == 422) {
-                    this.errors = e.response.data.errors;
-                }
-            }
+			if(response.status == 422) {
+				this.errors = response.data.errors;
+			}
 		}
     },
 	mounted() {
