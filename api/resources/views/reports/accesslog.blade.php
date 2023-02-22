@@ -1,6 +1,11 @@
 <table class="table align-middle fs-6 gy-5 bordered">
     <tbody>
         <tr>
+            <td colspan="4" style="text-align: center">
+                <img src="{{ $logo }}" alt="IRIS Online" align="center">
+            </td>
+        </tr>
+        <tr>
             <td colspan="4" style="text-align: center; font-size: 16px">Audit Trail Report by Create, Update Activity of Applicant Log {{ $report_type }}</td>
         </tr>
         <tr>

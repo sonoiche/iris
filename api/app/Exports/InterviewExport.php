@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Client\Applicant;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class InterviewExport implements FromView
@@ -23,6 +24,7 @@ class InterviewExport implements FromView
 
     public function view(): View
     {
+        $config       = Configuration::find(1);
         $principal_id = $this->principal_id;
         $job_order_id = $this->job_order_id;
         return view('reports.interview', [
@@ -41,7 +43,8 @@ class InterviewExport implements FromView
                 ->orderBy('applicants.fname')
                 ->get(),
             'from'   => $this->from,
-            'to'     => $this->to
+            'to'     => $this->to,
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

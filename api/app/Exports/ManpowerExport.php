@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use App\Models\Client\Employer\JobOrder;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Client\Employer\JobOrderPosition;
@@ -25,6 +26,7 @@ class ManpowerExport implements FromView
 
     public function view(): View
     {
+        $config       = Configuration::find(1);
         $principal_id = $this->principal_id;
         $job_order_id = $this->job_order_id;
 
@@ -57,7 +59,8 @@ class ManpowerExport implements FromView
         return view('reports.manpower', [
             'joborders' => $joborders_array,
             'from'      => $this->from,
-            'to'        => $this->to
+            'to'        => $this->to,
+            'logo'      => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

@@ -106,6 +106,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('applicants/resume-parser', [ApplicantController::class, 'resumeParser']);
         Route::post('applicants/trashed', [ApplicantController::class, 'getTrashed']);
         Route::post('applicants/store-resume', [ApplicantController::class, 'storeResume']);
+        Route::post('applicants/upload-photo', [ApplicantController::class, 'uploadPhoto']);
         Route::get('applicants/options', [ApplicantController::class, 'options']);
         Route::get('applicants/get-resume', [ApplicantController::class, 'getResumeData']);
         Route::get('applicants/{id}/return', [ApplicantController::class, 'returnApplicant']);

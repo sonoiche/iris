@@ -105,7 +105,7 @@ class Applicant extends Model
     {
         $photo = isset($this->attributes['photo']) ? $this->attributes['photo'] : '';
         if($photo) {
-            return config('app.api_url').'/storage/'.$photo;
+            return config('app.api_url').'/'.$photo;
         }
 
         return config('app.api_url').'/images/no-photo.png';

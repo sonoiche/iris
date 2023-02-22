@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Client\Applicant;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class BirthdayExport implements FromView
@@ -19,6 +20,7 @@ class BirthdayExport implements FromView
 
     public function view(): View
     {
+        $config      = Configuration::find(1);
         $month       = json_decode($this->month, true);
         $status_id   = $this->status_id;
         $final_month = sprintf("%02d", $month['month'] + 1);
@@ -32,7 +34,8 @@ class BirthdayExport implements FromView
                 })
                 ->orderBy('applicants.fname')
                 ->get(),
-            'month'   => $final_month
+            'month'   => $final_month,
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

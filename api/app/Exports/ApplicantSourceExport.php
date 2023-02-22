@@ -3,8 +3,9 @@
 namespace App\Exports;
 
 use App\Models\Client\Applicant;
-use App\Models\Client\ApplicantSource;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
+use App\Models\Client\ApplicantSource;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class ApplicantSourceExport implements FromView
@@ -22,6 +23,7 @@ class ApplicantSourceExport implements FromView
 
     public function view(): View
     {
+        $config = Configuration::find(1);
         $source = ApplicantSource::find($this->source_id);
         return view('reports.applicant-source', [
             'applicants' => Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
@@ -36,7 +38,8 @@ class ApplicantSourceExport implements FromView
                 ->get(),
             'source' => $source,
             'from'   => $this->from,
-            'to'     => $this->to
+            'to'     => $this->to,
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

@@ -19,8 +19,11 @@
                                                 <div class="col-lg-7 col-md-12">
                                                     <loading v-if="state.isLoading" />
                                                     <div class="d-flex" v-else>
-                                                        <div class="mr-15">
+                                                        <div class="mr-15 text-center">
                                                             <img :src="applicant.display_photo" alt="IRIS" class="img-fluid profile-photo">
+                                                            <div class="mt-3">
+                                                                <button class="btn btn-primary btn-xs" @click="uploadApplicantPhoto">Upload Photo</button>
+                                                            </div>
                                                         </div>
                                                         <div>
                                                             <span class="fw-bolder text-muted mr-10">Name:</span> <span class="fw-bold fs-6 text-gray-800">{{ applicant.fullname }} - {{ applicant.applicant_number }}</span><br>
@@ -76,6 +79,7 @@
                 </div>
             </div>
         </div>
+        <ModalCamera :is-active="modalActive" :applicant_id="state.applicant_id" :isLoading="state.isLoading" @close-modal="closeModalCamera" @refresh-table="refresh" />
     </div>
 </template>
 
@@ -111,6 +115,7 @@ import ApplicantCreateMedical from '@/views/client/applicant/medical/Create.vue'
 import ApplicantEditMedical from '@/views/client/applicant/medical/Edit.vue';
 import ApplicantLineup from '@/views/client/applicant/lineup/Index.vue';
 import ApplicantProcessing from '@/views/client/applicant/processing/Index.vue';
+import ModalCamera from '@/views/client/applicant/Camera.vue';
 
 export default {
     setup() {
@@ -123,6 +128,7 @@ export default {
         });
         const currentComponent = ref('ApplicantOverview');
         const logs = ref([]);
+        const modalActive = ref(false);
 
         const viewComponent = (component) => {
             currentComponent.value = component;
@@ -131,6 +137,22 @@ export default {
         const changeComponent = (component, id = '') => {
             currentComponent.value = component;
             state.updateId = id;
+        }
+
+        const uploadApplicantPhoto = () => {
+            modalActive.value = true;
+        }
+
+        const closeModalCamera = () => {
+            modalActive.value = false;
+        }
+
+        const refresh = async () => {
+            closeModalCamera();
+            await getApplicant(route.params.id);
+
+            let response = await axios.get(`client/activity-logs?applicant_id=${route.params.id}&limit=5`);
+            logs.value = response.data.data;
         }
 
         onMounted( async () => {
@@ -148,7 +170,11 @@ export default {
             currentComponent,
             viewComponent,
             changeComponent,
-            logs
+            logs,
+            modalActive,
+            uploadApplicantPhoto,
+            closeModalCamera,
+            refresh
         }
     },
     components: {
@@ -178,7 +204,8 @@ export default {
         ApplicantCreateMedical,
         ApplicantEditMedical,
         ApplicantLineup,
-        ApplicantProcessing
+        ApplicantProcessing,
+        ModalCamera
     }
 }
 </script>

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Client\Applicant;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use App\Models\Client\ApplicantStatus;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -22,6 +23,7 @@ class StatusExport implements FromView
 
     public function view(): View
     {
+        $config = Configuration::find(1);
         return view('reports.status', [
             'applicants' => Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
                 ->leftjoin('users','users.id','=','applicants.user_id')
@@ -34,7 +36,8 @@ class StatusExport implements FromView
                 ->get(),
             'from'   => $this->from,
             'to'     => $this->to,
-            'status' => ApplicantStatus::find($this->status_id)
+            'status' => ApplicantStatus::find($this->status_id),
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

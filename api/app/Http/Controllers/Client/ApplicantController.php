@@ -524,6 +524,41 @@ class ApplicantController extends Controller
         return response()->json($data);
     }
 
+    public function uploadPhoto(Request $request)
+    {
+        $upload_type    = $request['upload_type'];
+        $applicant_id   = $request['applicant_id'];
+        
+        $applicant = Applicant::where('applicant_number', $applicant_id)->first();
+        if($upload_type == 'camera') {
+            $base64image        = $request['canvas'];
+            $date               = time().'.png';
+            $image              = $this->base64_to_jpeg($base64image, storage_path().'/app/public/uploads/applicant/'.$date);
+            $applicant->photo   = 'storage/uploads/applicant/'.$image;
+            $applicant->save();
+        }
+
+        if($upload_type == 'photo') {
+            if($request['image'] != '' && $request->has('image')) {
+                $file   = $request->file('image');
+                $image  = time().'.'.$file->getClientOriginalExtension();
+    
+                Storage::disk('public')->putFileAs(
+                    'uploads/applicant',
+                    $file,
+                    $image
+                );
+    
+                $applicant->photo = 'storage/uploads/applicant/'.$image;
+                $applicant->save();
+            }
+        }
+
+        $data['applicant']  = $applicant;
+        $data['message']    = 'Applicant profile photo has been updated.';
+        return response()->json($data);
+    }
+
     private function generateApplicantNumber()
     {
         $year = date('Y');
@@ -551,5 +586,21 @@ class ApplicantController extends Controller
         $activity->module           = $type;
         $activity->user_action      = $action;
         $activity->save();
+    }
+
+    private function base64_to_jpeg($base64_string, $output_file) {
+
+        $parts        = explode(";base64,", $base64_string);
+        $imagebase64  = base64_decode($parts[1]);
+        // open the output file for writing
+        $ifp = fopen( $output_file, 'w' ); 
+    
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, $imagebase64 );
+    
+        // clean up the file resource
+        fclose( $ifp ); 
+    
+        return basename($output_file);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Client\Applicant;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use App\Models\Client\ApplicantStatus;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -22,6 +23,7 @@ class DeploymentExport implements FromView
 
     public function view(): View
     {
+        $config       = Configuration::find(1);
         $principal_id = $this->principal_id;
         return view('reports.deployment', [
             'applicants' => Applicant::leftJoin('lineups','lineups.applicant_id','=','applicants.applicant_number')
@@ -39,7 +41,8 @@ class DeploymentExport implements FromView
                 ->orderBy('applicants.fname')
                 ->get(),
             'from'   => $this->from,
-            'to'     => $this->to
+            'to'     => $this->to,
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Client\ActivityLog;
 use Illuminate\Contracts\View\View;
+use App\Models\Client\Configuration;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class ActivityExport implements FromView
@@ -23,6 +24,7 @@ class ActivityExport implements FromView
 
     public function view(): View
     {
+        $config      = Configuration::find(1);
         $report_type = $this->report_type;
         $user_id     = $this->user_id;
         $blade       = ($this->report_type == 'crud') ? 'reports.activity' : 'reports.accesslog';
@@ -38,7 +40,8 @@ class ActivityExport implements FromView
             ->get(),
             'from'   => $this->from,
             'to'     => $this->to,
-            'report_type' => $this->report_type
+            'report_type' => $this->report_type,
+            'logo'   => storage_path('app/public/'.$config->logo)
         ]);
     }
 }

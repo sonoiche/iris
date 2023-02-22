@@ -121,6 +121,21 @@ export default function applicantRepo() {
         }
     }
 
+    const uploadApplicantPhoto = async (data) => {
+        errors.value = '';
+        try {
+            let response = await axios.post(`client/applicants/upload-photo`, data);
+            alertmessage(response.data.message);
+            status.value = response.status;
+            applicant.value = response.data.applicant;
+        } catch (e) {
+            if(e.response.status === 422) {
+                errors.value = e.response.data.errors;
+                status.value = e.response.status;
+            }
+        }
+    }
+
     const destroyApplicant = async (id) => {
         let response = await axios.delete(`client/applicants/${id}`);
         alertmessage(response.data.message);
@@ -174,6 +189,7 @@ export default function applicantRepo() {
         permanentDestroyApplicant,
         returnApplicant,
         storeApplicantFromResume,
+        uploadApplicantPhoto,
         alertmessage
     }
 
