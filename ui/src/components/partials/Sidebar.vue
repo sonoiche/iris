@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-item py-1" @mouseover="menuHover('applicant')" @mouseleave="menuHoverLeave('applicant')" :class="{ 'show menu-dropdown' : page.applicantHover}">
+                <!-- <div class="menu-item py-1" @mouseover="menuHover('applicant')" @mouseleave="menuHoverLeave('applicant')" :class="{ 'show menu-dropdown' : page.applicantHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
                             <i class="fonticon-user-2 fs-1"></i>
@@ -164,16 +164,16 @@
                                 <span class="menu-title">Document List</span>
                             </router-link>
                         </div>
-                        <!-- <div class="menu-item">
+                        <!- - <div class="menu-item">
                             <a class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Medical</span>
                             </a>
-                        </div> -->
+                        </div> - ->
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="menu-item py-1" @mouseover="menuHover('web')" @mouseleave="menuHoverLeave('web')" :class="{ 'show menu-dropdown' : page.webHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
@@ -220,7 +220,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="menu-item py-1" @mouseover="menuHover('report')" @mouseleave="menuHoverLeave('report')" :class="{ 'show menu-dropdown' : page.reportHover}">
+                <!-- <div class="menu-item py-1" @mouseover="menuHover('report')" @mouseleave="menuHoverLeave('report')" :class="{ 'show menu-dropdown' : page.reportHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
                             <i class="fonticon-stats fs-1"></i>
@@ -297,7 +297,7 @@
                             </router-link>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="menu-item py-1" @mouseover="menuHover('settings')" @mouseleave="menuHoverLeave('settings')" :class="{ 'show menu-dropdown' : page.settingsHover}">
                     <span class="menu-link menu-center">
                         <span class="menu-icon me-0">
