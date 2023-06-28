@@ -304,7 +304,7 @@
                             <i class="fonticon-setting fs-1"></i>
                         </span>
                     </span>
-                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 409px);">
+                    <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-200px w-lg-225px show" style="z-index: 106; position: fixed; inset: 0px auto auto 0px; margin: 0px; transform: translate(100px, 238px);"> <!-- 409px -->
                         <div class="menu-item">
                             <div class="menu-content">
                                 <span class="menu-section fs-5 fw-bolder ps-1 py-1">Settings</span>
