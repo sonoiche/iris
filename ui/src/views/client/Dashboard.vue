@@ -1,19 +1,14 @@
 <template>
     <div>
         <Header />
-        <div class="content-wrapper">
+        <div class="content-wrapper" v-if="page.turnOff">
             <div class="container-fluid container-p-y">
                 <div id="kt_app_content_container" class="app-container container-fluid" style="padding-left: 100px !important;">
                     <div class="row g-5 g-xxl-10">
-                        <!--begin::Col-->
                         <div class="col-xl-6 col-xxl-6 mb-xl-5 mb-xxl-10">
-                            <!--begin::Card widget 4-->
                             <div class="card card-flush">
-                                <!--begin::Header-->
                                 <div class="card-header pt-5">
-                                    <!--begin::Title-->
                                     <div class="card-title d-flex flex-column">
-                                        <!--begin::Info-->
                                         <div class="d-flex align-items-center">
                                             <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">Quick Links</span>
                                         </div>
@@ -205,7 +200,8 @@ export default {
     setup() {
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
-            authuser: JSON.parse(localStorage.getItem('authuser'))
+            authuser: JSON.parse(localStorage.getItem('authuser')),
+            turnOff: false
         });
         const { applicants, getApplicants } = applicantRepo();
         const { principals, getSelectPrincipal } = principalRepo();
