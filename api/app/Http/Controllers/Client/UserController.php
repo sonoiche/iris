@@ -227,7 +227,7 @@ class UserController extends Controller
             $query->where('user_id', $user_id);
         })->when($applicant_id, function ($query, $applicant_id) {
             $query->where('applicant_id', $applicant_id);
-        })->latest()->limit($limit)->get();
+        })->whereNotNull('applicant_id')->latest()->limit($limit)->get();
 
     return response()->json($data);
     }
