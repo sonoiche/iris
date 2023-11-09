@@ -201,7 +201,7 @@ export default {
         const page = reactive({
             base_url: process.env.VUE_APP_URL,
             authuser: JSON.parse(localStorage.getItem('authuser')),
-            turnOff: false
+            turnOff: true
         });
         const { applicants, getApplicants } = applicantRepo();
         const { principals, getSelectPrincipal } = principalRepo();
