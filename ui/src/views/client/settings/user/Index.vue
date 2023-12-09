@@ -80,7 +80,7 @@ export default {
         const addUser = () => {
             modalActive.value = true;
             page.isLoading = false;
-            user.value = [];
+            user.value = {};
         }
 
         const closeModalUser = () => {
@@ -224,13 +224,26 @@ export default {
             user.value = await getUser(id);
         }
 
-        const removeUser = async (id) => {
-            page.isLoading = false;
-            await destroyUser(id);
-            if(status.value == 200) {
-                initialize.value = false;
-                $('#applicants-table').DataTable().destroy();
-            }
+        const removeUser = (id) => {
+            page.idToDelete = id;
+            swal({
+                title: 'Are you sure?',
+                text: "You want to delete this?",
+                icon: 'warning',
+                showCancelButton: true,
+                allowOutsideClick: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, please'
+            }).then( async (result) => {
+                if (result.isConfirmed) {
+                    await destroyUser(page.idToDelete);
+                    if(status.value == 200) {
+                        $('#source-table').DataTable().destroy();
+                        initDatatable();
+                    }
+                }
+            });
         }
 
         onMounted(() => {
