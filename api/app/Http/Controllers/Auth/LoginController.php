@@ -60,20 +60,21 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        return $request->all();
-        // $this->validator($request->all())->validate();
-        // $datetimenow = Carbon::now()->addDay()->format('Y-m-d h:i:s');
-        // $request->validate([
-        //     'email' => ['required','email'],
-        //     'password' => ['required']
-        // ]);
+        $this->validator($request->all())->validate();
+        $datetimenow = Carbon::now()->addDay()->format('Y-m-d h:i:s');
+        $request->validate([
+            'email' => ['required','email'],
+            'password' => ['required']
+        ]);
 
-        // $user = User::where('email', $request['email'])->first();
-        // if(!$user || !Hash::check($request['password'], $user->password)) {
-        //     throw ValidationException::withMessages([
-        //         'email' => ['The provided credential is incorrect.']
-        //     ]);
-        // }
+        $user = User::where('email', $request['email'])->first();
+        if(!$user || !Hash::check($request['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credential is incorrect.']
+            ]);
+        }
+
+        return $user;
 
         // $oauth = DB::table('oauth_access_tokens')->where('user_id', $user->id)
         //     ->where('expires_at', '>', $datetimenow)
