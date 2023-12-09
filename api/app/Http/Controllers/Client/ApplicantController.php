@@ -79,7 +79,7 @@ class ApplicantController extends Controller
 
     public function show($applicant_number)
     {
-        return new ApplicantResource(Applicant::where('applicant_number', $applicant_number)->first());
+        return new ApplicantResource(Applicant::where('applicant_number', $applicant_number)->withTrashed()->first());
     }
 
     public function update(ApplicantUpdateRequest $request, $id)
