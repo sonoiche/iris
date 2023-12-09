@@ -125,8 +125,6 @@ class LoginController extends Controller
             $user->save();
         }
 
-        return $user;
-
         // // insert to activity log
         // $activity = new ActivityLog;
         // $activity->user_id          = $user->id;
@@ -138,7 +136,7 @@ class LoginController extends Controller
         // $data['user'] = $user;
         // $data['two_factor_until'] = $user->two_factor_until;
 
-        // return response()->json($data);
+        return response()->json($data);
     }
 
     public function logout(Request $request)
