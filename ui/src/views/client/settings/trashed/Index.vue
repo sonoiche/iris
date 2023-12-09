@@ -236,6 +236,11 @@ export default {
                 const cell =  $('#applicants-table').DataTable().cell( $(this).closest("td") );
                 deleteApplicant(cell.data());
             });
+
+            $('tbody', '#applicants-table').on( 'click', '.view-applicant', function(){
+                const cell =  $('#applicants-table').DataTable().cell( $(this).closest("td") );
+                viewApplicant(cell.data()['applicant_id']);
+            });
         });
 
         return {
