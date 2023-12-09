@@ -125,16 +125,16 @@ class LoginController extends Controller
             $user->save();
         }
 
-        // // insert to activity log
-        // $activity = new ActivityLog;
-        // $activity->user_id          = $user->id;
-        // $activity->username         = $user->fname.' '.$user->lname;
-        // $activity->activity_type    = 'access';
-        // $activity->ip_address       = $this->getIp();
-        // $activity->save();
+        // insert to activity log
+        $activity = new ActivityLog;
+        $activity->user_id          = $user->id;
+        $activity->username         = $user->fname.' '.$user->lname;
+        $activity->activity_type    = 'access';
+        $activity->ip_address       = '127.0.0.1';//$this->getIp();
+        $activity->save();
 
-        // $data['user'] = $user;
-        // $data['two_factor_until'] = $user->two_factor_until;
+        $data['user'] = $user;
+        $data['two_factor_until'] = $user->two_factor_until;
 
         return response()->json($data);
     }
