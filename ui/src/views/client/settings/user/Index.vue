@@ -238,9 +238,9 @@ export default {
             }).then( async (result) => {
                 if (result.isConfirmed) {
                     initialize.value = false;
+                    $('#source-table').DataTable().destroy();
                     await destroyUser(page.idToDelete);
                     if(status.value == 200) {
-                        $('#source-table').DataTable().destroy();
                         initDatatable();
                     }
                 }
