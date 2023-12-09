@@ -219,9 +219,10 @@ export default {
         const editUser = async (id) => {
             initialize.value = false;
             $('#applicants-table').DataTable().destroy();
+            await getUser(id);
             modalActive.value = true;
             page.isLoading = false;
-            await getUser(id);
+            console.log(user.value);
         }
 
         const removeUser = (id) => {
