@@ -17,7 +17,7 @@ export default function userRepo() {
 
     const getUser = async (id) => {
         let response = await axios.get(`client/users/${id}`);
-        user.value = response.data.data;
+        user.value = response.data.user;
     }
 
     const getSelectUser = async () => {
