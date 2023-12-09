@@ -221,7 +221,7 @@ export default {
             $('#applicants-table').DataTable().destroy();
             modalActive.value = true;
             page.isLoading = false;
-            user.value = await getUser(id);
+            await getUser(id);
         }
 
         const removeUser = (id) => {
