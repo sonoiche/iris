@@ -237,11 +237,9 @@ export default {
                 confirmButtonText: 'Yes, please'
             }).then( async (result) => {
                 if (result.isConfirmed) {
-                    initialize.value = false;
-                    $('#source-table').DataTable().destroy();
                     await destroyUser(page.idToDelete);
                     if(status.value == 200) {
-                        initDatatable();
+                        location.reload();
                     }
                 }
             });
