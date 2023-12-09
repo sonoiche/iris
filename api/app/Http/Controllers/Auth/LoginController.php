@@ -74,23 +74,23 @@ class LoginController extends Controller
             ]);
         }
 
-        return $user;
+        $oauth = DB::table('oauth_access_tokens')->where('user_id', $user->id)
+            ->where('expires_at', '>', $datetimenow)
+            ->first();
 
-        // $oauth = DB::table('oauth_access_tokens')->where('user_id', $user->id)
-        //     ->where('expires_at', '>', $datetimenow)
-        //     ->first();
+        if(!empty($oauth)){
+            if($user->access_token) {
+                $data['token'] = $user->access_token;
+            } else {
+                $data['token'] = $token = $user->createToken($user->name)->accessToken;
+                User::where('id', $user->id)->update(['access_token' => $token]);
+            }
+        } else {
+            $data['token'] = $token = $user->createToken($user->name)->accessToken;
+            User::where('id', $user->id)->update(['access_token' => $token]);
+        }
 
-        // if(!empty($oauth)){
-        //     if($user->access_token) {
-        //         $data['token'] = $user->access_token;
-        //     } else {
-        //         $data['token'] = $token = $user->createToken($user->name)->accessToken;
-        //         User::where('id', $user->id)->update(['access_token' => $token]);
-        //     }
-        // } else {
-        //     $data['token'] = $token = $user->createToken($user->name)->accessToken;
-        //     User::where('id', $user->id)->update(['access_token' => $token]);
-        // }
+        return $data;
 
         // if($user->two_factor_secret) {
         //     $data['qrcode'] = $user->twoFactorQrCodeSvg();
