@@ -127,7 +127,7 @@ export default {
             if(props.user.id) {
                 formData.append('_method', 'PUT');
                 formData.append('id', props.user.id);
-                await updateUser(formData, props.user.id);
+                await updateUser(formData, props.user.id, false);
             } else {
                 await storeUser(formData);
             }

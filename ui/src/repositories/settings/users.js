@@ -40,13 +40,15 @@ export default function userRepo() {
         }
     }
 
-    const updateUser = async (data, id) => {
+    const updateUser = async (data, id, isStorage = true) => {
         errors.value = '';
         try {
             let response = await axios.post(`client/users/${id}`, data);
             alertmessage(response.data.message);
             status.value = response.status;
-            localStorage.setItem('authuser', JSON.stringify(response.data.user));
+            if(isStorage) {
+                localStorage.setItem('authuser', JSON.stringify(response.data.user));
+            }
         } catch (e) {
             if(e.response.status === 422) {
                 errors.value = e.response.data.errors;

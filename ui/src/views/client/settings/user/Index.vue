@@ -222,7 +222,6 @@ export default {
             await getUser(id);
             modalActive.value = true;
             page.isLoading = false;
-            console.log(user.value);
         }
 
         const removeUser = (id) => {
