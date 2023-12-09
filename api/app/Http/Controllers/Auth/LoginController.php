@@ -90,42 +90,42 @@ class LoginController extends Controller
             User::where('id', $user->id)->update(['access_token' => $token]);
         }
 
-        return $data;
+        if($user->two_factor_secret) {
+            $data['qrcode'] = $user->twoFactorQrCodeSvg();
+            $data['code']   = '';
+            foreach (json_decode(decrypt($user->two_factor_recovery_codes, true)) as $code) {
+                $data['code'] = trim($code);
+                break;
+            }
+        }
 
-        // if($user->two_factor_secret) {
-        //     $data['qrcode'] = $user->twoFactorQrCodeSvg();
-        //     $data['code']   = '';
-        //     foreach (json_decode(decrypt($user->two_factor_recovery_codes, true)) as $code) {
-        //         $data['code'] = trim($code);
-        //         break;
-        //     }
-        // }
-
-        // // if($user->sms_authentication) {
-        // //     $user->sms_code = $this->generateOtp();
-        // //     $user->save();
-
-        // //     // send OTP
-        // //     $phone_number = (string) PhoneNumber::make($user->sms_auth_number)->ofCountry('PH');
-        // //     $otp_password = $user->sms_code;
-
-        // //     $sid    = "ACc27ac3a6b54f5abf0471c2b1c5ff4376"; 
-        // //     $token  = "47cabe340916bca8d41f764897fbc9e7"; 
-        // //     $twilio = new Client($sid, $token); 
-            
-        // //     $twilio->messages->create($phone_number,
-        // //         [
-        // //             "messagingServiceSid" => "MG2e9435f1a0ed02995b56aa45c6247e82",      
-        // //             "body" => "IRIS Online one time password. Your OTP is ".$otp_password.". To continue logging in to your account, input this 6 digit code." 
-        // //         ] 
-        // //     ); 
-        // // }
-
-        // $timenow = Carbon::now();
-        // if(isset($user->two_factor_until) && $timenow > $user->two_factor_until) {
-        //     $user->two_factor_until = null;
+        // if($user->sms_authentication) {
+        //     $user->sms_code = $this->generateOtp();
         //     $user->save();
+
+        //     // send OTP
+        //     $phone_number = (string) PhoneNumber::make($user->sms_auth_number)->ofCountry('PH');
+        //     $otp_password = $user->sms_code;
+
+        //     $sid    = "ACc27ac3a6b54f5abf0471c2b1c5ff4376"; 
+        //     $token  = "47cabe340916bca8d41f764897fbc9e7"; 
+        //     $twilio = new Client($sid, $token); 
+            
+        //     $twilio->messages->create($phone_number,
+        //         [
+        //             "messagingServiceSid" => "MG2e9435f1a0ed02995b56aa45c6247e82",      
+        //             "body" => "IRIS Online one time password. Your OTP is ".$otp_password.". To continue logging in to your account, input this 6 digit code." 
+        //         ] 
+        //     ); 
         // }
+
+        $timenow = Carbon::now();
+        if(isset($user->two_factor_until) && $timenow > $user->two_factor_until) {
+            $user->two_factor_until = null;
+            $user->save();
+        }
+
+        return $user;
 
         // // insert to activity log
         // $activity = new ActivityLog;
