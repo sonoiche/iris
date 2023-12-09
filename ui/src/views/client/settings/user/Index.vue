@@ -71,7 +71,7 @@ export default {
             idToDelete: ''
         });
 
-        const { user, getUser } = userRepo();
+        const { user, getUser, destroyUser, status } = userRepo();
 
         const initialize = ref(false);
         const modalActive = ref(false);
@@ -162,6 +162,9 @@ export default {
                                 </a>
                                 <div class="dropdown-menu menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                     <div class="menu-item px-3">
+                                        <a href="javascript:;" class="menu-link px-3 edit-user">Edit</a>
+                                    </div>
+                                    <div class="menu-item px-3">
                                         <a href="javascript:;" class="menu-link px-3 remove-user">Delete</a>
                                     </div>
                                 </div>
@@ -213,6 +216,23 @@ export default {
             return true;
         }
 
+        const editUser = async (id) => {
+            initialize.value = false;
+            $('#applicants-table').DataTable().destroy();
+            modalActive.value = true;
+            page.isLoading = false;
+            user.value = await getUser(id);
+        }
+
+        const removeUser = async (id) => {
+            page.isLoading = false;
+            await destroyUser(id);
+            if(status.value == 200) {
+                initialize.value = false;
+                $('#applicants-table').DataTable().destroy();
+            }
+        }
+
         onMounted(() => {
             initDatatable();
 
@@ -239,6 +259,8 @@ export default {
             refresh,
             user,
             getUser,
+            destroyUser,
+            status,
             isCanWrite,
             isCanDelete
         }
