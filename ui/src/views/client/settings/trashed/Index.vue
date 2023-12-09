@@ -65,7 +65,8 @@ export default {
             search_table: '',
             isLoading: true,
             idToRetrieve: 0,
-            activeApplcantId: ''
+            activeApplcantId: '',
+            authuser: JSON.parse(localStorage.getItem('authuser'))
         });
         const initialize = ref(false);
         const totalCount = ref(0);
@@ -200,13 +201,13 @@ export default {
                         $('#applicants-table').DataTable().destroy();
                         initDatatable();
                     }
-                }
+                } 
             });
         }
 
         const isCanDelete = (name) => {
-            if(page.authuser.role_id != 1) {
-                let permissions = page.authuser.role?.permissions;
+            if(state.authuser.role_id != 1) {
+                let permissions = state.authuser.role?.permissions;
                 let array_permission = false;
                 permissions.forEach(item => {
                     if(item.name == name) {
