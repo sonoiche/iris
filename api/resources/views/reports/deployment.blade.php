@@ -36,7 +36,7 @@
             <td style="font-size: 16px">{{ $applicant->order_number }}</td>
             <td style="font-size: 16px">{{ $applicant->worksite }}</td>
             <td style="font-size: 16px">{{ $applicant->country_name }}</td>
-            <td style="font-size: 16px">{{ isset($applicant->salary) ? number_format($applicant->salary, 2) : '0.00' }}</td>
+            <td style="font-size: 16px">{{ isset($applicant->expected_salary) ? number_format($applicant->expected_salary, 2) : '0.00' }}</td>
         </tr>
         @endforeach
     </tbody>

@@ -357,7 +357,7 @@ class ReportController extends Controller
                 $nestedData['job_order']        = $applicant->order_number.' '.$applicant->position_title;
                 $nestedData['destination']      = $applicant->worksite;
                 $nestedData['country']          = $applicant->country_name;
-                $nestedData['salary']           = isset($applicant->salary) ? number_format($applicant->salary, 2) : '0.00';
+                $nestedData['salary']           = isset($applicant->expected_salary) ? number_format($applicant->expected_salary, 2) : '0.00';
                 $data['data'][]                 = $nestedData;
             }
         }

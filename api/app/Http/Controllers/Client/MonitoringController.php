@@ -66,7 +66,7 @@ class MonitoringController extends Controller
                 $nestedData['principal_name']   = $applicant->principal_name;
                 $nestedData['applicant_name']   = ['applicant_id' => $applicant->applicant_number, 'applicant_name' => $applicant->fname.' '.$applicant->lname];
                 $nestedData['actual_employer']  = $applicant->employer;
-                $nestedData['agreed_salary']    = isset($applicant->salary) ? number_format($applicant->salary, 2) : '0.00';
+                $nestedData['agreed_salary']    = isset($applicant->expected_salary) ? number_format($applicant->expected_salary, 2) : '0.00';
                 $nestedData['direct_hire']      = ucfirst($applicant->direct_hire);
                 $nestedData['worksite']         = $applicant->worksite;
                 $nestedData['country']          = $applicant->country_name;
